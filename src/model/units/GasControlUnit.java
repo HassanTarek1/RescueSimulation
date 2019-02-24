@@ -9,7 +9,7 @@ public class GasControlUnit extends FireUnit{
 					
 //constructor(s):
 	
-	GasControlUnit(String id, Address location, int stepsPerCycle){
+	public GasControlUnit(String id, Address location, int stepsPerCycle){
 		super(id, location, stepsPerCycle);
 	}
 

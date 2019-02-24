@@ -9,7 +9,7 @@ public class DiseaseControlUnit extends MedicalUnit{
 				
 //constructor(s):	
 	
-	DiseaseControlUnit(String id, Address location, int stepsPerCycle){
+	public DiseaseControlUnit(String id, Address location, int stepsPerCycle){
 		super(id, location, stepsPerCycle);
 	}
 

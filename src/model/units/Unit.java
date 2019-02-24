@@ -47,7 +47,7 @@ import simulation.Simulatable;
 
 //constructor(s):
 	
-	Unit(String id, Address location, int stepsPerCycle){
+	public Unit(String id, Address location, int stepsPerCycle){
 		unitID = id;
 		this.location = location;
 		this.stepsPerCycle = stepsPerCycle;
