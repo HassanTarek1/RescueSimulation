@@ -1,9 +1,16 @@
 package model.units;
 
-public class GasControlUnit {
+import simulation.Address;
 
-	public GasControlUnit() {
-		// TODO Auto-generated constructor stub
+public class GasControlUnit extends FireUnit{
+
+//variables.	
+//setters/getters.
+					
+//constructor(s):
+	
+	GasControlUnit(String id, Address location, int stepsPerCycle){
+		super(id, location, stepsPerCycle);
 	}
 
 }
