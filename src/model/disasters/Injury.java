@@ -1,8 +1,10 @@
 package model.disasters;
 
+import model.people.Citizen;
+
 public class Injury {
-	private int cycle
-	private Citizen target
+	private int cycle;
+	private Citizen target;
 	public Injury() {
 		// TODO Auto-generated constructor stub
 	}

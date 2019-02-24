@@ -3,6 +3,12 @@ package simulation;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+
+import model.disasters.Disaster;
+import model.infrastructure.ResidentialBuilding;
+import model.people.Citizen;
+import model.units.Unit;
 
 public class Simulator {
 	private int currentCycle;

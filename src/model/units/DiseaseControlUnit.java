@@ -1,33 +1,16 @@
 package model.units;
 
+import simulation.Address;
+
 public class DiseaseControlUnit extends MedicalUnit{
-	private String id;
-	private Address location;
-	private int stepsPerCycle;
-	public DiseaseControlUnit() {
-		
-	}
+
+//variables.	
+//setters/getters.
+				
+//constructor(s):	
+	
 	DiseaseControlUnit(String id, Address location, int stepsPerCycle){
-		this.id=id;
-		this.location=location;
-		this.stepsPerCycle=stepsPerCycle;
+		super(id, location, stepsPerCycle);
 	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public Address getLocation() {
-		return location;
-	}
-	public void setLocation(Address location) {
-		this.location = location;
-	}
-	public int getStepsPerCycle() {
-		return stepsPerCycle;
-	}
-	public void setStepsPerCycle(int stepsPerCycle) {
-		this.stepsPerCycle = stepsPerCycle;
-	}
+
 }
