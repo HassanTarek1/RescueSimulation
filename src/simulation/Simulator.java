@@ -5,6 +5,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import model.disasters.Disaster;
+import model.disasters.Fire;
+import model.disasters.GasLeak;
+import model.disasters.Infection;
+import model.disasters.Injury;
 import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
 import model.units.Ambulance;
@@ -21,15 +25,17 @@ public class Simulator {
 	private ArrayList<Unit> emergencyUnits;
 	private ArrayList<Disaster> plannedDisasters;
 	private ArrayList<Disaster> executedDisasters;
-<<<<<<< HEAD
-	private Address[][]world;
-	public Simulator() throws  IOException {
-	buildings=new ArrayList<ResidentialBuilding>	();
-	citizens=new  ArrayList<Citizen>();
-	emergencyUnits=new ArrayList<Unit> ();
-	plannedDisasters=new ArrayList<Disaster>() ;
-	
-	
+	private Address[][]world = new Address[10][10];
+	public Simulator() throws IOException {
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				world[i][j] = new Address(i, j);
+			}
+		}
+		this.loadBuildings("buildings.csv");
+		this.loadCitizens("citizens.csv");
+		this.loadDisasters("disasters.csv");
+		this.loadUnits("units");
 	}
 	private void loadUnits(String filePath) throws IOException{
 		String currentLine = "";
@@ -60,18 +66,14 @@ public class Simulator {
 		while ((currentLine = br.readLine()) != null) {
 		// Parsing the currentLine String
 			String[] tmp=currentLine.split(",");
-			
-		}
-=======
-	private Address[][]world = new Address[10][10];
-	public Simulator() {
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				world[i][j] = new Address(i, j);
+			switch(tmp[1]) {
+				case "INJ":this.plannedDisasters.add(new Injury(Integer.parseInt(tmp[0]),this.findCitizen(tmp[2])));break;
+				case "INF":this.plannedDisasters.add(new Infection(Integer.parseInt(tmp[0]),this.findCitizen(tmp[2])));break;
+				case "FIR":this.plannedDisasters.add(new Fire(Integer.parseInt(tmp[0]),this.findBuilding(Integer.parseInt(tmp[2]),Integer.parseInt(tmp[3]))));break;
+				case "GLK":this.plannedDisasters.add(new GasLeak(Integer.parseInt(tmp[0]),this.findBuilding(Integer.parseInt(tmp[2]),Integer.parseInt(tmp[3]))));break;
+			}
 			}
 		}
-	}
-	
 	private void loadBuildings(String filePath) throws IOException{
 		String currline = "";
 		FileReader fileReader= new FileReader(filePath);
@@ -92,6 +94,19 @@ public class Simulator {
 			Address a = new Address(Integer.parseInt(values[0]),Integer.parseInt(values[1]));
 			citizens.add(new Citizen(a, values[2], values[3], Integer.parseInt(values[4])));
 		}
->>>>>>> 86b68912815271906b6dfd991f8d0411e17114c6
+	}
+	private Citizen findCitizen(String id) {
+		for (int i = 0; i < this.citizens.size(); i++) {
+			if(citizens.get(i).getNationalID().equals(id))
+				return citizens.get(i);
+		}
+		return null;
+	}
+	private ResidentialBuilding findBuilding(int x,int y) {
+		for (int i = 0; i < this.buildings.size(); i++) {
+			if(buildings.get(i).getLocation().getX()==x && buildings.get(i).getLocation().getY()==y )
+				return buildings.get(i);
+		}
+		return null;
 	}
 }

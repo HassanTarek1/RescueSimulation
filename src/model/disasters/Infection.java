@@ -1,9 +1,11 @@
 package model.disasters;
 
-public class Infection {
+import model.people.Citizen;
 
-	public Infection() {
-		// TODO Auto-generated constructor stub
+public class Infection extends Disaster{
+
+	public Infection(int cycle, Citizen target) {
+		super(cycle,target);
 	}
 
 }

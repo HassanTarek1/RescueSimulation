@@ -1,9 +1,11 @@
 package model.disasters;
 
-public class GasLeak {
+import model.infrastructure.ResidentialBuilding;
 
-	public GasLeak() {
-		// TODO Auto-generated constructor stub
+public class GasLeak extends Disaster{
+
+	public GasLeak(int cycle, ResidentialBuilding target) {
+		super(cycle,target);
 	}
 
 }

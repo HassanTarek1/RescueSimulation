@@ -1,9 +1,11 @@
 package model.disasters;
 
-public class Fire {
+import model.infrastructure.ResidentialBuilding;
 
-	public Fire() {
-		// TODO Auto-generated constructor stub
+public class Fire extends Disaster {
+
+	public Fire(int cycle, ResidentialBuilding target) {
+		super(cycle,target);
 	}
 
 }
