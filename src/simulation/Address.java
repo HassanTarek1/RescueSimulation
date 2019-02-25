@@ -3,9 +3,6 @@ package simulation;
 public class Address {
 	private int x;
 	private int y;
-	public Address() {
-		// TODO Auto-generated constructor stub
-	}
 	
 	public int getX() {
 		return x;
