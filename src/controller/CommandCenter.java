@@ -16,7 +16,8 @@ public class CommandCenter {
 	
 	private ArrayList<Unit> emergencyUnits;
 	
-	public CommandCenter() {
+	public CommandCenter() throws Exception {
+		engine = new Simulator();
 		visibleBuildings = new ArrayList<>();
 		visibleCitizens = new ArrayList<>();
 		emergencyUnits = new ArrayList<>();

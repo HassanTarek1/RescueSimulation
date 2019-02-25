@@ -2,7 +2,6 @@ package simulation;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import model.disasters.Disaster;
 import model.disasters.Fire;
@@ -27,7 +26,7 @@ public class Simulator {
 	private ArrayList<Disaster> executedDisasters;
 	private Address[][]world = new Address[10][10];
 	
-	public Simulator() throws IOException {
+	public Simulator() throws Exception {
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
 				world[i][j] = new Address(i, j);
@@ -38,61 +37,58 @@ public class Simulator {
 		this.loadDisasters("disasters.csv");
 		this.loadUnits("units");
 	}
-	private void loadUnits(String filePath) throws IOException{
+	private void loadUnits(String filePath) throws Exception{
 		String currentLine = "";
-		ArrayList<ArrayList<String>> res=new ArrayList<>();
+
 		FileReader fileReader= new FileReader(filePath);
 		BufferedReader br = new BufferedReader(fileReader);
 		while ((currentLine = br.readLine()) != null) {
-		// Parsing the currentLine String
 			String[] tmp=currentLine.split(",");
 			if(tmp.length==4) 
-				this.emergencyUnits.add(new Evacuator(tmp[1],new Address(0,0),Integer.parseInt(tmp[2]),Integer.parseInt(tmp[3])));
+				this.emergencyUnits.add(new Evacuator(tmp[1],world[0][0],Integer.parseInt(tmp[2]),Integer.parseInt(tmp[3])));
 			else {
 				switch(tmp[0]) {
-				case "AMB":	this.emergencyUnits.add(new Ambulance(tmp[1],new Address(0,0),Integer.parseInt(tmp[2])));break;
-				case "DCU":this.emergencyUnits.add(new DiseaseControlUnit(tmp[1],new Address(0,0),Integer.parseInt(tmp[2])));break;
-				case "FTK":this.emergencyUnits.add(new FireTruck(tmp[1],new Address(0,0),Integer.parseInt(tmp[2])));break;
-				case "GCU":this.emergencyUnits.add(new GasControlUnit(tmp[1],new Address(0,0),Integer.parseInt(tmp[2])));break;
+				case "AMB":	this.emergencyUnits.add(new Ambulance(tmp[1],world[0][0],Integer.parseInt(tmp[2])));break;
+				case "DCU": this.emergencyUnits.add(new DiseaseControlUnit(tmp[1],world[0][0],Integer.parseInt(tmp[2])));break;
+				case "FTK": this.emergencyUnits.add(new FireTruck(tmp[1],world[0][0],Integer.parseInt(tmp[2])));break;
+				case "GCU": this.emergencyUnits.add(new GasControlUnit(tmp[1],world[0][0],Integer.parseInt(tmp[2])));break;
 				default:break;
 				}
 			}
 		}
 		}
-	private void loadDisasters(String filePath) throws IOException {
+	private void loadDisasters(String filePath) throws Exception {
 		String currentLine = "";
-		ArrayList<ArrayList<String>> res=new ArrayList<>();
 		FileReader fileReader= new FileReader(filePath);
 		BufferedReader br = new BufferedReader(fileReader);
 		while ((currentLine = br.readLine()) != null) {
-		// Parsing the currentLine String
 			String[] tmp=currentLine.split(",");
 			switch(tmp[1]) {
-				case "INJ":this.plannedDisasters.add(new Injury(Integer.parseInt(tmp[0]),this.findCitizen(tmp[2])));break;
-				case "INF":this.plannedDisasters.add(new Infection(Integer.parseInt(tmp[0]),this.findCitizen(tmp[2])));break;
-				case "FIR":this.plannedDisasters.add(new Fire(Integer.parseInt(tmp[0]),this.findBuilding(Integer.parseInt(tmp[2]),Integer.parseInt(tmp[3]))));break;
-				case "GLK":this.plannedDisasters.add(new GasLeak(Integer.parseInt(tmp[0]),this.findBuilding(Integer.parseInt(tmp[2]),Integer.parseInt(tmp[3]))));break;
+				case "INJ": this.plannedDisasters.add(new Injury(Integer.parseInt(tmp[0]),this.findCitizen(tmp[2])));break;
+				case "INF": this.plannedDisasters.add(new Infection(Integer.parseInt(tmp[0]),this.findCitizen(tmp[2])));break;
+				case "FIR": this.plannedDisasters.add(new Fire(Integer.parseInt(tmp[0]),this.findBuilding(Integer.parseInt(tmp[2]),Integer.parseInt(tmp[3]))));break;
+				case "GLK": this.plannedDisasters.add(new GasLeak(Integer.parseInt(tmp[0]),this.findBuilding(Integer.parseInt(tmp[2]),Integer.parseInt(tmp[3]))));break;
 			}
 			}
 		}
-	private void loadBuildings(String filePath) throws IOException{
+	private void loadBuildings(String filePath) throws Exception{
 		String currline = "";
 		FileReader fileReader= new FileReader(filePath);
 		BufferedReader br = new BufferedReader(fileReader);
 		while ((currline = br.readLine()) != null) {
 			String[] values = currline.split(",");
-			Address a = new Address(Integer.parseInt(values[0]),Integer.parseInt(values[1]));
+			Address a = world[Integer.parseInt(values[0])][Integer.parseInt(values[1])];
 			buildings.add(new ResidentialBuilding(a));
 		}
 	}
 	
-	private void loadCitizens(String filePath) throws IOException{
+	private void loadCitizens(String filePath) throws Exception{
 		String currline = "";
 		FileReader fileReader= new FileReader(filePath);
 		BufferedReader br = new BufferedReader(fileReader);
 		while ((currline = br.readLine()) != null) {
 			String[] values = currline.split(",");
-			Address a = new Address(Integer.parseInt(values[0]),Integer.parseInt(values[1]));
+			Address a = world[Integer.parseInt(values[0])][Integer.parseInt(values[1])];
 			citizens.add(new Citizen(a, values[2], values[3], Integer.parseInt(values[4])));
 		}
 	}
