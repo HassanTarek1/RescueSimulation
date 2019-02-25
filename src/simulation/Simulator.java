@@ -26,6 +26,7 @@ public class Simulator {
 	private ArrayList<Disaster> plannedDisasters;
 	private ArrayList<Disaster> executedDisasters;
 	private Address[][]world = new Address[10][10];
+	
 	public Simulator() throws IOException {
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -49,7 +50,7 @@ public class Simulator {
 				this.emergencyUnits.add(new Evacuator(tmp[1],new Address(0,0),Integer.parseInt(tmp[2]),Integer.parseInt(tmp[3])));
 			else {
 				switch(tmp[0]) {
-				case "AMP":	this.emergencyUnits.add(new Ambulance(tmp[1],new Address(0,0),Integer.parseInt(tmp[2])));break;
+				case "AMB":	this.emergencyUnits.add(new Ambulance(tmp[1],new Address(0,0),Integer.parseInt(tmp[2])));break;
 				case "DCU":this.emergencyUnits.add(new DiseaseControlUnit(tmp[1],new Address(0,0),Integer.parseInt(tmp[2])));break;
 				case "FTK":this.emergencyUnits.add(new FireTruck(tmp[1],new Address(0,0),Integer.parseInt(tmp[2])));break;
 				case "GCU":this.emergencyUnits.add(new GasControlUnit(tmp[1],new Address(0,0),Integer.parseInt(tmp[2])));break;
