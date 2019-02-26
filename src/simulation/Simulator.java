@@ -2,6 +2,7 @@ package simulation;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import model.disasters.Disaster;
 import model.disasters.Fire;
@@ -32,12 +33,31 @@ public class Simulator {
 				world[i][j] = new Address(i, j);
 			}
 		}
+		buildings = new ArrayList<>();
+		citizens = new ArrayList<>();
+		emergencyUnits = new ArrayList<>();
+		plannedDisasters = new ArrayList<>();
+		executedDisasters = new ArrayList<>();
+		
 		this.loadBuildings("buildings.csv");
+		this.loadBuildings("buildings2.csv");
+		this.loadBuildings("buildings_test.csv");
+		this.loadBuildings("buildings_test2.csv");
 		this.loadCitizens("citizens.csv");
+		this.loadCitizens("citizens2.csv");
+		this.loadCitizens("citizens_test.csv");
+		this.loadCitizens("citizens_test2.csv");
 		this.loadDisasters("disasters.csv");
+		this.loadDisasters("disasters2.csv");
+		this.loadDisasters("disasters_test.csv");
+		this.loadDisasters("disasters_test2.csv");
 		this.loadUnits("units");
+		this.loadUnits("units2");
+		this.loadUnits("units_test");
+		this.loadUnits("units_tests2");
+		
 	}
-	private void loadUnits(String filePath) throws Exception{
+	private void loadUnits(String filePath) throws IOException{
 		String currentLine = "";
 
 		FileReader fileReader= new FileReader(filePath);
@@ -57,7 +77,7 @@ public class Simulator {
 			}
 		}
 		}
-	private void loadDisasters(String filePath) throws Exception {
+	private void loadDisasters(String filePath) throws IOException {
 		String currentLine = "";
 		FileReader fileReader= new FileReader(filePath);
 		BufferedReader br = new BufferedReader(fileReader);
@@ -71,7 +91,7 @@ public class Simulator {
 			}
 			}
 		}
-	private void loadBuildings(String filePath) throws Exception{
+	private void loadBuildings(String filePath) throws IOException{
 		String currline = "";
 		FileReader fileReader= new FileReader(filePath);
 		BufferedReader br = new BufferedReader(fileReader);
@@ -82,14 +102,18 @@ public class Simulator {
 		}
 	}
 	
-	private void loadCitizens(String filePath) throws Exception{
+	private void loadCitizens(String filePath) throws IOException{
 		String currline = "";
 		FileReader fileReader= new FileReader(filePath);
 		BufferedReader br = new BufferedReader(fileReader);
 		while ((currline = br.readLine()) != null) {
 			String[] values = currline.split(",");
 			Address a = world[Integer.parseInt(values[0])][Integer.parseInt(values[1])];
-			citizens.add(new Citizen(a, values[2], values[3], Integer.parseInt(values[4])));
+			Citizen c = new Citizen(a, values[2], values[3], Integer.parseInt(values[4]));
+			citizens.add(c);
+			ResidentialBuilding b = findBuilding(a.getX(), a.getX());
+			if(b != null)
+				b.getOccupants().add(c);
 		}
 	}
 	private Citizen findCitizen(String id) {

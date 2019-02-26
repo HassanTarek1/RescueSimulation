@@ -15,13 +15,6 @@ public abstract class PoliceUnit extends Unit {
 	
 //setters/getters:
 	
-	public ArrayList<Citizen> getPassengers() {
-		return passengers;
-	}
-	
-	public void setPassengers(ArrayList<Citizen> passengers) {
-		this.passengers = passengers;
-	}
 	
 	public int getMaxCapacity() {
 		return maxCapacity;
@@ -37,9 +30,9 @@ public abstract class PoliceUnit extends Unit {
 	
 //constructor(s):	
 	
-	PoliceUnit(String id, Address location, int stepsPerCycle, int maxCapacity){
+	public PoliceUnit(String id, Address location, int stepsPerCycle, int maxCapacity){
 		super(id, location, stepsPerCycle);
-		
+		passengers = new ArrayList<>();
 		this.maxCapacity = maxCapacity;
 	}
 	

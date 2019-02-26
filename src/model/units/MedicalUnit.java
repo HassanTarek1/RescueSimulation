@@ -13,7 +13,7 @@ public abstract class MedicalUnit extends Unit{
 	
 //constructor(s):
 
-	MedicalUnit(String id, Address location, int stepsPerCycle){
+	public MedicalUnit(String id, Address location, int stepsPerCycle){
 		super(id, location, stepsPerCycle);
 	}
 	
