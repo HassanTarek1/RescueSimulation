@@ -48,6 +48,7 @@ public class M1PublicTests
 
 	@Test(timeout = 1000)
 	public void testReadingCitizenFromCSV() throws Exception {
+		try{
 		final Field f = Class.forName(simulatorPath).getDeclaredField(
 				"citizens");
 
@@ -95,9 +96,13 @@ public class M1PublicTests
 
 		Object s = Class.forName(simulatorPath).getConstructor().newInstance();
 		
+		
 		Method method = Class.forName(simulatorPath).getDeclaredMethod(
 				"loadBuildings", new Class[] { String.class });
 		method.setAccessible(true);
+		
+		
+		
 		
 		
 		if(((ArrayList<Object>) f1.get(s)).size()==0)
@@ -108,7 +113,17 @@ public class M1PublicTests
 			fail("Simulator constructor should load the disasters from the corresponding csv file.");
 		if(((ArrayList<Object>) f4.get(s)).size()==0)
 			fail("Simulator constructor should load the units from the corresponding csv file.");
-		
+	
+		}
+		catch(Exception e){
+			fail("Simulator constructor should load buildings and citizens correctly.");
+		}
+		finally{
+			File buildingFile = new File("buildings_test.csv");
+			buildingFile.delete();
+			File citizenFile = new File("citizen_test.csv");
+			citizenFile.delete();
+		}
 	}
 
 	@Test(timeout = 1000)
@@ -3076,18 +3091,16 @@ public class M1PublicTests
 	
 
 
-////////////////
 
-	// TODO: check this one.
 	@Test(timeout = 1000)
 	public void testInstanceVariableSimulatorWorldInitialization()
 			throws Exception {
-
+try{
 		copyFiles();
 		
 		Object simulator = Class.forName(simulatorPath).getConstructor().newInstance();
 		
-		resetFiles();
+		
 		
 		String[] names = {"currentCycle", "buildings", "citizens", "emergencyUnits", "plannedDisasters", "executedDisasters"};
 		testConstructorInitializationNotNull(simulator, names);
@@ -3115,7 +3128,6 @@ public class M1PublicTests
 		for (int i = 0; i < world.length; i++) {
 			for (int j = 0; j < world[i].length; j++) {
 
-				// getting the x value
 				Field x = null;
 				Class cx = world[i][j].getClass();
 				try {
@@ -3127,7 +3139,6 @@ public class M1PublicTests
 				x.setAccessible(true);
 				int fx = x.getInt(world[i][j]);
 
-				// getting the y value
 				Field y = null;
 				Class cy = world[i][j].getClass();
 				try {
@@ -3148,7 +3159,12 @@ public class M1PublicTests
 			}
 		}
 
+}
+catch(Exception e){
 	
+}finally{
+	resetFiles();
+}
 
 	}
 
@@ -3175,7 +3191,6 @@ public class M1PublicTests
 			f.setAccessible(true);
 			if(f.get(createdObject) == null)
 				fail("The constructor of the " + createdObject.getClass().getSimpleName() + " class should initialize the instance variable \"" + currName + "\" correctly.");
-//			assertEquals("The constructor of the " + createdObject.getClass().getSimpleName() + " class should initialize the instance variable \"" + currName + "\" correctly.", null, f.get(createdObject));
 		}
 		
 	}
@@ -3198,10 +3213,6 @@ public class M1PublicTests
 		copyFile(sourceFileDisasters, destinationFileDisasters);
 		copyFile(sourceFileUnits, destinationFileUnits);
 
-//		sourceFileBuildings.delete();
-//		sourceFileCitizens.delete();
-//		sourceFileDisasters.delete();
-//		sourceFileUnits.delete();
 
 	}
 	
@@ -3268,6 +3279,7 @@ public class M1PublicTests
 	@Test(timeout = 1000)
 	public void testReadingBuildingsFromCSV() throws Exception 
 	{
+		try{
 		final Field f = Class.forName(simulatorPath).getDeclaredField("buildings");
 		
 		f.setAccessible(true);
@@ -3279,6 +3291,7 @@ public class M1PublicTests
 		final Field f2 = Class.forName(simulatorPath).getDeclaredField("world");
 		
 		f2.setAccessible(true);
+	
 		Object s = Class.forName(simulatorPath).getConstructor().newInstance();
 		
 		PrintWriter buildingWriter = new PrintWriter("buildings_test.csv");
@@ -3302,8 +3315,7 @@ public class M1PublicTests
 		((ArrayList<Object>) f.get(s)).clear();
 		method.invoke(s, "buildings_test.csv");
 		
-		File buildingFile = new File("buildings_test.csv");
-		buildingFile.delete();
+	
 		
 		
 		
@@ -3329,11 +3341,20 @@ public class M1PublicTests
 					(correctBuildings.get(i)).getClass().getDeclaredMethod("getLocation").invoke(correctBuildings.get(i)),
 					(testBuildings.get(i)).getClass().getDeclaredMethod("getLocation").invoke(testBuildings.get(i)));
 		}	
-	}
+		}
+		catch(Exception e){
+			
+		}
+		finally{
+			File buildingFile = new File("buildings_test.csv");
+			buildingFile.delete();
+		}
+		}
 	
 	@Test(timeout = 1000)
 	public void testReadingCitizenFromCSV2() throws Exception 
 	{
+		try{
 		final Field f = Class.forName(simulatorPath).getDeclaredField("citizens");
 		
 		f.setAccessible(true);
@@ -3372,8 +3393,6 @@ public class M1PublicTests
 		
 		ArrayList<Object> correctCitizens = new ArrayList<Object>();
 		
-		File citizenFile = new File("citizen_test.csv");
-		citizenFile.delete();
 		
 		correctCitizens.add(Class.forName(citizenPath).getConstructor(Class.forName(addressPath), String.class, String.class, int.class).newInstance(testWorld[5][5],"1","zizo",25));
 		correctCitizens.add(Class.forName(citizenPath).getConstructor(Class.forName(addressPath), String.class, String.class, int.class).newInstance(testWorld[6][6],"2","amr",30));
@@ -3405,11 +3424,19 @@ public class M1PublicTests
 					(correctCitizens.get(i)).getClass().getDeclaredMethod("getAge").invoke(correctCitizens.get(i)),
 					(testCitizens.get(i)).getClass().getDeclaredMethod("getAge").invoke(testCitizens.get(i)));
 		}
+		}
+		catch(Exception e){
+			
+		}
+		finally{
+			File citizenFile = new File("citizen_test.csv");
+			citizenFile.delete();
+		}
 	}
 		@Test(timeout = 1000)
 		public void testReadingDisastersFromCSV() throws Exception 
 		{
-			
+			try{
 			final Field f = Class.forName(simulatorPath).getDeclaredField("plannedDisasters");
 			
 			f.setAccessible(true);
@@ -3474,8 +3501,6 @@ public class M1PublicTests
 			correctDisasters.add(Class.forName(firePath).getConstructor(int.class, Class.forName(residentialBuildingPath)).newInstance(4,correctBuildings.get(0)));
 			correctDisasters.add(Class.forName(gasLeakPath).getConstructor(int.class, Class.forName(residentialBuildingPath)).newInstance(5,correctBuildings.get(1)));
 			
-			File disastersFile = new File("disasters_test.csv");
-			disastersFile.delete();
 			
 			assertEquals(
 					"The loaded disasters ArrayList doesn't contain the same number of disasters given in the CSV file",
@@ -3530,14 +3555,20 @@ public class M1PublicTests
 				}
 				
 			}
-		
+			}
+			catch(Exception e){
+				
+			}finally{
+				File disasterFile = new File("disasters_test.csv");
+				disasterFile.delete();
+			}
 		
 	}
 	
 		@Test(timeout = 1000)
 		public void testReadingUnitsFromCSV() throws Exception 
 		{
-			
+			try{
 			final Field f = Class.forName(simulatorPath).getDeclaredField("emergencyUnits");
 			
 			f.setAccessible(true);
@@ -3569,8 +3600,7 @@ public class M1PublicTests
 			correctUnit.add(Class.forName(fireTruckPath).getConstructor(String.class, Class.forName(addressPath), int.class).newInstance("4", testWorld[0][0], 8));
 			correctUnit.add(Class.forName(gasControlUnitPath).getConstructor(String.class, Class.forName(addressPath), int.class).newInstance("9", testWorld[0][0], 3));
 			
-			File unitsFile = new File("units_test.csv");
-			unitsFile.delete();
+			
 			
 			
 			assertEquals(
@@ -3598,12 +3628,17 @@ public class M1PublicTests
 						(testUnits.get(i).getClass().getMethod("getUnitID").invoke(testUnits.get(i))));
 				
 			}
+			}
+			catch(Exception e){
+				
+			}finally{
+				File unitsFile = new File("units_test.csv");
+				unitsFile.delete();
+			}
 			
 		}
 
-////////////////
 
-// ############################################# Helper methods
 
 	public void testEnumValues(Class aClass, String [] value) throws ClassNotFoundException 
 	{
@@ -3852,7 +3887,10 @@ public class M1PublicTests
 	
 	@Test(timeout = 1000)
 	public void testReadingCSVCallingLoads() throws Exception {
-		copyWithoutDeletingFiles();
+		
+		try{
+			copyWithoutDeletingFiles();
+			
 		final Field citizenField = Class.forName(simulatorPath).getDeclaredField(
 				"citizens");
 
@@ -3921,7 +3959,7 @@ public class M1PublicTests
 		ArrayList<Object> testBuildings = new ArrayList<Object>();
 
 		Object s = Class.forName(simulatorPath).getConstructor().newInstance();
-		resetWithoutDeletingFiles();
+		
 		testBuildings = (ArrayList<Object>) buildingsField.get(s);
 
 		method = Class.forName(simulatorPath).getDeclaredMethod("loadCitizens",
@@ -4060,6 +4098,13 @@ public class M1PublicTests
 					(correctUnit.get(i).getClass().getMethod("getUnitID").invoke(correctUnit.get(i))),
 					(testUnits.get(i).getClass().getMethod("getUnitID").invoke(testUnits.get(i))));
 			
+		}
+		}
+		catch(Exception e){
+			
+		}
+		finally{
+			resetWithoutDeletingFiles();
 		}
 		
 		

@@ -69,7 +69,7 @@ public class Simulator {
 			}
 		}
 		}
-	private void loadDisasters(String filePath) throws IOException {
+	private void loadDisasters(String filePath) throws Exception {
 		String currentLine = "";
 		FileReader fileReader= new FileReader(filePath);
 		BufferedReader br = new BufferedReader(fileReader);
