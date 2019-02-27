@@ -12,6 +12,7 @@ import simulation.Simulatable;
 		this.startCycle=startCycle;
 		this.target=target;
 	}
+	public Disaster() {}
 	public  int getStartCycle() {
 		return startCycle;
 	}

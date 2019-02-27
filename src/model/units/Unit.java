@@ -53,5 +53,6 @@ import simulation.Simulatable;
 		this.stepsPerCycle = stepsPerCycle;
 		state = UnitState.IDLE;
 	}
+	public Unit() {}
 	
 }

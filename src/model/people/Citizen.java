@@ -86,5 +86,6 @@ public class Citizen implements Simulatable,Rescuable{
 		this.age = age;
 		state = CitizenState.SAFE;
 	}
+	public Citizen() {}
 	
 }

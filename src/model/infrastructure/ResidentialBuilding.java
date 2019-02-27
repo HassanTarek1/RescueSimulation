@@ -76,6 +76,7 @@ public class ResidentialBuilding implements Simulatable,Rescuable{
 		occupants = new ArrayList<>();
 		this.location = location;
 	}
+	public ResidentialBuilding() {}
 	
 	
 }
