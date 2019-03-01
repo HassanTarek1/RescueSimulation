@@ -103,7 +103,7 @@ public class Simulator {
 			Address a = world[Integer.parseInt(values[0])][Integer.parseInt(values[1])];
 			Citizen c = new Citizen(a, values[2], values[3], Integer.parseInt(values[4]));
 			citizens.add(c);
-			ResidentialBuilding b = findBuilding(a.getX(), a.getX());
+			ResidentialBuilding b = findBuilding(a.getX(), a.getY());
 			if(b != null)
 				b.getOccupants().add(c);
 		}

@@ -26,10 +26,6 @@ public class ResidentialBuilding implements Simulatable,Rescuable{
 		return location;
 	}
 	
-	public void setLocation(Address location) {
-		this.location = location;
-	}
-	
 	public int getStructuralIntegrity() {
 		return structuralIntegrity;
 	}

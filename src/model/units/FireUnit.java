@@ -9,7 +9,7 @@ public abstract class FireUnit extends Unit{
 	
 //constructor(s):
 	
-	FireUnit(String id, Address location, int stepsPerCycle){
+	public FireUnit(String id, Address location, int stepsPerCycle){
 		super(id, location, stepsPerCycle);
 	}
 	
