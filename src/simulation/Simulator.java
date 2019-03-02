@@ -25,9 +25,10 @@ public class Simulator {
 	private ArrayList<Unit> emergencyUnits;
 	private ArrayList<Disaster> plannedDisasters;
 	private ArrayList<Disaster> executedDisasters;
-	private Address[][]world = new Address[10][10];
+	private Address[][]world ;
 	
 	public Simulator() throws Exception {
+		world= new Address[10][10];
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
 				world[i][j] = new Address(i, j);
