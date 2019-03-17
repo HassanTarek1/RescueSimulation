@@ -44,6 +44,7 @@ import simulation.Simulatable;
 	public int getStepsPerCycle() {
 		return stepsPerCycle;
 	}
+	abstract public void cycleStep() ;
 
 //constructor(s):
 	
