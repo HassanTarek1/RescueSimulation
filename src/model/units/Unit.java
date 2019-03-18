@@ -1,10 +1,12 @@
 package model.units;
 
+import model.events.SOSResponder;
+import model.events.WorldListener;
 import simulation.Address;
 import simulation.Rescuable;
 import simulation.Simulatable;
 
- public abstract class Unit implements Simulatable{
+ public abstract class Unit implements Simulatable,SOSResponder{
 	 
 //variables:
 	 
@@ -14,6 +16,7 @@ import simulation.Simulatable;
 	private Rescuable target;
 	private int distanceToTarget;
 	private int stepsPerCycle;
+	private WorldListener wListener;
 	
 //setters/getters:
 	
@@ -44,13 +47,26 @@ import simulation.Simulatable;
 	public int getStepsPerCycle() {
 		return stepsPerCycle;
 	}
-	abstract public void cycleStep() ;
+	public void cycleStep() {
+		
+	}
+	public void setwListener(WorldListener wListener) {
+		this.wListener = wListener;
+	}
+	//methods
+	public void respond(Rescuable r) {
+		
+	}
 
 //constructor(s):
 	
+	
+
 	public Unit(String id, Address location, int stepsPerCycle){
 		unitID = id;
 		this.location = location;
+		if(wListener!=null)
+			wListener.assignAddress(this, location.getX(), location.getY());
 		this.stepsPerCycle = stepsPerCycle;
 		state = UnitState.IDLE;
 	}

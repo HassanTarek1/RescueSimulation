@@ -3,6 +3,7 @@ package model.infrastructure;
 import java.util.ArrayList;
 
 import model.disasters.Disaster;
+import model.disasters.Fire;
 import model.people.Citizen;
 import simulation.Address;
 import simulation.Rescuable;
@@ -65,7 +66,15 @@ public class ResidentialBuilding implements Simulatable,Rescuable{
 	public Disaster getDisaster() {
 		return disaster;
 	}
+	public void struckBy(Disaster d) {
+		
+	}
+	public void cycleStep() {
+		
+		
+	}
 	
+
 //constructor(s):
 	
 	public ResidentialBuilding(Address location) {
@@ -73,6 +82,8 @@ public class ResidentialBuilding implements Simulatable,Rescuable{
 		this.location = location;
 	}
 	public ResidentialBuilding() {}
+
+	
 	
 	
 }

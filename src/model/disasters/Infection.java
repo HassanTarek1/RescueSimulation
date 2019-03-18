@@ -8,4 +8,16 @@ public class Infection extends Disaster{
 		super(cycle,target);
 	}
 
+	//methods
+	public void strike() {
+		Citizen target=(Citizen)this.getTarget();
+		int oldToxicity=target.getToxicity();
+		target.setToxicity(oldToxicity+25);
+	}
+	
+	public void cycleStep() {
+		Citizen target=(Citizen)this.getTarget();
+		int oldToxicity=target.getToxicity();
+		target.setToxicity(oldToxicity+15);
+	}
 }

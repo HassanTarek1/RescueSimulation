@@ -8,4 +8,15 @@ public class GasLeak extends Disaster{
 		super(cycle,target);
 	}
 
+	//methods 
+	public void strike() {
+		ResidentialBuilding target=(ResidentialBuilding)this.getTarget();
+		int oldGasLevel=target.getGasLevel();
+		target.setGasLevel(oldGasLevel+10);
+	}
+	public void cycleStep() {
+		ResidentialBuilding target=(ResidentialBuilding)this.getTarget();
+		int oldGasLevel=target.getGasLevel();
+		target.setGasLevel(oldGasLevel+15);
+	}
 }

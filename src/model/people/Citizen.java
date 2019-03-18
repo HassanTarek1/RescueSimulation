@@ -1,6 +1,7 @@
 package model.people;
 
 import model.disasters.Disaster;
+import model.events.WorldListener;
 import simulation.Address;
 import simulation.Rescuable;
 import simulation.Simulatable;
@@ -18,6 +19,7 @@ public class Citizen implements Simulatable,Rescuable{
 	private int hp = 100;
 	private int bloodLoss = 0;
 	private int toxicity = 0;
+	private WorldListener wListener;
 	
 //setters/getters:
 	
@@ -76,16 +78,33 @@ public class Citizen implements Simulatable,Rescuable{
 	public void setToxicity(int toxicity) {
 		this.toxicity = toxicity;
 	}
+	public void setwListener(WorldListener wListener) {
+		this.wListener = wListener;
+	}
+	
+	//methods
+	
+	public void struckBy(Disaster d) {
+		
+		
+	}
+	public void cycleStep() {
+		
+	}
 	
 //constructor(s):
 	
 	public Citizen(Address location, String nationalID, String name, int age) {
 		this.location = location;
+		if(wListener!=null)
+			wListener.assignAddress(this, location.getX(), location.getY());
 		this.nationalID = nationalID;
 		this.name = name;
 		this.age = age;
 		state = CitizenState.SAFE;
 	}
 	public Citizen() {}
+
+	
 	
 }
