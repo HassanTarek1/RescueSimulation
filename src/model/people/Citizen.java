@@ -62,12 +62,18 @@ public class Citizen implements Simulatable,Rescuable{
 	}
 	
 	public void setHp(int hp) {
-		if(hp>0 && hp<=100)
-			this.hp = hp;
-		else {
-			if(hp==0)
-				state=CitizenState.DECEASED;
+		if(hp<=0) {
+			this.hp = 0;
+			state=CitizenState.DECEASED;
+			return;
 		}
+		
+		if(hp >= 100) {
+			this.hp = 100;
+			return;
+		}
+		
+		this.hp = hp;
 	}
 	
 	public int getBloodLoss() {
@@ -75,26 +81,41 @@ public class Citizen implements Simulatable,Rescuable{
 	}
 	
 	public void setBloodLoss(int bloodLoss) {
-		if(bloodLoss>0 && bloodLoss<=100)
-			this.bloodLoss = bloodLoss;
-		else {
-			if(bloodLoss==100)
-				this.setHp(0);
+			
+		if(bloodLoss <= 0) {
+			this.bloodLoss = 0;
+			return;
 		}
+			
+		if(bloodLoss >=100) {
+			this.setHp(0);
+			this.bloodLoss = 100;
+		}
+			
+		this.bloodLoss = bloodLoss;
 	}
+	
 	
 	public int getToxicity() {
 		return toxicity;
 	}
 	
 	public void setToxicity(int toxicity) {
-		if(toxicity>0 && toxicity<=100)
-			this.toxicity = toxicity;
-		else {
-			if(toxicity==100)
-				this.setHp(0);
+			
+		if(toxicity >=100) {
+			this.setHp(0);
+			this.toxicity = 100;
+			return;
 		}
+			
+		if(toxicity <= 0) {
+			this.toxicity = 0;
+			return;
+		}
+			
+		this.toxicity = toxicity;
 	}
+	
 	public WorldListener getWorldListener() {
 		return worldListener;
 	}

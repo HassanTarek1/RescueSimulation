@@ -39,6 +39,12 @@ public class ResidentialBuilding implements Simulatable,Rescuable{
 	}
 	
 	public void setStructuralIntegrity(int structuralIntegrity) {
+		if(structuralIntegrity <= 0) {
+			this.KillAll();
+			this.structuralIntegrity = 0;
+			return;
+		}
+		
 		this.structuralIntegrity = structuralIntegrity;
 	}
 	
@@ -47,6 +53,16 @@ public class ResidentialBuilding implements Simulatable,Rescuable{
 	}
 	
 	public void setFireDamage(int fireDamage) {
+		if(fireDamage < 0) {
+			this.fireDamage = 0;
+			return;
+		}
+		
+		if(fireDamage > 100) {
+			this.fireDamage = 100;
+			return;
+		}
+		
 		this.fireDamage = fireDamage;
 	}
 	
@@ -55,6 +71,15 @@ public class ResidentialBuilding implements Simulatable,Rescuable{
 	}
 	
 	public void setGasLevel(int gasLevel) {
+		if(gasLevel >= 100) {
+			this.KillAll();
+			this.gasLevel = 100;
+			return;
+		}
+		if(gasLevel <= 0) {
+			gasLevel = 0;
+			return;
+		}
 		this.gasLevel = gasLevel;
 	}
 	
@@ -63,6 +88,17 @@ public class ResidentialBuilding implements Simulatable,Rescuable{
 	}
 	
 	public void setFoundationDamage(int foundationDamage) {
+		if(foundationDamage >= 100) {
+			setStructuralIntegrity(0);
+			this.foundationDamage = 100;
+			return;
+		}
+		
+		if(foundationDamage < 0) {
+			this.foundationDamage = 0;
+			return;
+		}
+		
 		this.foundationDamage = foundationDamage;
 	}
 	
@@ -73,6 +109,9 @@ public class ResidentialBuilding implements Simulatable,Rescuable{
 	public Disaster getDisaster() {
 		return disaster;
 	}
+	
+	//methods: 
+	
 	public void struckBy(Disaster d) {
 		
 	}
@@ -93,6 +132,11 @@ public class ResidentialBuilding implements Simulatable,Rescuable{
 			}
 		}
 			
+	}
+	
+	private void KillAll() {	
+		for(Citizen currCitizen : this.occupants)
+			currCitizen.setHp(0);
 	}
 	
 
