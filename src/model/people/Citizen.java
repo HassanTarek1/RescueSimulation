@@ -90,6 +90,7 @@ public class Citizen implements Simulatable,Rescuable{
 		if(bloodLoss >=100) {
 			this.setHp(0);
 			this.bloodLoss = 100;
+			return;
 		}
 			
 		this.bloodLoss = bloodLoss;
@@ -134,8 +135,9 @@ public class Citizen implements Simulatable,Rescuable{
 	
 
 	public void struckBy(Disaster d) {
-		
-		
+		d.strike();
+		if(emergencyService!=null)
+			emergencyService.receiveSOSCall(this);
 	}
 	public void cycleStep() {
 		if ((bloodLoss>0 && bloodLoss<30) || (toxicity>0 && toxicity<30))

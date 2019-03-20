@@ -27,7 +27,14 @@ public class CommandCenter implements SOSListener{
 
 	
 	public void receiveSOSCall(Rescuable r) {
-		
+		if(r instanceof Citizen) {
+			visibleCitizens.add((Citizen)r);
+			return;
+		}
+		if(r instanceof ResidentialBuilding) {
+			visibleBuildings.add((ResidentialBuilding)r);
+			return;
+		}
 		
 	}
 }
