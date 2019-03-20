@@ -4,37 +4,52 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import model.disasters.Collapse;
 import model.disasters.Disaster;
 import model.disasters.Fire;
 import model.disasters.GasLeak;
 import model.disasters.Infection;
 import model.disasters.Injury;
+import model.events.SOSListener;
 import model.events.WorldListener;
 import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
+import model.people.CitizenState;
 import model.units.Ambulance;
 import model.units.DiseaseControlUnit;
 import model.units.Evacuator;
 import model.units.FireTruck;
 import model.units.GasControlUnit;
 import model.units.Unit;
+import model.units.UnitState;
 
 public class Simulator implements WorldListener{
+	
 	private int currentCycle;
+	
 	private ArrayList<ResidentialBuilding> buildings;
 	private ArrayList<Citizen> citizens;
 	private ArrayList<Unit> emergencyUnits;
 	private ArrayList<Disaster> plannedDisasters;
 	private ArrayList<Disaster> executedDisasters;
+	
 	private Address[][]world ;
 	
-	public Simulator() throws Exception {
+	SOSListener emergencyService;
+	
+	//constructor:
+	
+	public Simulator(SOSListener emergencyService) throws Exception {
+		
+		currentCycle = 0;
+		
 		world= new Address[10][10];
 		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < 10; j++) 
 				world[i][j] = new Address(i, j);
-			}
 		}
+		
 		buildings = new ArrayList<>();
 		citizens = new ArrayList<>();
 		emergencyUnits = new ArrayList<>();
@@ -42,15 +57,24 @@ public class Simulator implements WorldListener{
 		executedDisasters = new ArrayList<>();
 		
 		this.loadBuildings("buildings.csv");
-		
 		this.loadCitizens("citizens.csv");
-		
 		this.loadDisasters("disasters.csv");
-		
 		this.loadUnits("units.csv");
 		
-		
 	}
+	//setters/getters:
+	
+	public ArrayList<Unit> getEmergencyUnits(){
+		return emergencyUnits;
+	}
+	
+	public void setEmergencyService(SOSListener emergencyService) {
+		this.emergencyService = emergencyService;
+	}
+	
+	
+	//methods:
+	
 	private void loadUnits(String filePath) throws Exception{
 		String currentLine = "";
 
@@ -139,4 +163,130 @@ public class Simulator implements WorldListener{
 			
 		
 	}
+	boolean checkGameOver() {
+		if(plannedDisasters.size() == 0 && NoActiveDisasters() && IdleUnits())
+			return true;
+		return false;
+	}
+	
+	private boolean NoActiveDisasters() {
+		boolean CIT = true;
+		boolean BUI = true;
+		
+		for(Citizen currCitizen : citizens) {
+			if(currCitizen.getDisaster() != null)
+				CIT = false;
+		}
+		
+		for(ResidentialBuilding currBuilding : buildings) {
+			if(currBuilding.getDisaster() != null)
+				BUI = false;
+		}
+		
+		if(CIT && BUI)
+			return true;
+		return false;
+		
+	}
+	private boolean IdleUnits() {
+		for(Unit currUnit : emergencyUnits)
+			if(currUnit.getState() != UnitState.IDLE) return false;
+		return true;
+	}
+	
+	int calculateCasualties() {
+		int Dead = 0;
+		for(Citizen currCitizen : citizens) {
+			if(currCitizen.getState() == CitizenState.DECEASED)
+				Dead++;
+		}
+		return Dead;
+	}
+	
+	void nextCycle() {
+		currentCycle++;
+		for (int i = 0; i < plannedDisasters.size(); i++) {
+			Disaster currDisaster = plannedDisasters.get(i);
+			if(currDisaster.getStartCycle() == currentCycle) {
+				
+				currDisaster.setActive(true);
+				
+				plannedDisasters.remove(i);
+				
+				executedDisasters.add(currDisaster);
+				
+				
+				Rescuable target = currDisaster.getTarget();
+				
+				
+				
+				if(target instanceof ResidentialBuilding) {
+					
+					if (currDisaster instanceof Fire) {
+						int Gaslvl =  ((ResidentialBuilding) target).getGasLevel();
+						
+						if(Gaslvl == 0) 
+							currDisaster.strike();
+						
+						if(Gaslvl > 0 && Gaslvl < 70) {
+							Collapse temp = new Collapse(currentCycle, (ResidentialBuilding) target);
+							temp.strike();
+						}
+						
+						if(Gaslvl >= 70) {
+							((ResidentialBuilding) target).setStructuralIntegrity(0);
+						}	
+					}
+					
+					if (currDisaster instanceof GasLeak) {
+						if(((ResidentialBuilding) target).getFireDamage() > 0) {
+							Collapse temp = new Collapse(currentCycle, (ResidentialBuilding) target);
+							temp.strike();
+						}
+					}
+					
+					if (currDisaster instanceof Collapse) {
+						RemoveDisaters((ResidentialBuilding) target);
+						((ResidentialBuilding) target).setFireDamage(0);
+					}
+					
+				}
+				
+			}
+		}
+		
+		for(ResidentialBuilding currBuilding : buildings) {
+			if(currBuilding.getFireDamage() >= 100) {
+				RemoveDisaters(currBuilding);
+				executedDisasters.add(new Collapse(currentCycle, currBuilding));
+				currBuilding.setFireDamage(0);
+			}
+		}
+		
+		
+		
+		//(place reserved for units)
+		
+		
+		for(Disaster currDisaster : executedDisasters) {
+			if(currDisaster.getStartCycle() != currentCycle)
+				currDisaster.cycleStep();
+		}
+		
+		for(ResidentialBuilding currBuilding : buildings) 
+			currBuilding.cycleStep();
+		
+		for(Citizen currCitizen : citizens) 
+			currCitizen.cycleStep();
+		
+		
+	}
+	
+	private void RemoveDisaters(ResidentialBuilding currBuilding) {
+		for (int i = 0; i < executedDisasters.size(); i++) {
+			if(executedDisasters.get(i).getTarget() == currBuilding)
+				executedDisasters.remove(i);
+		}
+	}
+
 }

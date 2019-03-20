@@ -116,21 +116,22 @@ public class ResidentialBuilding implements Simulatable,Rescuable{
 		
 	}
 	public void cycleStep() {
+		
 		if (this.foundationDamage>0) {
 			Random r=new Random();
 			int rValue=(int)(6*r.nextDouble()+5);
 			this.setStructuralIntegrity(this.getStructuralIntegrity()-rValue);
 		}
+		
 		if(fireDamage>0 && fireDamage<30)
 			this.setStructuralIntegrity(this.getStructuralIntegrity()-3);
-		else {
-			if(fireDamage>=30 && fireDamage<70)
+		
+		if(fireDamage>=30 && fireDamage<70)
 				this.setStructuralIntegrity(this.getStructuralIntegrity()-5);
-			else {
-				if(fireDamage>=70 && fireDamage<100)
-					this.setStructuralIntegrity(this.getStructuralIntegrity()-7);
-			}
-		}
+			
+		if(fireDamage>=70 && fireDamage<100)
+				this.setStructuralIntegrity(this.getStructuralIntegrity()-7);
+			
 			
 	}
 	

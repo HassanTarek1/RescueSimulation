@@ -138,16 +138,29 @@ public class Citizen implements Simulatable,Rescuable{
 		
 	}
 	public void cycleStep() {
-		if ((bloodLoss>0 && bloodLoss<30) || (toxicity>0 && toxicity<30))
+		
+		if ((bloodLoss>0 && bloodLoss<30))
 			this.setHp(getHp()-5);
-		else {
-			if((bloodLoss>=30 && bloodLoss<70) || (toxicity>=30 && toxicity<70))
-				this.setHp(getHp()-10);
-			else {
-				if((bloodLoss>=70 ) || (toxicity>=70))
-					this.setHp(getHp()-15);
-			}
-		}
+		
+		if ((bloodLoss>=30 && bloodLoss<70))
+			this.setHp(getHp()-10);
+			
+		if ((bloodLoss>=70 ))
+			this.setHp(getHp()-15);
+		
+		if (( toxicity>0 && toxicity<30))
+			this.setHp(getHp()-5);
+		
+		if ((toxicity>=30 && toxicity<70))
+			this.setHp(getHp()-10);
+			
+		if ((toxicity>=70 ))
+			this.setHp(getHp()-15);
+			
+		
+		if((bloodLoss > 0 || toxicity > 0) && state != CitizenState.DECEASED) 
+			this.state = CitizenState.IN_TROUBLE;
+		
 	}
 	
 	
