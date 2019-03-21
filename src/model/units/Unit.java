@@ -6,7 +6,7 @@ import simulation.Address;
 import simulation.Rescuable;
 import simulation.Simulatable;
 
- public class Unit implements Simulatable,SOSResponder{
+ public abstract class Unit implements Simulatable,SOSResponder{
 	 
 //variables:
 	 
