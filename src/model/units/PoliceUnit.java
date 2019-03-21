@@ -28,6 +28,16 @@ public abstract class PoliceUnit extends Unit {
 		this.distanceToBase = distanceToBase;
 	}
 	
+	public ArrayList<Citizen> getPassengers() {
+		return passengers;
+	}
+//Methods
+	@Override
+	public void treat() {
+		// TODO
+	}
+	
+
 //constructor(s):	
 	
 	public PoliceUnit(String id, Address location, int stepsPerCycle, int maxCapacity){
@@ -35,6 +45,6 @@ public abstract class PoliceUnit extends Unit {
 		passengers = new ArrayList<>();
 		this.maxCapacity = maxCapacity;
 	}
-	
+
 	
 }

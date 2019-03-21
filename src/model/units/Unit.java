@@ -6,7 +6,7 @@ import simulation.Address;
 import simulation.Rescuable;
 import simulation.Simulatable;
 
- public abstract class Unit implements Simulatable,SOSResponder{
+ public class Unit implements Simulatable,SOSResponder{
 	 
 //variables:
 	 
@@ -16,7 +16,7 @@ import simulation.Simulatable;
 	private Rescuable target;
 	private int distanceToTarget;
 	private int stepsPerCycle;
-	private WorldListener wListener;
+	private WorldListener worldListener;
 	
 //setters/getters:
 	
@@ -47,26 +47,43 @@ import simulation.Simulatable;
 	public int getStepsPerCycle() {
 		return stepsPerCycle;
 	}
-	public void cycleStep() {
-		
+	
+	public WorldListener getWorldListener() {
+		return worldListener;
 	}
-	public void setwListener(WorldListener wListener) {
-		this.wListener = wListener;
+
+	public void setWorldListener(WorldListener worldListener) {
+		this.worldListener = worldListener;
 	}
+
+	public void setDistanceToTarget(int distanceToTarget) {
+		this.distanceToTarget = distanceToTarget;
+	}
+
 	//methods
+	public void cycleStep() {
+		//TODO
+	}
+	
+	public void jobsDone() {
+		//TODO
+	}
+	
 	public void respond(Rescuable r) {
-		
+		//TODO
+	}
+	
+	public void treat() {
+		//implemented in relevant subclasses
+		//MedicalUnit and FireUnit and PoliceUnit
 	}
 
 //constructor(s):
-	
-	
-
 	public Unit(String id, Address location, int stepsPerCycle){
 		unitID = id;
 		this.location = location;
-		if(wListener!=null)
-			wListener.assignAddress(this, location.getX(), location.getY());
+		if(worldListener!=null)
+			worldListener.assignAddress(this, location.getX(), location.getY());
 		this.stepsPerCycle = stepsPerCycle;
 		state = UnitState.IDLE;
 	}
