@@ -32,9 +32,10 @@ public abstract class PoliceUnit extends Unit {
 		return passengers;
 	}
 //Methods
-	@Override
+	
 	public void treat() {
-		// TODO
+	
+		//Replaced in subclasses
 	}
 	
 

@@ -1,7 +1,14 @@
 package model.units;
 
+import model.disasters.Fire;
+import model.disasters.GasLeak;
+import model.disasters.Infection;
+import model.disasters.Injury;
 import model.events.SOSResponder;
 import model.events.WorldListener;
+import model.infrastructure.ResidentialBuilding;
+import model.people.Citizen;
+import model.people.CitizenState;
 import simulation.Address;
 import simulation.Rescuable;
 import simulation.Simulatable;
@@ -62,11 +69,31 @@ import simulation.Simulatable;
 
 	//methods
 	public void cycleStep() {
-		//TODO
+		
+		switch (state) {
+		case RESPONDING: setDistanceToTarget(distanceToTarget - getStepsPerCycle());break;
+		case TREATING: treat();break;
+		default: break;
+		}
+					
+		//Police Units
+		
+		if(this instanceof Evacuator) {
+			
+		}
+		
+		
+		if(state == UnitState.RESPONDING && distanceToTarget <= 0) {
+			this.setState(UnitState.TREATING);
+			this.setLocation(this.getTarget().getLocation());
+		}
+		
+		
 	}
 	
 	public void jobsDone() {
-		//TODO
+		
+		//Replaced in subclasses
 	}
 	
 	public void respond(Rescuable r) {

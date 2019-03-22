@@ -19,7 +19,7 @@ public class CommandCenter implements SOSListener{
 	private ArrayList<Unit> emergencyUnits;
 	
 	public CommandCenter() throws Exception {
-		engine = new Simulator();
+		engine = new Simulator(null);
 		visibleBuildings = new ArrayList<>();
 		visibleCitizens = new ArrayList<>();
 		emergencyUnits = new ArrayList<>();

@@ -30,18 +30,11 @@ public abstract class MedicalUnit extends Unit{
 		}
 	}
 
-	@Override
+	
 	public void treat() {
-		Citizen X=(Citizen)(this.getTarget());
-		if(X.getBloodLoss()>0) {
-			X.setBloodLoss(X.getBloodLoss()-treatmentAmount);
-		}
-		if(X.getToxicity()>0) {
-			X.setToxicity(X.getToxicity()-treatmentAmount);
-		}
-		if(X.getBloodLoss()==0 && X.getToxicity()==0) {
-			X.setState(CitizenState.RESCUED);
-		}
-	}
+		
+	//Replaced in subclasses
+		
+	}	
 	
 }

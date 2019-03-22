@@ -1,5 +1,9 @@
 package model.units;
 
+import model.disasters.Fire;
+import model.infrastructure.ResidentialBuilding;
+import model.people.Citizen;
+import model.people.CitizenState;
 import simulation.Address;
 
 public class FireTruck extends FireUnit{
@@ -11,6 +15,33 @@ public class FireTruck extends FireUnit{
 	
 	public FireTruck(String id, Address location, int stepsPerCycle){
 		super(id, location, stepsPerCycle);
+	}
+	
+	public void treat() {
+		ResidentialBuilding X=(ResidentialBuilding)(this.getTarget());
+		
+		if(X.getDisaster() instanceof Fire)
+			X.getDisaster().setActive(false);
+		
+		
+		X.setFireDamage(X.getFireDamage()-10);
+		
+		if(X.getFireDamage() <= 0) {
+			this.setLocation(new Address(0, 0));
+			this.setState(UnitState.IDLE);
+		}
+		
+		jobsDone();
+	}
+	
+	public void jobsDone() {
+		ResidentialBuilding X = (ResidentialBuilding) this.getTarget();
+		
+		if((X.getFireDamage() <= 0) || X.getStructuralIntegrity() <= 0) {
+			this.setState(UnitState.IDLE);
+		}
+		
+		
 	}
 	
 }
