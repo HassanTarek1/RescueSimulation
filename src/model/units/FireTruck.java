@@ -1,6 +1,7 @@
 package model.units;
 
 import model.disasters.Fire;
+import model.events.WorldListener;
 import model.infrastructure.ResidentialBuilding;
 import simulation.Address;
 
@@ -27,16 +28,15 @@ public class FireTruck extends FireUnit{
 		
 		jobsDone();
 	}
+
 	
 	public void jobsDone() {
-		ResidentialBuilding X = (ResidentialBuilding) this.getTarget();
-		
-		if((X.getFireDamage() <= 0) || X.getStructuralIntegrity() <= 0) {
+		ResidentialBuilding x = (ResidentialBuilding)this.getTarget();
+		if((x.getFireDamage()<=0) || x.getStructuralIntegrity()<=0) {
 			this.setState(UnitState.IDLE);
-			
-		}
-		
-		
-	}
-	
+			WorldListener listener=this.getWorldListener();
+			if(listener!=null)
+				listener.assignAddress(this, 0, 0);
+		}			
+	}		
 }

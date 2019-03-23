@@ -73,23 +73,37 @@ import simulation.Simulatable;
 					
 		//Police Units
 		
-		if(this instanceof Evacuator) {
-			
+		if(this instanceof Evacuator && state==UnitState.TREATING) {
+			Evacuator tmp=((Evacuator)this);
+			int passengers=tmp.getPassengers().size();
+			if(passengers==tmp.getMaxCapacity() && distanceToTarget<=0) {
+				tmp.setDistanceToTarget(distanceToTarget+getStepsPerCycle());
+				tmp.setDistanceToBase(tmp.getDistanceToBase()-getStepsPerCycle());
+			}
+			else {
+				if(passengers==tmp.getMaxCapacity() && tmp.getDistanceToBase()<=0){
+					tmp.getPassengers().clear();
+					tmp.setState(UnitState.RESPONDING);
+					if(worldListener!=null)
+						worldListener.assignAddress(this, 0, 0);
+				}
+			}
 		}
 		
 		
 		if(state == UnitState.RESPONDING && distanceToTarget <= 0) {
 			this.setState(UnitState.TREATING);
-			this.setLocation(this.getTarget().getLocation());
+			if(worldListener!=null) {
+				Rescuable target=this.getTarget();
+				Address add=target.getLocation();
+				worldListener.assignAddress(this,add.getX(), add.getY());
+			}
 		}
 		
 		
 	}
 	
-	public void jobsDone() {
-		
-		//Replaced in subclasses
-	}
+	abstract public void jobsDone() ;
 	
 	public void respond(Rescuable r) {
 		
@@ -110,10 +124,8 @@ import simulation.Simulatable;
 		
 	}
 	
-	public void treat() {
-		//implemented in relevant subclasses
-		//MedicalUnit and FireUnit and PoliceUnit
-	}
+	public abstract void treat() ;
+
 	
 	public int DeltaX() {
 		if(target != null) {
@@ -136,7 +148,7 @@ import simulation.Simulatable;
 		
 		return 0;
 	}
-
+	
 //constructor(s):
 	public Unit(String id, Address location, int stepsPerCycle){
 		unitID = id;

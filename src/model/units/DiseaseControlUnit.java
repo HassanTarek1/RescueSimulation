@@ -1,6 +1,7 @@
 package model.units;
 
 import model.disasters.Infection;
+import model.events.WorldListener;
 import model.people.Citizen;
 import model.people.CitizenState;
 import simulation.Address;
@@ -38,12 +39,15 @@ public class DiseaseControlUnit extends MedicalUnit{
 		jobsDone();
 		
 	}
+
 	
 	public void jobsDone() {
-		Citizen X = (Citizen) this.getTarget();
-		
-		if((X.getToxicity() <= 0 && X.getHp() >= 100) || X.getState() == CitizenState.DECEASED) {
+		Citizen x = (Citizen)this.getTarget();
+		if((x.getToxicity()<=0 && x.getHp()>=100) || x.getState()==CitizenState.DECEASED) {
 			this.setState(UnitState.IDLE);
+			WorldListener listener=this.getWorldListener();
+			if(listener!=null)
+				listener.assignAddress(this, 0, 0);
 		}
 	}
 

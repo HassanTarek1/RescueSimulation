@@ -2,6 +2,7 @@ package model.units;
 
 import model.people.Citizen;
 import simulation.Address;
+import simulation.Rescuable;
 
 public abstract class MedicalUnit extends Unit{
 	
@@ -28,12 +29,11 @@ public abstract class MedicalUnit extends Unit{
 			X.setHp(X.getHp()+healingAmount);
 		}
 	}
-
-	
-	public void treat() {
-		
-	//Replaced in subclasses
-		
-	}	
-	
+	public void respond(Rescuable r) {
+		super.respond(r);
+		Citizen x=((Citizen)r);
+		if(x.getBloodLoss()<=0 && x.getToxicity()<=0 && x.getHp()<=100) {
+			x.getDisaster().setActive(false);
+		}
+	}
 }
