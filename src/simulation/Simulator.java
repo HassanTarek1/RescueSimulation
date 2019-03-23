@@ -2,7 +2,6 @@ package simulation;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import model.disasters.Collapse;
@@ -44,6 +43,8 @@ public class Simulator implements WorldListener{
 		
 		currentCycle = 0;
 		
+		this.emergencyService = emergencyService;
+		
 		world= new Address[10][10];
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) 
@@ -60,6 +61,19 @@ public class Simulator implements WorldListener{
 		this.loadCitizens("citizens.csv");
 		this.loadDisasters("disasters.csv");
 		this.loadUnits("units.csv");
+		
+		for(Citizen currCitizen : citizens) {
+			currCitizen.setWorldListener(this);
+			currCitizen.setEmergencyService(emergencyService);
+		}
+		
+		for(Unit currUnit : emergencyUnits) {
+			currUnit.setWorldListener(this);
+		}
+		
+		for(ResidentialBuilding currBuilding : buildings) {
+			currBuilding.setEmergencyService(emergencyService);
+		}
 		
 	}
 	//setters/getters:
@@ -79,6 +93,7 @@ public class Simulator implements WorldListener{
 		String currentLine = "";
 
 		FileReader fileReader= new FileReader(filePath);
+		@SuppressWarnings("resource")
 		BufferedReader br = new BufferedReader(fileReader);
 		while ((currentLine = br.readLine()) != null) {
 			String[] tmp=currentLine.split(",");
@@ -94,10 +109,11 @@ public class Simulator implements WorldListener{
 				}
 			}
 		}
-		}
+	}
 	private void loadDisasters(String filePath) throws Exception {
 		String currentLine = "";
 		FileReader fileReader= new FileReader(filePath);
+		@SuppressWarnings("resource")
 		BufferedReader br = new BufferedReader(fileReader);
 		while ((currentLine = br.readLine()) != null) {
 			String[] tmp=currentLine.split(",");
@@ -108,10 +124,11 @@ public class Simulator implements WorldListener{
 				case "GLK": this.plannedDisasters.add(new GasLeak(Integer.parseInt(tmp[0]),this.findBuilding(Integer.parseInt(tmp[2]),Integer.parseInt(tmp[3]))));break;
 			}
 			}
-		}
+	}
 	private void loadBuildings(String filePath) throws Exception{
 		String currline = "";
 		FileReader fileReader= new FileReader(filePath);
+		@SuppressWarnings("resource")
 		BufferedReader br = new BufferedReader(fileReader);
 		while ((currline = br.readLine()) != null) {
 			String[] values = currline.split(",");
@@ -123,6 +140,7 @@ public class Simulator implements WorldListener{
 	private void loadCitizens(String filePath) throws Exception{
 		String currline = "";
 		FileReader fileReader= new FileReader(filePath);
+		@SuppressWarnings("resource")
 		BufferedReader br = new BufferedReader(fileReader);
 		while ((currline = br.readLine()) != null) {
 			String[] values = currline.split(",");
@@ -208,9 +226,7 @@ public class Simulator implements WorldListener{
 		for (int i = 0; i < plannedDisasters.size(); i++) {
 			Disaster currDisaster = plannedDisasters.get(i);
 			if(currDisaster.getStartCycle() == currentCycle) {
-				
-				currDisaster.setActive(true);
-				
+								
 				plannedDisasters.remove(i);
 				
 				executedDisasters.add(currDisaster);
@@ -252,24 +268,30 @@ public class Simulator implements WorldListener{
 					
 				}
 				
+				target.struckBy(currDisaster);
+				
 			}
 		}
 		
 		for(ResidentialBuilding currBuilding : buildings) {
 			if(currBuilding.getFireDamage() >= 100) {
 				RemoveDisaters(currBuilding);
-				executedDisasters.add(new Collapse(currentCycle, currBuilding));
+				Collapse tempCollapse = new Collapse(currentCycle, currBuilding);
+				currBuilding.struckBy(tempCollapse);
+				executedDisasters.add(tempCollapse);
 				currBuilding.setFireDamage(0);
 			}
 		}
 		
 		
 		
-		//(place reserved for units)
+		for(Unit currUnit : emergencyUnits) {
+			currUnit.cycleStep();
+		}
 		
 		
 		for(Disaster currDisaster : executedDisasters) {
-			if(currDisaster.getStartCycle() != currentCycle)
+			if(currDisaster.getStartCycle() != currentCycle && currDisaster.isActive() == true)
 				currDisaster.cycleStep();
 		}
 		

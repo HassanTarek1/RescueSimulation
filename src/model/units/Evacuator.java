@@ -31,5 +31,5 @@ public class Evacuator extends PoliceUnit{
 			getPassengers().add(currCitizen);
 		}
 	}
-	
+		
 }

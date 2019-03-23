@@ -23,10 +23,6 @@ public class GasControlUnit extends FireUnit{
 		
 		X.setGasLevel(X.getGasLevel()-10);
 		
-		if(X.getGasLevel() <= 0) {
-			this.setLocation(new Address(0, 0));
-			this.setState(UnitState.IDLE);
-		}
 		
 		jobsDone();
 	}

@@ -1,7 +1,6 @@
 package model.units;
 
 import model.people.Citizen;
-import model.people.CitizenState;
 import simulation.Address;
 
 public abstract class MedicalUnit extends Unit{

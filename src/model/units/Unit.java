@@ -1,14 +1,9 @@
 package model.units;
 
-import model.disasters.Fire;
-import model.disasters.GasLeak;
-import model.disasters.Infection;
-import model.disasters.Injury;
+
 import model.events.SOSResponder;
 import model.events.WorldListener;
-import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
-import model.people.CitizenState;
 import simulation.Address;
 import simulation.Rescuable;
 import simulation.Simulatable;
@@ -97,12 +92,49 @@ import simulation.Simulatable;
 	}
 	
 	public void respond(Rescuable r) {
-		//TODO
+		
+		if(this.target != null) {	
+			boolean set = true;
+			
+			if(this instanceof Ambulance && ((Citizen) target).getBloodLoss() <= 0) set = false;
+			if(this instanceof DiseaseControlUnit && ((Citizen) target).getToxicity() <= 0)set = false;
+			
+			if(set)
+				this.target.getDisaster().setActive(true);
+			
+		}
+		
+			target = r;
+			setDistanceToTarget(DeltaX() + DeltaY());
+			this.state = UnitState.RESPONDING;
+		
 	}
 	
 	public void treat() {
 		//implemented in relevant subclasses
 		//MedicalUnit and FireUnit and PoliceUnit
+	}
+	
+	public int DeltaX() {
+		if(target != null) {
+			int X = this.location.getX();
+			int NX = this.target.getLocation().getX();
+			
+			return NX - X;
+		}
+		
+		return 0;
+	}
+	
+	public int DeltaY() {
+		if(target != null) {
+			int Y = this.location.getY();
+			int NY = this.target.getLocation().getY();
+			
+			return NY - Y;
+		}
+		
+		return 0;
 	}
 
 //constructor(s):

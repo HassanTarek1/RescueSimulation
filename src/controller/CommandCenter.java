@@ -16,13 +16,14 @@ public class CommandCenter implements SOSListener{
 	
 	private ArrayList<Citizen> visibleCitizens;
 	
+	@SuppressWarnings("unused")
 	private ArrayList<Unit> emergencyUnits;
 	
 	public CommandCenter() throws Exception {
-		engine = new Simulator(null);
+		engine = new Simulator(this);
 		visibleBuildings = new ArrayList<>();
 		visibleCitizens = new ArrayList<>();
-		emergencyUnits = new ArrayList<>();
+		emergencyUnits = engine.getEmergencyUnits();
 	}
 
 	

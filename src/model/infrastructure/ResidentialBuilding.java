@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import model.disasters.Disaster;
-import model.disasters.Fire;
 import model.events.SOSListener;
 import model.people.Citizen;
 import simulation.Address;
@@ -113,11 +112,12 @@ public class ResidentialBuilding implements Simulatable,Rescuable{
 	//methods: 
 	
 	public void struckBy(Disaster d) {
-		d.strike();
+		disaster = d;
+		d.setActive(true);
 		if(emergencyService!=null)
 			emergencyService.receiveSOSCall(this);
-		
 	}
+	
 	public void cycleStep() {
 		
 		if (this.foundationDamage>0) {
