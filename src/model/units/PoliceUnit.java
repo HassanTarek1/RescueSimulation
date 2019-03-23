@@ -33,12 +33,7 @@ public abstract class PoliceUnit extends Unit {
 	}
 //Methods
 	
-	public void treat() {
 	
-		//Replaced in subclasses
-	}
-	
-
 //constructor(s):	
 	
 	public PoliceUnit(String id, Address location, int stepsPerCycle, int maxCapacity){

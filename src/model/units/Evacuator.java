@@ -30,6 +30,15 @@ public class Evacuator extends PoliceUnit{
 			occ.remove(i);
 			getPassengers().add(currCitizen);
 		}
+		jobsDone();
+	}
+
+	
+	public void jobsDone() {
+		ResidentialBuilding x = (ResidentialBuilding)this.getTarget();
+		if((x.getOccupants().isEmpty()) || x.getFoundationDamage()>=100)
+			this.setState(UnitState.IDLE);
+		
 	}
 	
 }
