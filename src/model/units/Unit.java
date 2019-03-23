@@ -4,6 +4,7 @@ package model.units;
 import model.events.SOSResponder;
 import model.events.WorldListener;
 import model.people.Citizen;
+import model.people.CitizenState;
 import simulation.Address;
 import simulation.Rescuable;
 import simulation.Simulatable;
@@ -81,9 +82,17 @@ import simulation.Simulatable;
 				tmp.setDistanceToBase(tmp.getDistanceToBase()-getStepsPerCycle());
 			}
 			else {
-				if(passengers==tmp.getMaxCapacity() && tmp.getDistanceToBase()<=0){
+				if(passengers > 0 && tmp.getDistanceToBase()<=0){
+					
+					for(Citizen currCitizen : tmp.getPassengers())
+						currCitizen.setState(CitizenState.RESCUED);
+					
 					tmp.getPassengers().clear();
+					
 					tmp.setState(UnitState.RESPONDING);
+					
+					tmp.jobsDone();
+
 					if(worldListener!=null)
 						worldListener.assignAddress(this, 0, 0);
 				}
@@ -132,7 +141,7 @@ import simulation.Simulatable;
 			int X = this.location.getX();
 			int NX = this.target.getLocation().getX();
 			
-			return NX - X;
+			return Math.abs(NX - X);
 		}
 		
 		return 0;
@@ -143,7 +152,7 @@ import simulation.Simulatable;
 			int Y = this.location.getY();
 			int NY = this.target.getLocation().getY();
 			
-			return NY - Y;
+			return Math.abs(NY - Y);
 		}
 		
 		return 0;

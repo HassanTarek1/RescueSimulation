@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
-import model.people.CitizenState;
 import simulation.Address;
 
 public class Evacuator extends PoliceUnit{
@@ -26,11 +25,10 @@ public class Evacuator extends PoliceUnit{
 		
 		while(occ.size() > 0 && getPassengers().size() < getMaxCapacity()) {
 			Citizen currCitizen = occ.get(i);
-			currCitizen.setState(CitizenState.RESCUED);
 			occ.remove(i);
 			getPassengers().add(currCitizen);
+			i++;
 		}
-		jobsDone();
 	}
 
 	
