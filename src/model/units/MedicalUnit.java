@@ -33,7 +33,7 @@ public abstract class MedicalUnit extends Unit{
 	public void respond(Rescuable r) {
 		super.respond(r);
 		Citizen x=((Citizen)r);
-		if(!x.getDisaster().isActive()) {
+		if(x.getBloodLoss()<=0 && x.getToxicity()<=0 && x.getHp()<=100) {
 			x.getDisaster().setActive(false);
 		}
 	}
