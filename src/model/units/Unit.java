@@ -104,27 +104,32 @@ import simulation.Simulatable;
 	}
 	
 	public void jobsDone() {
-		
+		target = null;
+		this.state = UnitState.IDLE;
 	};
 	
 	public void respond(Rescuable r) {
 		//Overridden in medicalUnit class
-			if(r!=this.getTarget()) {
+			if(this.getTarget() != null && r!=this.getTarget()) {
 				if(this.getTarget() instanceof Citizen) {
 					Citizen s=(Citizen)this.getTarget();
 					s.getDisaster().setActive(true);
 				}
 				else {
 					ResidentialBuilding s=(ResidentialBuilding)this.getTarget();
-					s.getDisaster().setActive(true);
+					if(s.getDisaster() != null)
+						s.getDisaster().setActive(true);
 				}
 				target=r;
 			}
-			if(distanceToTarget>0) {
+			
+			if(this.getTarget() == null)
+				target=r;
+			
+			
 				setDistanceToTarget(DeltaX() + DeltaY());
 				this.state = UnitState.RESPONDING;
-			}
-
+			
 	}
 	
 	public void treat() {

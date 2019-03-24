@@ -39,6 +39,7 @@ public class FireTruck extends FireUnit{
 		if((x.getFireDamage()<=0) || x.getStructuralIntegrity()<=0) {
 			this.setState(UnitState.IDLE);
 			WorldListener listener=this.getWorldListener();
+			super.jobsDone();
 			if(listener!=null)
 				listener.assignAddress(this, 0, 0);
 		}			

@@ -268,16 +268,13 @@ public class Simulator implements WorldListener{
 					
 					if (currDisaster instanceof Collapse) {
 						RemoveDisaters((ResidentialBuilding) target);
+						currDisaster.strike();
 						((ResidentialBuilding) target).setFireDamage(0);
 					}
 					
 				}
 				
-
-				target.struckBy(currDisaster);
-				executedDisasters.add(currDisaster);	
-				
-
+				//target.struckBy(currDisaster);				
 			}
 		}
 		
