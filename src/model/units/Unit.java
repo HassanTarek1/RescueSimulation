@@ -3,6 +3,7 @@ package model.units;
 
 import model.events.SOSResponder;
 import model.events.WorldListener;
+import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
 import model.people.CitizenState;
 import simulation.Address;
@@ -74,6 +75,7 @@ import simulation.Simulatable;
 		break;
 		case TREATING:
 			if(this instanceof Evacuator) {
+				//checks if the evacuator is full and didn't arrive at the base
 				Evacuator tmp=((Evacuator)this);
 				int passengers=tmp.getPassengers().size();
 				if(passengers==tmp.getMaxCapacity() && tmp.getDistanceToBase()!=0) {
@@ -104,12 +106,22 @@ import simulation.Simulatable;
 	abstract public void jobsDone() ;
 	
 	public void respond(Rescuable r) {
-			target = r;
+		//Overridden in medicalUnit class
+			if(r!=this.getTarget()) {
+				if(this.getTarget() instanceof Citizen) {
+					Citizen s=(Citizen)this.getTarget();
+					s.getDisaster().setActive(true);
+				}
+				else {
+					ResidentialBuilding s=(ResidentialBuilding)this.getTarget();
+					s.getDisaster().setActive(true);
+				}
+				target=r;
+			}
 			if(distanceToTarget>0) {
 				setDistanceToTarget(DeltaX() + DeltaY());
 				this.state = UnitState.RESPONDING;
 			}
-
 	}
 	
 	public abstract void treat() ;
