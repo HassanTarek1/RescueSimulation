@@ -24,7 +24,7 @@ public Evacuator(String id, Address location, int stepsPerCycle,int maxCapacity)
 		
 		super(id, location, stepsPerCycle, maxCapacity);
 	}
-	
+
 	public void treat() {
 		ArrayList<Citizen> occ = ((ResidentialBuilding)this.getTarget()).getOccupants();
 		if(this.getPassengers().size() > 0 && this.getDistanceToBase()<=0){

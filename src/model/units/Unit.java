@@ -3,6 +3,7 @@ package model.units;
 
 import model.events.SOSResponder;
 import model.events.WorldListener;
+import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
 import model.people.CitizenState;
 import simulation.Address;
@@ -72,47 +73,30 @@ import simulation.Simulatable;
 			((PoliceUnit)this).setDistanceToBase(((PoliceUnit)this).getDistanceToBase()+getStepsPerCycle());
 		}
 		break;
-		case TREATING: treat();break;
-		default: break;
-		}
-					
-		//Police Units
-		
-		if(this instanceof Evacuator && state==UnitState.TREATING) {
-			Evacuator tmp=((Evacuator)this);
-			int passengers=tmp.getPassengers().size();
-			if(passengers==tmp.getMaxCapacity() && distanceToTarget<=0) {
-				tmp.setDistanceToTarget(distanceToTarget+getStepsPerCycle());
-				tmp.setDistanceToBase(tmp.getDistanceToBase()-getStepsPerCycle());
-				
-			}
-			else {
-				if(passengers > 0 && tmp.getDistanceToBase()<=0){
-					
-					for(Citizen currCitizen : tmp.getPassengers()) {
-						currCitizen.setState(CitizenState.RESCUED);
-						worldListener.assignAddress(currCitizen, 0, 0);
+		case TREATING:
+			if(this instanceof Evacuator) {
+				//checks if the evacuator is full and didn't arrive at the base
+				Evacuator tmp=((Evacuator)this);
+				int passengers=tmp.getPassengers().size();
+				if(passengers==tmp.getMaxCapacity() && tmp.getDistanceToBase()!=0) {
+					tmp.setDistanceToTarget(distanceToTarget+getStepsPerCycle());
+					tmp.setDistanceToBase(tmp.getDistanceToBase()-getStepsPerCycle());
 					}
-					
-					tmp.getPassengers().clear();
-					
-					tmp.setState(UnitState.RESPONDING);
-					
-					tmp.jobsDone();
-
-					if(worldListener!=null)
-						worldListener.assignAddress(this, 0, 0);
-				}
+				else
+					treat();
 			}
-		}
-		
+			else
+				treat();
+			break;
+		default: break;
+		}		
 		
 		if(state == UnitState.RESPONDING && distanceToTarget <= 0) {
 			this.setState(UnitState.TREATING);
 			if(worldListener!=null) {
 				Rescuable target=this.getTarget();
-				Address add=target.getLocation();
-				worldListener.assignAddress(this,add.getX(), add.getY());
+				Address address=target.getLocation();
+				worldListener.assignAddress(this,address.getX(), address.getY());
 			}
 		}
 		
@@ -124,12 +108,22 @@ import simulation.Simulatable;
 	};
 	
 	public void respond(Rescuable r) {
-			target = r;
+		//Overridden in medicalUnit class
+			if(r!=this.getTarget()) {
+				if(this.getTarget() instanceof Citizen) {
+					Citizen s=(Citizen)this.getTarget();
+					s.getDisaster().setActive(true);
+				}
+				else {
+					ResidentialBuilding s=(ResidentialBuilding)this.getTarget();
+					s.getDisaster().setActive(true);
+				}
+				target=r;
+			}
 			if(distanceToTarget>0) {
 				setDistanceToTarget(DeltaX() + DeltaY());
 				this.state = UnitState.RESPONDING;
 			}
-		
 
 	}
 	
