@@ -119,7 +119,9 @@ import simulation.Simulatable;
 		
 	}
 	
-	abstract public void jobsDone() ;
+	public void jobsDone() {
+		
+	};
 	
 	public void respond(Rescuable r) {
 			target = r;
@@ -127,10 +129,13 @@ import simulation.Simulatable;
 				setDistanceToTarget(DeltaX() + DeltaY());
 				this.state = UnitState.RESPONDING;
 			}
+		
 
 	}
 	
-	public abstract void treat() ;
+	public void treat() {
+		
+	};
 
 	
 	public int DeltaX() {
@@ -156,6 +161,16 @@ import simulation.Simulatable;
 	}
 	
 //constructor(s):
+	public Unit(String id, Address location, int stepsPerCycle, WorldListener listener){
+		worldListener = listener;
+		unitID = id;
+		this.location = location;
+		if(worldListener!=null)
+			worldListener.assignAddress(this, location.getX(), location.getY());
+		this.stepsPerCycle = stepsPerCycle;
+		state = UnitState.IDLE;
+	}
+	
 	public Unit(String id, Address location, int stepsPerCycle){
 		unitID = id;
 		this.location = location;

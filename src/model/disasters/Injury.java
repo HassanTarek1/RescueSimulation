@@ -10,6 +10,8 @@ public class Injury extends Disaster{
 	//methods 
 	public void strike() {
 		Citizen target=(Citizen)this.getTarget();
+		target.struckBy(this);
+		this.setActive(true);
 		int oldBlood=target.getBloodLoss();
 		target.setBloodLoss(oldBlood+30);
 	}

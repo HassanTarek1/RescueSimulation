@@ -13,6 +13,10 @@ public class Ambulance extends MedicalUnit{
 				
 //constructor(s):	
 
+	public Ambulance(String id, Address location, int stepsPerCycle,WorldListener listener){
+		super(id, location, stepsPerCycle,listener);
+	}
+	
 	public Ambulance(String id, Address location, int stepsPerCycle){
 		super(id, location, stepsPerCycle);
 	}

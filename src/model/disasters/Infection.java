@@ -11,6 +11,8 @@ public class Infection extends Disaster{
 	//methods
 	public void strike() {
 		Citizen target=(Citizen)this.getTarget();
+		target.struckBy(this);
+		this.setActive(true);
 		int oldToxicity=target.getToxicity();
 		target.setToxicity(oldToxicity+25);
 	}

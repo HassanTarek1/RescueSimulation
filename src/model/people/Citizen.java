@@ -136,7 +136,6 @@ public class Citizen implements Simulatable,Rescuable{
 
 	public void struckBy(Disaster d) {
 		disaster = d;
-		d.setActive(true);
 		this.state = CitizenState.IN_TROUBLE;
 		if(emergencyService!=null)
 			emergencyService.receiveSOSCall(this);
@@ -170,6 +169,17 @@ public class Citizen implements Simulatable,Rescuable{
 	
 //constructor(s):
 	
+	public Citizen(Address location, String nationalID, String name, int age,WorldListener listener) {
+		worldListener = listener;
+		this.location = location;
+		if(worldListener!=null)
+			worldListener.assignAddress(this, location.getX(), location.getY());
+		this.nationalID = nationalID;
+		this.name = name;
+		this.age = age;
+		state = CitizenState.SAFE;
+	}
+	
 	public Citizen(Address location, String nationalID, String name, int age) {
 		this.location = location;
 		if(worldListener!=null)
@@ -179,6 +189,7 @@ public class Citizen implements Simulatable,Rescuable{
 		this.age = age;
 		state = CitizenState.SAFE;
 	}
+	
 	public Citizen() {}
 
 	

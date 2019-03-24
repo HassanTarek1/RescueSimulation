@@ -12,6 +12,10 @@ public class FireTruck extends FireUnit{
 			
 //constructor(s):
 	
+	public FireTruck(String id, Address location, int stepsPerCycle,WorldListener listener){
+		super(id, location, listener, stepsPerCycle);
+	}
+	
 	public FireTruck(String id, Address location, int stepsPerCycle){
 		super(id, location, stepsPerCycle);
 	}

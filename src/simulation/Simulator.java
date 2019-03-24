@@ -192,12 +192,12 @@ public class Simulator implements WorldListener{
 		boolean BUI = true;
 		
 		for(Citizen currCitizen : citizens) {
-			if(currCitizen.getDisaster() != null || currCitizen.getDisaster().isActive() == true)
+			if(currCitizen.getDisaster() != null && currCitizen.getDisaster().isActive() == true)
 				CIT = false;
 		}
 		
 		for(ResidentialBuilding currBuilding : buildings) {
-			if(currBuilding.getDisaster() != null || currBuilding.getDisaster().isActive() == true)
+			if(currBuilding.getDisaster() != null && currBuilding.getDisaster().isActive() == true)
 				BUI = false;
 		}
 		
@@ -267,8 +267,6 @@ public class Simulator implements WorldListener{
 					}
 					
 				}
-				
-				target.struckBy(currDisaster);
 				
 			}
 		}

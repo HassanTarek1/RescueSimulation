@@ -2,6 +2,7 @@ package model.units;
 
 import java.util.ArrayList;
 
+import model.events.WorldListener;
 import model.people.Citizen;
 import simulation.Address;
 
@@ -35,6 +36,12 @@ public abstract class PoliceUnit extends Unit {
 	
 	
 //constructor(s):	
+	
+	public PoliceUnit(String id, Address location, int stepsPerCycle,WorldListener listener, int maxCapacity){
+		super(id, location, stepsPerCycle, listener);
+		passengers = new ArrayList<>();
+		this.maxCapacity = maxCapacity;
+	}
 	
 	public PoliceUnit(String id, Address location, int stepsPerCycle, int maxCapacity){
 		super(id, location, stepsPerCycle);

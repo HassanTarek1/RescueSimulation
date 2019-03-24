@@ -13,8 +13,12 @@ public class DiseaseControlUnit extends MedicalUnit{
 				
 //constructor(s):	
 	
+	public DiseaseControlUnit(String id, Address location, int stepsPerCycle,WorldListener listener){
+		super(id, location,  stepsPerCycle,listener);
+	}
+	
 	public DiseaseControlUnit(String id, Address location, int stepsPerCycle){
-		super(id, location, stepsPerCycle);
+		super(id, location,  stepsPerCycle);
 	}
 	
 	public void treat() {
