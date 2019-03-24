@@ -67,7 +67,11 @@ import simulation.Simulatable;
 	public void cycleStep() {
 		
 		switch (state) {
-		case RESPONDING: setDistanceToTarget(distanceToTarget - getStepsPerCycle());break;
+		case RESPONDING: setDistanceToTarget(distanceToTarget - getStepsPerCycle());
+		if (this instanceof PoliceUnit) {
+			((PoliceUnit)this).setDistanceToBase(((PoliceUnit)this).getDistanceToBase()+getStepsPerCycle());
+		}
+		break;
 		case TREATING: treat();break;
 		default: break;
 		}
@@ -80,12 +84,15 @@ import simulation.Simulatable;
 			if(passengers==tmp.getMaxCapacity() && distanceToTarget<=0) {
 				tmp.setDistanceToTarget(distanceToTarget+getStepsPerCycle());
 				tmp.setDistanceToBase(tmp.getDistanceToBase()-getStepsPerCycle());
+				
 			}
 			else {
 				if(passengers > 0 && tmp.getDistanceToBase()<=0){
 					
-					for(Citizen currCitizen : tmp.getPassengers())
+					for(Citizen currCitizen : tmp.getPassengers()) {
 						currCitizen.setState(CitizenState.RESCUED);
+						worldListener.assignAddress(currCitizen, 0, 0);
+					}
 					
 					tmp.getPassengers().clear();
 					
@@ -115,22 +122,12 @@ import simulation.Simulatable;
 	abstract public void jobsDone() ;
 	
 	public void respond(Rescuable r) {
-		
-		if(this.target != null) {	
-			boolean set = true;
-			
-			if(this instanceof Ambulance && ((Citizen) target).getBloodLoss() <= 0) set = false;
-			if(this instanceof DiseaseControlUnit && ((Citizen) target).getToxicity() <= 0)set = false;
-			
-			if(set)
-				this.target.getDisaster().setActive(true);
-			
-		}
-		
 			target = r;
-			setDistanceToTarget(DeltaX() + DeltaY());
-			this.state = UnitState.RESPONDING;
-		
+			if(distanceToTarget>0) {
+				setDistanceToTarget(DeltaX() + DeltaY());
+				this.state = UnitState.RESPONDING;
+			}
+
 	}
 	
 	public abstract void treat() ;

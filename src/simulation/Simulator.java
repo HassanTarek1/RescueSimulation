@@ -181,7 +181,7 @@ public class Simulator implements WorldListener{
 			
 		
 	}
-	boolean checkGameOver() {
+	public boolean checkGameOver() {
 		if(plannedDisasters.size() == 0 && NoActiveDisasters() && IdleUnits())
 			return true;
 		return false;
@@ -192,12 +192,12 @@ public class Simulator implements WorldListener{
 		boolean BUI = true;
 		
 		for(Citizen currCitizen : citizens) {
-			if(currCitizen.getDisaster() != null)
+			if(currCitizen.getDisaster() != null || currCitizen.getDisaster().isActive() == true)
 				CIT = false;
 		}
 		
 		for(ResidentialBuilding currBuilding : buildings) {
-			if(currBuilding.getDisaster() != null)
+			if(currBuilding.getDisaster() != null || currBuilding.getDisaster().isActive() == true)
 				BUI = false;
 		}
 		
@@ -212,7 +212,7 @@ public class Simulator implements WorldListener{
 		return true;
 	}
 	
-	int calculateCasualties() {
+	public int calculateCasualties() {
 		int Dead = 0;
 		for(Citizen currCitizen : citizens) {
 			if(currCitizen.getState() == CitizenState.DECEASED)
@@ -221,7 +221,7 @@ public class Simulator implements WorldListener{
 		return Dead;
 	}
 	
-	void nextCycle() {
+	public void nextCycle() {
 		currentCycle++;
 		for (int i = 0; i < plannedDisasters.size(); i++) {
 			Disaster currDisaster = plannedDisasters.get(i);
