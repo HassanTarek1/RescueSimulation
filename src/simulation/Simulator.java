@@ -226,6 +226,7 @@ public class Simulator implements WorldListener{
 								
 				
 				executedDisasters.add(currDisaster);
+				plannedDisasters.remove(plannedDisasters.indexOf(currDisaster));
 				
 				
 				Rescuable target = currDisaster.getTarget();

@@ -69,10 +69,9 @@ import simulation.Simulatable;
 		
 		switch (state) {
 		case RESPONDING: setDistanceToTarget(distanceToTarget - getStepsPerCycle());
-		if (this instanceof PoliceUnit) {
-			((PoliceUnit)this).setDistanceToBase(((PoliceUnit)this).getDistanceToBase()+getStepsPerCycle());
-		}
-		break;
+		               if (this instanceof PoliceUnit) {
+			                ((PoliceUnit)this).setDistanceToBase(((PoliceUnit)this).getDistanceToBase()+getStepsPerCycle());
+		                     }break;
 		case TREATING:
 			if(this instanceof Evacuator) {
 				//checks if the evacuator is full and didn't arrive at the base
@@ -106,7 +105,7 @@ import simulation.Simulatable;
 	public void jobsDone() {
 		target = null;
 		this.state = UnitState.IDLE;
-	};
+	}
 	
 	public void respond(Rescuable r) {
 		//Overridden in medicalUnit class
@@ -132,9 +131,7 @@ import simulation.Simulatable;
 			
 	}
 	
-	public void treat() {
-		
-	};
+	public void treat() {};
 
 	
 	public int DeltaX() {

@@ -13,7 +13,7 @@ public class GasControlUnit extends FireUnit{
 //constructor(s):
 	
 	public GasControlUnit(String id, Address location, int stepsPerCycle, WorldListener listener){
-		super(id, location, listener, stepsPerCycle);
+		super(id, location,  stepsPerCycle,listener);
 	}
 	
 	public GasControlUnit(String id, Address location, int stepsPerCycle){

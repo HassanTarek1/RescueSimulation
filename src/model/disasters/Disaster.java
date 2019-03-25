@@ -34,9 +34,7 @@ import simulation.Simulatable;
 	
 	//methods
 
-	public void strike() {
-
-	};
+	public void strike() { active=true; }
 	
 	abstract public void cycleStep();
 }
