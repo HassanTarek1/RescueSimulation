@@ -27,30 +27,20 @@ public Evacuator(String id, Address location, int stepsPerCycle,int maxCapacity)
 
 	public void treat() {
 		ArrayList<Citizen> occ = ((ResidentialBuilding)this.getTarget()).getOccupants();
-		if(this.getPassengers().size() > 0 && this.getDistanceToBase()<=0){
-			for(Citizen currCitizen : this.getPassengers()) {
-				currCitizen.setState(CitizenState.RESCUED);
-				if(this.getWorldListener()!=null)
-					this.getWorldListener().assignAddress(currCitizen, 0, 0);
-			}
-			this.getPassengers().clear();
-
-		}else {
+			
 			while(occ.size() > 0 && getPassengers().size() < getMaxCapacity()) {
 				Citizen currCitizen = occ.get(0);
 				occ.remove(0);
 				getPassengers().add(currCitizen);
 			}
 
-		}
+		
 		
 	}
-
 	
 	public void jobsDone() {
 		ResidentialBuilding x = (ResidentialBuilding)this.getTarget();
 		if((x.getOccupants().isEmpty()) || x.getFoundationDamage()>=100) {
-			this.setState(UnitState.IDLE);
 			super.jobsDone();
 			}
 		

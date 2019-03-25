@@ -39,8 +39,6 @@ public class Ambulance extends MedicalUnit{
 		if(X.getBloodLoss() <= 0 && X.getHp() < 100) {
 			this.heal();
 		}
-		
-		jobsDone();
 	}
 
 	public void jobsDone() {

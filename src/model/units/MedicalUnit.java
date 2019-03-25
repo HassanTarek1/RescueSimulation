@@ -30,10 +30,15 @@ public abstract class MedicalUnit extends Unit{
 	
 	public void heal() {
 		Citizen X=(Citizen)(this.getTarget());
-		if(X.getHp()<100) {
+		if(X != null && X.getHp()<100) {
 			X.setHp(X.getHp()+healingAmount);
+			
+			
 		}
+		
+		this.jobsDone();
 	}
+	
 	public void respond(Rescuable r) {
 			super.respond(r);
 			Citizen x=((Citizen)r);

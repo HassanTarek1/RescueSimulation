@@ -66,39 +66,97 @@ import simulation.Simulatable;
 
 	//methods
 	public void cycleStep() {
-		
-		switch (state) {
-		case RESPONDING: setDistanceToTarget(distanceToTarget - getStepsPerCycle());
-		               if (this instanceof PoliceUnit) {
-			                ((PoliceUnit)this).setDistanceToBase(((PoliceUnit)this).getDistanceToBase()+getStepsPerCycle());
-		                     }break;
-		case TREATING:
-			if(this instanceof Evacuator) {
-				//checks if the evacuator is full and didn't arrive at the base
-				Evacuator tmp=((Evacuator)this);
-				int passengers=tmp.getPassengers().size();
-				if(passengers==tmp.getMaxCapacity() && tmp.getDistanceToBase()!=0) {
-					tmp.setDistanceToTarget(distanceToTarget+getStepsPerCycle());
-					tmp.setDistanceToBase(tmp.getDistanceToBase()-getStepsPerCycle());
-					}
-				else
+		if(this.getState() != UnitState.IDLE && target != null) {
+			
+			if(!(this instanceof Evacuator)) {
+				if(state == UnitState.RESPONDING) {
+					if(distanceToTarget > 0)
+						distanceToTarget = (distanceToTarget - stepsPerCycle);
+					if(distanceToTarget <= 0) {
+						distanceToTarget = 0;
+						state = UnitState.TREATING;
+						worldListener.assignAddress(this, target.getLocation().getX(), target.getLocation().getY());
+					}			
+				}
+				
+				if (state == UnitState.TREATING) 
 					treat();
+					
 			}
-			else
-				treat();
-			break;
-		default: break;
-		}		
-		
-		if(state == UnitState.RESPONDING && distanceToTarget <= 0) {
-			this.setState(UnitState.TREATING);
-			if(worldListener!=null) {
-				Rescuable target=this.getTarget();
-				Address address=target.getLocation();
-				worldListener.assignAddress(this,address.getX(), address.getY());
+			
+			if(this instanceof Evacuator) {
+				if(this.state == UnitState.RESPONDING) {
+					
+					//on the way to the target
+					
+					if(distanceToTarget > 0) {
+					distanceToTarget = (distanceToTarget - stepsPerCycle);
+					((Evacuator) this).setDistanceToBase(((Evacuator) this).getDistanceToBase() + stepsPerCycle);
+					
+						if(distanceToTarget <= 0) {
+							distanceToTarget = 0;
+							((Evacuator) this).setDistanceToBase(this.getTarget().getLocation().getX() + this.getTarget().getLocation().getY());
+							worldListener.assignAddress(this, target.getLocation().getX(), target.getLocation().getY());
+						}
+					}
+					
+					//reached the target last cycle (should start treating)
+					else if(distanceToTarget <= 0) {
+						state = UnitState.TREATING;
+						
+					}
+				}
+					
+					 if(state == UnitState.TREATING) {
+						Evacuator Evac = (Evacuator) this;
+						
+						//reached the target with no passengers
+						if(Evac.getPassengers().isEmpty() && distanceToTarget <= 0){
+							distanceToTarget = 0;
+							Evac.setDistanceToBase(target.getLocation().getX() + target.getLocation().getY());
+							worldListener.assignAddress(Evac, target.getLocation().getX(), target.getLocation().getY());
+							treat();
+						
+						}
+						//not empty and on the way to the base	
+						else if(!Evac.getPassengers().isEmpty() && Evac.getDistanceToBase() > 0) {
+							distanceToTarget = (distanceToTarget + stepsPerCycle);
+							Evac.setDistanceToBase(Evac.getDistanceToBase() - stepsPerCycle);
+						}
+						
+						//empty and in base (unlikely case)
+						else if(Evac.getPassengers().isEmpty() && Evac.getDistanceToBase() <= 0) {
+							Evac.jobsDone();
+							worldListener.assignAddress(Evac, 0, 0);
+						}
+							
+						
+						//not empty and in base
+						else if(!Evac.getPassengers().isEmpty() && Evac.getDistanceToBase() <= 0) {
+							distanceToTarget = (target.getLocation().getX() + target.getLocation().getY());
+							Evac.setDistanceToBase(0);
+							
+							while(!Evac.getPassengers().isEmpty()) {
+								
+								 Evac.getPassengers().get(0).setState(CitizenState.RESCUED);
+								 worldListener.assignAddress(Evac.getPassengers().get(0), 0, 0);
+								 Evac.getPassengers().remove(0);
+							}
+							worldListener.assignAddress(Evac, 0, 0);
+							Evac.jobsDone();
+						}
+						
+						else if (Evac.getPassengers().isEmpty() && distanceToTarget > 0){
+							distanceToTarget = (distanceToTarget - stepsPerCycle);
+							Evac.setDistanceToBase(Evac.getDistanceToBase() + stepsPerCycle);
+						}
+						
+						
+					}
+					
+				
 			}
 		}
-		
 		
 	}
 	
@@ -125,8 +183,12 @@ import simulation.Simulatable;
 			if(this.getTarget() == null)
 				target=r;
 			
-			
+				
 				setDistanceToTarget(DeltaX() + DeltaY());
+				
+				if(this instanceof PoliceUnit) 
+					((PoliceUnit)this).setDistanceToBase(this.getLocation().getX() + this.getLocation().getX());
+				
 				this.state = UnitState.RESPONDING;
 			
 	}

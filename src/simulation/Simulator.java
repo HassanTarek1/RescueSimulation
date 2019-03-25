@@ -185,22 +185,18 @@ public class Simulator implements WorldListener{
 	}
 	
 	private boolean NoActiveDisasters() {
-		boolean CIT = true;
-		boolean BUI = true;
-		
+	
 		for(Citizen currCitizen : citizens) {
 			if(currCitizen.getDisaster() != null && currCitizen.getDisaster().isActive() == true)
-				CIT = false;
+				return false;
 		}
 		
 		for(ResidentialBuilding currBuilding : buildings) {
 			if(currBuilding.getDisaster() != null && currBuilding.getDisaster().isActive() == true)
-				BUI = false;
+				return false;
 		}
-		
-		if(CIT && BUI)
-			return true;
-		return false;
+
+		return true;
 		
 	}
 	private boolean IdleUnits() {
@@ -296,7 +292,7 @@ public class Simulator implements WorldListener{
 		
 		
 		for(Disaster currDisaster : executedDisasters) {
-			if(currDisaster.getStartCycle() != currentCycle && currDisaster.isActive() == true)
+			if(currDisaster.getStartCycle() != currentCycle && currDisaster.isActive())
 				currDisaster.cycleStep();
 		}
 		
