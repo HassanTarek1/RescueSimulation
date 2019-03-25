@@ -73,16 +73,18 @@ import simulation.Simulatable;
 			                ((PoliceUnit)this).setDistanceToBase(((PoliceUnit)this).getDistanceToBase()+getStepsPerCycle());
 		                     }break;
 		case TREATING:
+			
 			if(this instanceof Evacuator) {
 				//checks if the evacuator is full and didn't arrive at the base
 				Evacuator tmp=((Evacuator)this);
 				int passengers=tmp.getPassengers().size();
-				if(passengers==tmp.getMaxCapacity() && tmp.getDistanceToBase()!=0) {
+				if(passengers==tmp.getMaxCapacity() && tmp.getDistanceToBase()>0) {
 					tmp.setDistanceToTarget(distanceToTarget+getStepsPerCycle());
 					tmp.setDistanceToBase(tmp.getDistanceToBase()-getStepsPerCycle());
 					}
-				else
+				else {
 					treat();
+				}
 			}
 			else
 				treat();
