@@ -220,14 +220,12 @@ public class Simulator implements WorldListener{
 	
 	public void nextCycle() {
 		currentCycle++;
-		for (Disaster currDisaster : plannedDisasters) {
+		for (int i = 0 ; i < plannedDisasters.size() ; i++) {
+			Disaster currDisaster = plannedDisasters.get(i);
 			
 			if(currDisaster.getStartCycle() == currentCycle) {
-								
-				
+				plannedDisasters.remove(i);
 				executedDisasters.add(currDisaster);
-				plannedDisasters.remove(plannedDisasters.indexOf(currDisaster));
-				
 				
 				Rescuable target = currDisaster.getTarget();
 				
@@ -238,13 +236,14 @@ public class Simulator implements WorldListener{
 					if (currDisaster instanceof Fire) {
 						int Gaslvl =  ((ResidentialBuilding) target).getGasLevel();
 						
-						if(Gaslvl == 0) 
+						if(Gaslvl <= 0) 
 							currDisaster.strike();
 						
 						if(Gaslvl > 0 && Gaslvl < 70) {
-							currDisaster = new Collapse(currentCycle, (ResidentialBuilding) target);
+							Collapse currDisaster1 = new Collapse(currentCycle, (ResidentialBuilding) target);
 							currDisaster.strike();
-							RemoveDisaters((ResidentialBuilding) target);
+							RemoveDisaters((ResidentialBuilding)target);
+							executedDisasters.add(currDisaster1);
 							((ResidentialBuilding) target).setFireDamage(0);
 						}
 						
@@ -258,9 +257,10 @@ public class Simulator implements WorldListener{
 					
 					if (currDisaster instanceof GasLeak) {
 						if(((ResidentialBuilding) target).getFireDamage() > 0) {
-							currDisaster = new Collapse(currentCycle, (ResidentialBuilding) target);
+							Collapse currDisaster1 = new Collapse(currentCycle, (ResidentialBuilding) target);
 							currDisaster.strike();
-							RemoveDisaters((ResidentialBuilding) target);
+							RemoveDisaters((ResidentialBuilding)target);
+							executedDisasters.add(currDisaster1);
 							((ResidentialBuilding) target).setFireDamage(0);
 						}
 						else
@@ -274,8 +274,9 @@ public class Simulator implements WorldListener{
 					}
 					
 				}
+				if(target instanceof Citizen)
+					currDisaster.strike();
 				
-				//target.struckBy(currDisaster);				
 			}
 		}
 		
@@ -285,7 +286,6 @@ public class Simulator implements WorldListener{
 				currBuilding.setFireDamage(0);
 				Collapse tempCollapse = new Collapse(currentCycle, currBuilding);
 				tempCollapse.strike();
-				currBuilding.struckBy(tempCollapse);
 				executedDisasters.add(tempCollapse);
 				
 			}
