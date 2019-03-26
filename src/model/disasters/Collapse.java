@@ -15,7 +15,6 @@ public class Collapse extends Disaster{
 	public void strike() {
 		ResidentialBuilding target=(ResidentialBuilding)this.getTarget();
 		target.struckBy(this);
-		this.setActive(true);
 		int oldFoundDamage=target.getFoundationDamage();
 		target.setFoundationDamage(oldFoundDamage+10);
 	}

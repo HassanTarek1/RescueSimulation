@@ -185,22 +185,22 @@ public class Simulator implements WorldListener{
 	}
 	
 	private boolean NoActiveDisasters() {
-		boolean CIT = true;
-		boolean BUI = true;
-		
+		for (Disaster disaster : executedDisasters) {
+			if(disaster.isActive())
+				return false;
+		}
+	
 		for(Citizen currCitizen : citizens) {
 			if(currCitizen.getDisaster() != null && currCitizen.getDisaster().isActive() == true)
-				CIT = false;
+				return false;
 		}
 		
 		for(ResidentialBuilding currBuilding : buildings) {
 			if(currBuilding.getDisaster() != null && currBuilding.getDisaster().isActive() == true)
-				BUI = false;
+				return false;
 		}
-		
-		if(CIT && BUI)
-			return true;
-		return false;
+
+		return true;
 		
 	}
 	private boolean IdleUnits() {
@@ -241,7 +241,7 @@ public class Simulator implements WorldListener{
 						
 						if(Gaslvl > 0 && Gaslvl < 70) {
 							Collapse currDisaster1 = new Collapse(currentCycle, (ResidentialBuilding) target);
-							currDisaster.strike();
+							currDisaster1.strike();
 							RemoveDisaters((ResidentialBuilding)target);
 							executedDisasters.add(currDisaster1);
 							((ResidentialBuilding) target).setFireDamage(0);
@@ -258,7 +258,7 @@ public class Simulator implements WorldListener{
 					if (currDisaster instanceof GasLeak) {
 						if(((ResidentialBuilding) target).getFireDamage() > 0) {
 							Collapse currDisaster1 = new Collapse(currentCycle, (ResidentialBuilding) target);
-							currDisaster.strike();
+							currDisaster1.strike();
 							RemoveDisaters((ResidentialBuilding)target);
 							executedDisasters.add(currDisaster1);
 							((ResidentialBuilding) target).setFireDamage(0);
@@ -276,7 +276,6 @@ public class Simulator implements WorldListener{
 				}
 				if(target instanceof Citizen)
 					currDisaster.strike();
-				
 			}
 		}
 		
@@ -296,7 +295,7 @@ public class Simulator implements WorldListener{
 		
 		
 		for(Disaster currDisaster : executedDisasters) {
-			if(currDisaster.getStartCycle() != currentCycle && currDisaster.isActive() == true)
+			if(currDisaster.getStartCycle() != currentCycle && currDisaster.isActive())
 				currDisaster.cycleStep();
 		}
 		
