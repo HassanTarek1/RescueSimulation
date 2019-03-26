@@ -23,7 +23,7 @@ public class CommandCenter implements SOSListener{
 		engine = new Simulator(this);
 		visibleBuildings = new ArrayList<>();
 		visibleCitizens = new ArrayList<>();
-		emergencyUnits = engine.getEmergencyUnits();
+		emergencyUnits = new ArrayList<>();
 	}
 
 	
