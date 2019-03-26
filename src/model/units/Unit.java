@@ -92,7 +92,6 @@ import simulation.Simulatable;
 					if(distanceToTarget > 0) {
 					distanceToTarget = (distanceToTarget - stepsPerCycle);
 					((Evacuator) this).setDistanceToBase(((Evacuator) this).getDistanceToBase() + stepsPerCycle);
-					
 						if(distanceToTarget <= 0) {
 							distanceToTarget = 0;
 							((Evacuator) this).setDistanceToBase(this.getTarget().getLocation().getX() + this.getTarget().getLocation().getY());
@@ -110,13 +109,13 @@ import simulation.Simulatable;
 				if(state == UnitState.TREATING) {
 						Evacuator Evac = (Evacuator) this;
 						
-						//reached the target with no passengers
+						
 						if (Evac.getPassengers().isEmpty() && distanceToTarget > 0){
 							distanceToTarget = (distanceToTarget - stepsPerCycle);
 							Evac.setDistanceToBase(Evac.getDistanceToBase() + stepsPerCycle);
 							
 						}
-						
+						//reached the target with no passengers
 						if(Evac.getPassengers().isEmpty() && distanceToTarget <= 0){
 							distanceToTarget = 0;
 							Evac.setDistanceToBase(target.getLocation().getX() + target.getLocation().getY());
@@ -143,7 +142,6 @@ import simulation.Simulatable;
 							Evac.setDistanceToBase(0);
 							worldListener.assignAddress(Evac, 0, 0);
 							while(!Evac.getPassengers().isEmpty()) {
-								
 								 Evac.getPassengers().get(0).setState(CitizenState.RESCUED);
 								 worldListener.assignAddress(Evac.getPassengers().get(0), 0, 0);
 								 Evac.getPassengers().remove(0);
@@ -159,6 +157,8 @@ import simulation.Simulatable;
 	public void jobsDone() {
 		target = null;
 		this.state = UnitState.IDLE;
+		if(this.getWorldListener()!=null)
+			this.getWorldListener().assignAddress(this, 0,0);
 	}
 	
 	public void respond(Rescuable r) {

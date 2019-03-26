@@ -230,9 +230,6 @@ public class Simulator implements WorldListener{
 				executedDisasters.add(currDisaster);
 				currDisaster.strike();
 				Rescuable target = currDisaster.getTarget();
-				
-				
-				
 				if(target instanceof ResidentialBuilding) {
 					
 					if (currDisaster instanceof Fire) {
@@ -286,8 +283,6 @@ public class Simulator implements WorldListener{
 		for(Unit currUnit : emergencyUnits) {
 			currUnit.cycleStep();
 		}
-		
-		
 		for(Disaster currDisaster : executedDisasters) {
 			if(currDisaster.getStartCycle() != currentCycle && currDisaster.isActive())
 				currDisaster.cycleStep();

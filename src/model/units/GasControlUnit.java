@@ -35,15 +35,8 @@ public class GasControlUnit extends FireUnit{
 	
 	public void jobsDone() {
 		ResidentialBuilding x = (ResidentialBuilding)this.getTarget();
-		if((x.getGasLevel()<=0) || x.getStructuralIntegrity()<=0) {
-			this.setState(UnitState.IDLE);
-			WorldListener listener=this.getWorldListener();
+		if((x.getGasLevel()<=0) || x.getStructuralIntegrity()<=0) 
 			super.jobsDone();
-			if(listener!=null)
-				listener.assignAddress(this, 0, 0);
-			}
-		
-		
 	}
 	
 }
