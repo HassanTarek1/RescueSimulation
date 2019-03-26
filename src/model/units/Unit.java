@@ -84,7 +84,7 @@ import simulation.Simulatable;
 					
 			}
 			
-			if(this instanceof Evacuator) {
+			else {
 				if(this.state == UnitState.RESPONDING) {
 					
 					//on the way to the target
@@ -135,29 +135,24 @@ import simulation.Simulatable;
 						else if(!Evac.getPassengers().isEmpty() && Evac.getDistanceToBase() <= 0) {
 							distanceToTarget = (target.getLocation().getX() + target.getLocation().getY());
 							Evac.setDistanceToBase(0);
-							
+							worldListener.assignAddress(Evac, 0, 0);
 							while(!Evac.getPassengers().isEmpty()) {
 								
 								 Evac.getPassengers().get(0).setState(CitizenState.RESCUED);
 								 worldListener.assignAddress(Evac.getPassengers().get(0), 0, 0);
 								 Evac.getPassengers().remove(0);
 							}
-							worldListener.assignAddress(Evac, 0, 0);
+							
 							Evac.jobsDone();
 						}
 						
 						else if (Evac.getPassengers().isEmpty() && distanceToTarget > 0){
 							distanceToTarget = (distanceToTarget - stepsPerCycle);
 							Evac.setDistanceToBase(Evac.getDistanceToBase() + stepsPerCycle);
-						}
-						
-						
-					}
-					
-				
+						}	
+				}
 			}
 		}
-		
 	}
 	
 	public void jobsDone() {
@@ -170,33 +165,32 @@ import simulation.Simulatable;
 			if(this.getTarget() != null && r!=this.getTarget()) {
 				if(this.getTarget() instanceof Citizen) {
 					Citizen s=(Citizen)this.getTarget();
-					s.getDisaster().setActive(true);
+					if(s.getDisaster() != null)
+						s.getDisaster().setActive(true);
 				}
-				else {
+				else if(this.getTarget() instanceof ResidentialBuilding){
 					ResidentialBuilding s=(ResidentialBuilding)this.getTarget();
 					if(s.getDisaster() != null)
 						s.getDisaster().setActive(true);
 				}
 				target=r;
+				this.state = UnitState.RESPONDING;
+				setDistanceToTarget(DeltaX() + DeltaY());
 			}
 			
-			if(this.getTarget() == null)
+			else if(this.getTarget() == null) {
 				target=r;
-			
-				
 				setDistanceToTarget(DeltaX() + DeltaY());
-				
-				if(this instanceof PoliceUnit) 
-					((PoliceUnit)this).setDistanceToBase(this.getLocation().getX() + this.getLocation().getX());
-				
 				this.state = UnitState.RESPONDING;
+			}
+			
 			
 	}
 	
 	public void treat() {};
 
 	
-	public int DeltaX() {
+	private int DeltaX() {
 		if(target != null) {
 			int X = this.location.getX();
 			int NX = this.target.getLocation().getX();
@@ -207,7 +201,7 @@ import simulation.Simulatable;
 		return 0;
 	}
 	
-	public int DeltaY() {
+	private int DeltaY() {
 		if(target != null) {
 			int Y = this.location.getY();
 			int NY = this.target.getLocation().getY();

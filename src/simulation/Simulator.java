@@ -185,6 +185,10 @@ public class Simulator implements WorldListener{
 	}
 	
 	private boolean NoActiveDisasters() {
+		for (Disaster disaster : executedDisasters) {
+			if(disaster.isActive())
+				return false;
+		}
 	
 		for(Citizen currCitizen : citizens) {
 			if(currCitizen.getDisaster() != null && currCitizen.getDisaster().isActive() == true)
@@ -237,7 +241,7 @@ public class Simulator implements WorldListener{
 						
 						if(Gaslvl > 0 && Gaslvl < 70) {
 							Collapse currDisaster1 = new Collapse(currentCycle, (ResidentialBuilding) target);
-							currDisaster.strike();
+							currDisaster1.strike();
 							RemoveDisaters((ResidentialBuilding)target);
 							executedDisasters.add(currDisaster1);
 							((ResidentialBuilding) target).setFireDamage(0);
@@ -254,7 +258,7 @@ public class Simulator implements WorldListener{
 					if (currDisaster instanceof GasLeak) {
 						if(((ResidentialBuilding) target).getFireDamage() > 0) {
 							Collapse currDisaster1 = new Collapse(currentCycle, (ResidentialBuilding) target);
-							currDisaster.strike();
+							currDisaster1.strike();
 							RemoveDisaters((ResidentialBuilding)target);
 							executedDisasters.add(currDisaster1);
 							((ResidentialBuilding) target).setFireDamage(0);
@@ -272,7 +276,6 @@ public class Simulator implements WorldListener{
 				}
 				if(target instanceof Citizen)
 					currDisaster.strike();
-				
 			}
 		}
 		
