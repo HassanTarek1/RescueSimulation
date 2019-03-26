@@ -36,7 +36,9 @@ public class Simulator implements WorldListener{
 	private SOSListener emergencyService;
 	
 	//constructor:
-	
+	public Simulator() {
+		
+	}
 	public Simulator(SOSListener emergencyService) throws Exception {
 		
 		currentCycle = 0;
@@ -239,7 +241,7 @@ public class Simulator implements WorldListener{
 						if(Gaslvl <= 0) 
 							currDisaster.strike();
 						
-						if(Gaslvl > 0 && Gaslvl < 70) {
+						else if(Gaslvl > 0 && Gaslvl < 70) {
 							Collapse currDisaster1 = new Collapse(currentCycle, (ResidentialBuilding) target);
 							currDisaster1.strike();
 							RemoveDisaters((ResidentialBuilding)target);
@@ -247,7 +249,7 @@ public class Simulator implements WorldListener{
 							((ResidentialBuilding) target).setFireDamage(0);
 						}
 						
-						if(Gaslvl >= 70) {
+						else if(Gaslvl >= 70) {
 							((ResidentialBuilding) target).setStructuralIntegrity(0);
 							for (Citizen citizen : ((ResidentialBuilding)target).getOccupants()) {
 								citizen.setState(CitizenState.DECEASED);
@@ -255,7 +257,7 @@ public class Simulator implements WorldListener{
 						}	
 					}
 					
-					if (currDisaster instanceof GasLeak) {
+					else if (currDisaster instanceof GasLeak) {
 						if(((ResidentialBuilding) target).getFireDamage() > 0) {
 							Collapse currDisaster1 = new Collapse(currentCycle, (ResidentialBuilding) target);
 							currDisaster1.strike();
@@ -267,10 +269,13 @@ public class Simulator implements WorldListener{
 							currDisaster.strike();
 					}
 					
-					if (currDisaster instanceof Collapse) {
+					else if (currDisaster instanceof Collapse) {
 						RemoveDisaters((ResidentialBuilding) target);
 						currDisaster.strike();
 						((ResidentialBuilding) target).setFireDamage(0);
+					}
+					else {
+						currDisaster.strike();
 					}
 					
 				}

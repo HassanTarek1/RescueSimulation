@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import model.events.WorldListener;
 import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
-import model.people.CitizenState;
 import simulation.Address;
 
 public class Evacuator extends PoliceUnit{
