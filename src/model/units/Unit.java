@@ -111,6 +111,12 @@ import simulation.Simulatable;
 						Evacuator Evac = (Evacuator) this;
 						
 						//reached the target with no passengers
+						if (Evac.getPassengers().isEmpty() && distanceToTarget > 0){
+							distanceToTarget = (distanceToTarget - stepsPerCycle);
+							Evac.setDistanceToBase(Evac.getDistanceToBase() + stepsPerCycle);
+							
+						}
+						
 						if(Evac.getPassengers().isEmpty() && distanceToTarget <= 0){
 							distanceToTarget = 0;
 							Evac.setDistanceToBase(target.getLocation().getX() + target.getLocation().getY());
@@ -144,11 +150,6 @@ import simulation.Simulatable;
 							}
 							
 							Evac.jobsDone();
-						}
-						
-						else if (Evac.getPassengers().isEmpty() && distanceToTarget > 0){
-							distanceToTarget = (distanceToTarget - stepsPerCycle);
-							Evac.setDistanceToBase(Evac.getDistanceToBase() + stepsPerCycle);
 						}	
 				}
 			}

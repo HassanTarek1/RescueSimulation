@@ -35,7 +35,7 @@ public Evacuator(String id, Address location, int stepsPerCycle,int maxCapacity)
 				getPassengers().add(currCitizen);
 			}
 
-		jobsDone();
+		//jobsDone();
 		
 	}
 	
