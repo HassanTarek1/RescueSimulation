@@ -226,7 +226,7 @@ public class Simulator implements WorldListener{
 			if(currDisaster.getStartCycle() == currentCycle) {
 				plannedDisasters.remove(i);
 				executedDisasters.add(currDisaster);
-				
+				currDisaster.strike();
 				Rescuable target = currDisaster.getTarget();
 				
 				
@@ -235,10 +235,6 @@ public class Simulator implements WorldListener{
 					
 					if (currDisaster instanceof Fire) {
 						int Gaslvl =  ((ResidentialBuilding) target).getGasLevel();
-						
-						if(Gaslvl <= 0) 
-							currDisaster.strike();
-						
 						if(Gaslvl > 0 && Gaslvl < 70) {
 							Collapse currDisaster1 = new Collapse(currentCycle, (ResidentialBuilding) target);
 							currDisaster1.strike();
@@ -263,19 +259,15 @@ public class Simulator implements WorldListener{
 							executedDisasters.add(currDisaster1);
 							((ResidentialBuilding) target).setFireDamage(0);
 						}
-						else
-							currDisaster.strike();
 					}
 					
 					if (currDisaster instanceof Collapse) {
 						RemoveDisaters((ResidentialBuilding) target);
-						currDisaster.strike();
 						((ResidentialBuilding) target).setFireDamage(0);
 					}
 					
 				}
-				if(target instanceof Citizen)
-					currDisaster.strike();
+				
 			}
 		}
 		
