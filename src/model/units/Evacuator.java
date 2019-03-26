@@ -27,14 +27,15 @@ public Evacuator(String id, Address location, int stepsPerCycle,int maxCapacity)
 
 	public void treat() {
 		ArrayList<Citizen> occ = ((ResidentialBuilding)this.getTarget()).getOccupants();
-			
-			while(occ.size() > 0 && getPassengers().size() < getMaxCapacity()) {
+			ResidentialBuilding building=(ResidentialBuilding)this.getTarget();
+			while(occ.size() > 0 && getPassengers().size() < getMaxCapacity() && 
+					building.getStructuralIntegrity()>0) {
 				Citizen currCitizen = occ.get(0);
 				occ.remove(0);
 				getPassengers().add(currCitizen);
 			}
 
-		
+		jobsDone();
 		
 	}
 	

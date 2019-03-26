@@ -107,7 +107,7 @@ import simulation.Simulatable;
 					}
 				}
 					
-					 if(state == UnitState.TREATING) {
+				if(state == UnitState.TREATING) {
 						Evacuator Evac = (Evacuator) this;
 						
 						//reached the target with no passengers
