@@ -47,12 +47,8 @@ public class DiseaseControlUnit extends MedicalUnit{
 	
 	public void jobsDone() {
 		Citizen x = (Citizen)this.getTarget();
-		if((x.getToxicity()<=0 && x.getHp()>=100) || x.getState()==CitizenState.DECEASED) {
-			WorldListener listener=this.getWorldListener();
+		if((x.getToxicity()<=0 && x.getHp()>=100) || x.getState()==CitizenState.DECEASED) 
 			super.jobsDone();
-			if(listener!=null)
-				listener.assignAddress(this, 0, 0);
-		}
 	}
 
 }
