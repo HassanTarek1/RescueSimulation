@@ -1,6 +1,7 @@
 package model.units;
 
 
+
 import model.events.SOSResponder;
 import model.events.WorldListener;
 import model.infrastructure.ResidentialBuilding;
@@ -72,7 +73,7 @@ import simulation.Simulatable;
 				if(state == UnitState.RESPONDING) {
 					if(distanceToTarget > 0)
 						distanceToTarget = (distanceToTarget - stepsPerCycle);
-					if(distanceToTarget <= 0) {
+					else if(distanceToTarget <= 0) {
 						distanceToTarget = 0;
 						state = UnitState.TREATING;
 						worldListener.assignAddress(this, target.getLocation().getX(), target.getLocation().getY());
@@ -117,7 +118,7 @@ import simulation.Simulatable;
 							
 						}
 						
-						if(Evac.getPassengers().isEmpty() && distanceToTarget <= 0){
+						else if(Evac.getPassengers().isEmpty() && distanceToTarget <= 0){
 							distanceToTarget = 0;
 							Evac.setDistanceToBase(target.getLocation().getX() + target.getLocation().getY());
 							worldListener.assignAddress(Evac, target.getLocation().getX(), target.getLocation().getY());
@@ -144,9 +145,10 @@ import simulation.Simulatable;
 							worldListener.assignAddress(Evac, 0, 0);
 							while(!Evac.getPassengers().isEmpty()) {
 								
-								 Evac.getPassengers().get(0).setState(CitizenState.RESCUED);
-								 worldListener.assignAddress(Evac.getPassengers().get(0), 0, 0);
-								 Evac.getPassengers().remove(0);
+								if( Evac.getPassengers().get(0).getState() != CitizenState.DECEASED)
+									Evac.getPassengers().get(0).setState(CitizenState.RESCUED);
+								 	worldListener.assignAddress(Evac.getPassengers().get(0), 0, 0);
+								 	Evac.getPassengers().remove(0);
 							}
 							
 							Evac.jobsDone();

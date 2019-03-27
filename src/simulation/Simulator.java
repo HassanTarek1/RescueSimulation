@@ -36,9 +36,7 @@ public class Simulator implements WorldListener{
 	private SOSListener emergencyService;
 	
 	//constructor:
-	public Simulator() {
-		
-	}
+	public Simulator() {}
 	public Simulator(SOSListener emergencyService) throws Exception {
 		
 		currentCycle = 0;
