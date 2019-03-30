@@ -116,8 +116,8 @@ import simulation.Simulatable;
 							Evac.setDistanceToBase(Evac.getDistanceToBase() + stepsPerCycle);
 							
 						}
-						
-						else if(Evac.getPassengers().isEmpty() && distanceToTarget <= 0){
+						//31/3/2019 12:07am ..added Evac.getMaxCapacity()
+						else if(Evac.getPassengers().size()<Evac.getMaxCapacity() && distanceToTarget <= 0){
 
 						//reached the target with no passengers
 
@@ -139,9 +139,9 @@ import simulation.Simulatable;
 							worldListener.assignAddress(Evac, 0, 0);
 						}
 							
-						
+						//31/3/2019 12:07am ..removed else
 						//not empty and in base
-						else if(!Evac.getPassengers().isEmpty() && Evac.getDistanceToBase() <= 0) {
+						if(!Evac.getPassengers().isEmpty() && Evac.getDistanceToBase() <= 0) {
 							distanceToTarget = (target.getLocation().getX() + target.getLocation().getY());
 							Evac.setDistanceToBase(0);
 							worldListener.assignAddress(Evac, 0, 0);
