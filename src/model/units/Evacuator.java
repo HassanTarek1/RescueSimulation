@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import model.events.WorldListener;
 import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
+import model.people.CitizenState;
 import simulation.Address;
 
 public class Evacuator extends PoliceUnit{
@@ -30,8 +31,10 @@ public Evacuator(String id, Address location, int stepsPerCycle,int maxCapacity)
 			while(occ.size() > 0 && getPassengers().size() < getMaxCapacity() && 
 					building.getStructuralIntegrity()>0) {
 				Citizen currCitizen = occ.get(0);
-				occ.remove(0);
-				getPassengers().add(currCitizen);
+				if(currCitizen.getState()!=CitizenState.DECEASED) {
+					occ.remove(0);
+					getPassengers().add(currCitizen);
+				}
 			}
 
 	}

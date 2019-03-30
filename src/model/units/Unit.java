@@ -133,7 +133,7 @@ import simulation.Simulatable;
 							Evac.setDistanceToBase(Evac.getDistanceToBase() - stepsPerCycle);
 						}
 						
-						//empty and in base (unlikely case)
+						//empty and in base 
 						else if(Evac.getPassengers().isEmpty() && Evac.getDistanceToBase() <= 0) {
 							Evac.jobsDone();
 							worldListener.assignAddress(Evac, 0, 0);
