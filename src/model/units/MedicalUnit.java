@@ -38,12 +38,17 @@ public abstract class MedicalUnit extends Unit{
 	}
 	
 	public void respond(Rescuable r) {
+			
 			if(r!=this.getTarget() && this.getTarget()!=null) {
 				Citizen currTarget=(Citizen)this.getTarget();
+				super.respond(r);
 				if(currTarget.getBloodLoss()<=0 && currTarget.getToxicity()<=0 && currTarget.getHp()<=100) {
 					currTarget.getDisaster().setActive(false);
 				}
 			}
-			super.respond(r);
+			
+			if(this.getTarget() == null)
+				super.respond(r);
+				
 	}
 }

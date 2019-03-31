@@ -136,6 +136,7 @@ public class Citizen implements Simulatable,Rescuable{
 
 	public void struckBy(Disaster d) {
 		disaster = d;
+		d.setActive(true);
 		this.state = CitizenState.IN_TROUBLE;
 		if(emergencyService!=null)
 			emergencyService.receiveSOSCall(this);
