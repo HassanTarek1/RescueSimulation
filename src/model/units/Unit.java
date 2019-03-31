@@ -141,7 +141,7 @@ import simulation.Simulatable;
 							
 						//31/3/2019 12:07am ..removed else
 						//not empty and in base
-						if(!Evac.getPassengers().isEmpty() && Evac.getDistanceToBase() <= 0) {
+						else if(!Evac.getPassengers().isEmpty() && Evac.getDistanceToBase() <= 0) {
 							distanceToTarget = (target.getLocation().getX() + target.getLocation().getY());
 							Evac.setDistanceToBase(0);
 							worldListener.assignAddress(Evac, 0, 0);
