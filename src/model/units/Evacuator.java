@@ -31,12 +31,9 @@ public Evacuator(String id, Address location, int stepsPerCycle,int maxCapacity)
 			while(occ.size() > 0 && getPassengers().size() < getMaxCapacity() && 
 					building.getStructuralIntegrity()>0) {
 				Citizen currCitizen = occ.get(0);
-				if(currCitizen.getState()!=CitizenState.DECEASED) {
-					occ.remove(0);
-					getPassengers().add(currCitizen);
-				}
+				occ.remove(0);
+				getPassengers().add(currCitizen);
 			}
-
 	}
 	
 	public void jobsDone() {
