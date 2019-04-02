@@ -76,7 +76,7 @@ public class ResidentialBuilding implements Simulatable,Rescuable{
 			return;
 		}
 		if(gasLevel <= 0) {
-			gasLevel = 0;
+			this.gasLevel = 0;
 			return;
 		}
 		this.gasLevel = gasLevel;

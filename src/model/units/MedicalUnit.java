@@ -33,8 +33,10 @@ public abstract class MedicalUnit extends Unit{
 		if(X != null) {
 			X.setHp(X.getHp()+healingAmount);
 		}
-		if(X.getHp()>=100)
-		 jobsDone();
+		if(X.getHp()>=100) {
+			X.setHp(100);
+			jobsDone();
+		}
 	}
 	
 	public void respond(Rescuable r) {
