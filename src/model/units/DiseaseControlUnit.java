@@ -31,12 +31,15 @@ public class DiseaseControlUnit extends MedicalUnit{
 		if(X.getToxicity() >0) {
 			X.setToxicity(X.getToxicity()-getTreatmentAmount());
 		}
+		else if(X.getToxicity() <= 0 && X.getHp() < 100) {
+			this.heal();
+		}
 		
 		if(X.getBloodLoss()==0 && X.getToxicity()==0) {
 			X.setState(CitizenState.RESCUED);
 		}
 		if(X.getToxicity()<=0)
-			this.heal();
+			this.heal();	
 	}
 
 	

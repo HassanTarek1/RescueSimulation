@@ -21,15 +21,17 @@ public class GasControlUnit extends FireUnit{
 	}
 	
 	public void treat() {
-		ResidentialBuilding X=(ResidentialBuilding)(this.getTarget());
-		
-		if(X.getDisaster() instanceof GasLeak)
-			X.getDisaster().setActive(false);
-		
-		X.setGasLevel(X.getGasLevel()-10);
-		
-		
-		jobsDone();
+		getTarget().getDisaster().setActive(false);
+
+		ResidentialBuilding target = (ResidentialBuilding) getTarget();
+		if (target.getStructuralIntegrity() == 0) {
+			super.jobsDone();
+			return;
+		} else if (target.getGasLevel() > 0) 
+			target.setGasLevel(target.getGasLevel() - 10);
+
+		if (target.getGasLevel() == 0)
+			super.jobsDone();
 	}
 
 	
