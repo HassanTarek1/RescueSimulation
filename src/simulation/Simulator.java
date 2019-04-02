@@ -186,23 +186,22 @@ public class Simulator implements WorldListener{
 	
 	private boolean NoActiveDisasters() {
 		for (Disaster disaster : executedDisasters) {
-			if(disaster.isActive())
-				return false;
+			
+			if(disaster.getTarget() instanceof Citizen) {
+				Citizen currCitizen = (Citizen) disaster.getTarget();
+				if(currCitizen.getState() != CitizenState.DECEASED && disaster.isActive())
+					return false;
+			}
+			
+			if(disaster.getTarget() instanceof ResidentialBuilding) {
+				ResidentialBuilding currCitizen = (ResidentialBuilding) disaster.getTarget();
+				if(currCitizen.getStructuralIntegrity() > 0 && disaster.isActive())
+					return false;
+			}	
 		}
-	
-		for(Citizen currCitizen : citizens) {
-			if(currCitizen.getDisaster() != null && currCitizen.getDisaster().isActive() == true)
-				return false;
-		}
-		
-		for(ResidentialBuilding currBuilding : buildings) {
-			if(currBuilding.getDisaster() != null && currBuilding.getDisaster().isActive() == true)
-				return false;
-		}
-
 		return true;
-		
 	}
+	
 	private boolean IdleUnits() {
 		for(Unit currUnit : emergencyUnits)
 			if(currUnit.getState() != UnitState.IDLE) return false;

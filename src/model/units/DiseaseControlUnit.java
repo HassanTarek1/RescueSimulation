@@ -35,13 +35,8 @@ public class DiseaseControlUnit extends MedicalUnit{
 		if(X.getBloodLoss()==0 && X.getToxicity()==0) {
 			X.setState(CitizenState.RESCUED);
 		}
-		
-		if(X.getToxicity() <= 0 && X.getHp() < 100) {
+		if(X.getToxicity()<=0)
 			this.heal();
-		}
-		
-		jobsDone();
-		
 	}
 
 	
