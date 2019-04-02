@@ -204,8 +204,11 @@ public class Simulator implements WorldListener{
 		
 	}
 	private boolean IdleUnits() {
-		for(Unit currUnit : emergencyUnits)
-			if(currUnit.getState() != UnitState.IDLE) return false;
+		for(Unit currUnit : emergencyUnits) {
+				if(currUnit.getState() != UnitState.IDLE) return false;
+			
+		}
+		
 		return true;
 	}
 	
