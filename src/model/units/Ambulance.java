@@ -1,10 +1,13 @@
 package model.units;
 
+import exceptions.IncompatibleTargetException;
 import model.disasters.Injury;
 import model.events.WorldListener;
+import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
 import model.people.CitizenState;
 import simulation.Address;
+import simulation.Rescuable;
 
 public class Ambulance extends MedicalUnit{
 
@@ -44,4 +47,11 @@ public class Ambulance extends MedicalUnit{
 		if((x.getBloodLoss()<=0 && x.getHp()>=100) || x.getState()==CitizenState.DECEASED) 
 			super.jobsDone();
 	}
+	
+	
+	
+	
+	
+	
+	
 }

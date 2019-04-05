@@ -30,12 +30,12 @@ public class MainMenu extends JFrame implements MouseListener{
 		setSize(1250, 725);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ImageIcon icon = new ImageIcon("MainIcon.jpg");
+		ImageIcon icon = new ImageIcon("icons/MainIcon.jpg");
 		setIconImage(icon.getImage());
 		
 		
 		//Panel
-		panel = new ImagePanel("Main Menu Background(title).png");
+		panel = new ImagePanel("icons/Main Menu Background(title).png");
 		panel.setSize(1250, 725);
 		panel.setBackground(Color.white);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -43,7 +43,7 @@ public class MainMenu extends JFrame implements MouseListener{
 	
 		//New Game
 		NewGame = new JLabel("",JLabel.CENTER);
-		ImageIcon nIcon = new ImageIcon("new game.png");
+		ImageIcon nIcon = new ImageIcon("icons/new game.png");
 		NewGame.setIcon(nIcon);
 		NewGame.setAlignmentX(Component.CENTER_ALIGNMENT);
 		NewGame.setForeground(Color.DARK_GRAY);
@@ -51,7 +51,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		//Help
 		Help = new JLabel("",JLabel.CENTER);
-		ImageIcon hIcon = new ImageIcon("Help.png");
+		ImageIcon hIcon = new ImageIcon("icons/Help.png");
 		Help.setIcon(hIcon);
 		Help.setAlignmentX(Component.CENTER_ALIGNMENT);
 		Help.setForeground(Color.DARK_GRAY);
@@ -59,7 +59,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		//About
 		About = new JLabel("",JLabel.CENTER);
-		ImageIcon aIcon = new ImageIcon("About.png");
+		ImageIcon aIcon = new ImageIcon("icons/About.png");
 		About.setIcon(aIcon);
 		About.setAlignmentX(Component.CENTER_ALIGNMENT);
 		About.setForeground(Color.DARK_GRAY);
@@ -67,7 +67,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		//About
 		Quit = new JLabel("",JLabel.CENTER);
-		ImageIcon qIcon = new ImageIcon("Quit.png");
+		ImageIcon qIcon = new ImageIcon("icons/Quit.png");
 		Quit.setIcon(qIcon);
 		Quit.setAlignmentX(Component.CENTER_ALIGNMENT);
 		Quit.setForeground(Color.DARK_GRAY);

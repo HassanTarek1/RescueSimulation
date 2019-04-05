@@ -1,6 +1,8 @@
 package model.units;
 
+import exceptions.IncompatibleTargetException;
 import model.events.WorldListener;
+import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
 import simulation.Address;
 import simulation.Rescuable;
@@ -39,8 +41,11 @@ public abstract class MedicalUnit extends Unit{
 		}
 	}
 	
-	public void respond(Rescuable r) {
-			
+	public void respond(Rescuable r) throws IncompatibleTargetException {
+		if(r instanceof ResidentialBuilding) {
+			String message="What are you doing. you ca not heal a building";
+			throw new IncompatibleTargetException(this, r, message);
+		}
 			if(r!=this.getTarget() && this.getTarget()!=null) {
 				Citizen currTarget=(Citizen)this.getTarget();
 				super.respond(r);
