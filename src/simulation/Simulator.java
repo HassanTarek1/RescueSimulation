@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 
+import exceptions.BuildingAlreadyCollapsedException;
+import exceptions.CitizenAlreadyDeadException;
+import exceptions.DisasterException;
 import model.disasters.Collapse;
 import model.disasters.Disaster;
 import model.disasters.Fire;
@@ -220,7 +223,21 @@ public class Simulator implements WorldListener{
 		return Dead;
 	}
 	
-	public void nextCycle() {
+	private boolean canStrike(Rescuable target) {
+		if(target instanceof Citizen) {
+			Citizen citizen = (Citizen)(target);
+			if(citizen.getHp()<=0)
+				return false;
+		}
+		else if(target instanceof ResidentialBuilding) {
+			ResidentialBuilding building =(ResidentialBuilding)(target);
+			if(building.getStructuralIntegrity()<=0)
+				return false;
+		}
+		return true;
+	}
+	
+	public void nextCycle() throws DisasterException  {
 		currentCycle++;
 		for (int i = 0 ; i < plannedDisasters.size() ; i++) {
 			Disaster currDisaster = plannedDisasters.get(i);

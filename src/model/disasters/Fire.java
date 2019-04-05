@@ -1,5 +1,6 @@
 package model.disasters;
 
+import exceptions.BuildingAlreadyCollapsedException;
 import model.infrastructure.ResidentialBuilding;
 
 public class Fire extends Disaster {
@@ -9,14 +10,18 @@ public class Fire extends Disaster {
 	}
 	
 	//methods
-	public void strike() {
+	public void strike() throws BuildingAlreadyCollapsedException {
 		ResidentialBuilding target=(ResidentialBuilding)this.getTarget();
+		if(target.getStructuralIntegrity()<=0) {
+			String message ="The Builging is Already Collapsed";
+			throw new BuildingAlreadyCollapsedException(this,message);
+		}
 		target.struckBy(this);
 		this.setActive(true);
 		int oldFireDamage=target.getFireDamage();
 		target.setFireDamage(oldFireDamage+10);
 	}
-	public void cycleStep() {
+	public void cycleStep() throws BuildingAlreadyCollapsedException {
 		strike();
 	}
 

@@ -1,6 +1,8 @@
 package model.units;
 
+import exceptions.CannotTreatException;
 import exceptions.IncompatibleTargetException;
+import exceptions.UnitException;
 import model.disasters.Infection;
 import model.events.WorldListener;
 import model.infrastructure.ResidentialBuilding;
@@ -51,7 +53,8 @@ public class DiseaseControlUnit extends MedicalUnit{
 		if((x.getToxicity()<=0 && x.getHp()>=100) || x.getState()==CitizenState.DECEASED) 
 			super.jobsDone();
 	}
-	public void respond(Rescuable r) throws IncompatibleTargetException {
+	
+	public void respond(Rescuable r) throws UnitException {
 		if(r instanceof ResidentialBuilding) {
 			String message="What are you doing. you can not cure a building";
 			throw new IncompatibleTargetException(this, r, message);

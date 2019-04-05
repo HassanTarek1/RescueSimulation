@@ -2,7 +2,9 @@ package model.units;
 
 import java.util.ArrayList;
 
+import exceptions.CannotTreatException;
 import exceptions.IncompatibleTargetException;
+import exceptions.UnitException;
 import model.events.WorldListener;
 import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
@@ -47,10 +49,13 @@ public Evacuator(String id, Address location, int stepsPerCycle,int maxCapacity)
 			}
 		
 	}
-	public void respond(Rescuable r) throws IncompatibleTargetException {
+	public void respond(Rescuable r) throws UnitException {
 		if(r instanceof Citizen) {
 			String message="What are you doing. you can not evacuate a citizen";
 			throw new IncompatibleTargetException(this, r, message);
+		}
+		if(!canTreat(r)) {
+			throw new CannotTreatException(this,r,"the Building is Safe");
 		}
 		super.respond(r);
 	}

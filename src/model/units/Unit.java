@@ -2,7 +2,9 @@ package model.units;
 
 
 
+import exceptions.CannotTreatException;
 import exceptions.IncompatibleTargetException;
+import exceptions.UnitException;
 import model.events.SOSResponder;
 import model.events.WorldListener;
 import model.infrastructure.ResidentialBuilding;
@@ -169,7 +171,7 @@ import simulation.Simulatable;
 			this.getWorldListener().assignAddress(this, 0,0);
 	}
 	
-	public void respond(Rescuable r) throws IncompatibleTargetException {
+	public void respond(Rescuable r) throws UnitException {
 		//Overridden in medicalUnit class
 			if(this.getTarget() != null && r!=this.getTarget()) {
 				if(this.getTarget() instanceof Citizen) {

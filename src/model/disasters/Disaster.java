@@ -1,5 +1,7 @@
 package model.disasters;
 
+import exceptions.BuildingAlreadyCollapsedException;
+import exceptions.DisasterException;
 import simulation.Rescuable;
 import simulation.Simulatable;
 
@@ -34,7 +36,7 @@ import simulation.Simulatable;
 	
 	//methods
 
-	public void strike() { active=true; }
+	public void strike() throws DisasterException { active=true; }
 	
-	abstract public void cycleStep();
+	abstract public void cycleStep() throws DisasterException;
 }

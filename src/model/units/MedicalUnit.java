@@ -1,6 +1,8 @@
 package model.units;
 
+import exceptions.CannotTreatException;
 import exceptions.IncompatibleTargetException;
+import exceptions.UnitException;
 import model.events.WorldListener;
 import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
@@ -41,10 +43,13 @@ public abstract class MedicalUnit extends Unit{
 		}
 	}
 	
-	public void respond(Rescuable r) throws IncompatibleTargetException {
+	public void respond(Rescuable r) throws UnitException{
 		if(r instanceof ResidentialBuilding) {
 			String message="What are you doing. you can not heal a building";
 			throw new IncompatibleTargetException(this, r, message);
+		}
+		if(!canTreat(r)) {
+			throw new CannotTreatException(this,r,"the Citizen is Safe");
 		}
 			if(r!=this.getTarget() && this.getTarget()!=null) {
 				Citizen currTarget=(Citizen)this.getTarget();
