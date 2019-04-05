@@ -8,7 +8,14 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -93,7 +100,7 @@ public class MainMenu extends JFrame implements MouseListener{
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
+	public void mouseClicked(MouseEvent e) {		
 		JLabel temp = (JLabel) e.getSource();
 		
 		if(temp == NewGame) {
@@ -108,36 +115,97 @@ public class MainMenu extends JFrame implements MouseListener{
 		}
 		
 		else if (temp == Quit) {
-			dispose();
+			System.exit(0);
 		}
 		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+		try {
+			PlaySound("sounds/Hero.wav");
+		} catch (UnsupportedAudioFileException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (LineUnavailableException e1) {
+			e1.printStackTrace();
+		}
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
+		JLabel temp = (JLabel) e.getSource();
+		
+		if(temp == NewGame) {
+			ImageIcon nIcon = new ImageIcon("icons/new game1.png");
+			NewGame.setIcon(nIcon);
+		}
+		else if (temp == About) {
+			ImageIcon aIcon = new ImageIcon("icons/About1.png");
+			About.setIcon(aIcon);
+		}
+		
+		else if (temp == Help) {
+			ImageIcon hIcon = new ImageIcon("icons/Help1.png");
+			Help.setIcon(hIcon);
+		}
+		
+		else if (temp == Quit) {
+			ImageIcon qIcon = new ImageIcon("icons/Quit1.png");
+			Quit.setIcon(qIcon);
+		}
+		
+		try {
+			PlaySound("sounds/bottle.wav");
+		} catch (UnsupportedAudioFileException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (LineUnavailableException e1) {
+			e1.printStackTrace();
+		}
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
+		JLabel temp = (JLabel) e.getSource();
 		
+		if(temp == NewGame) {
+			ImageIcon nIcon = new ImageIcon("icons/new game.png");
+			NewGame.setIcon(nIcon);
+		}
+		else if (temp == About) {
+			ImageIcon aIcon = new ImageIcon("icons/About.png");
+			About.setIcon(aIcon);
+		}
+		
+		else if (temp == Help) {
+			ImageIcon hIcon = new ImageIcon("icons/Help.png");
+			Help.setIcon(hIcon);
+		}
+		
+		else if (temp == Quit) {
+			ImageIcon qIcon = new ImageIcon("icons/Quit.png");
+			Quit.setIcon(qIcon);
+		}
+	
+	
 	}
 	
-	
+	public void PlaySound(String dir) throws UnsupportedAudioFileException, IOException, LineUnavailableException {    
+		AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(dir).getAbsoluteFile());
+		Clip clip = AudioSystem.getClip();
+		clip.open(audioInputStream);
+		clip.start();
+	}
 }
 
 class ImagePanel extends JPanel {
