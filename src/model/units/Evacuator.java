@@ -2,11 +2,13 @@ package model.units;
 
 import java.util.ArrayList;
 
+import exceptions.IncompatibleTargetException;
 import model.events.WorldListener;
 import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
 import model.people.CitizenState;
 import simulation.Address;
+import simulation.Rescuable;
 
 public class Evacuator extends PoliceUnit{
 	
@@ -44,6 +46,13 @@ public Evacuator(String id, Address location, int stepsPerCycle,int maxCapacity)
 				this.getWorldListener().assignAddress(this, 0, 0);
 			}
 		
+	}
+	public void respond(Rescuable r) throws IncompatibleTargetException {
+		if(r instanceof Citizen) {
+			String message="What are you doing. you can not evacuate a citizen";
+			throw new IncompatibleTargetException(this, r, message);
+		}
+		super.respond(r);
 	}
 		
 }

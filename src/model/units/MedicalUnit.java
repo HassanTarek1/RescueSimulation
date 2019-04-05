@@ -43,7 +43,7 @@ public abstract class MedicalUnit extends Unit{
 	
 	public void respond(Rescuable r) throws IncompatibleTargetException {
 		if(r instanceof ResidentialBuilding) {
-			String message="What are you doing. you ca not heal a building";
+			String message="What are you doing. you can not heal a building";
 			throw new IncompatibleTargetException(this, r, message);
 		}
 			if(r!=this.getTarget() && this.getTarget()!=null) {
