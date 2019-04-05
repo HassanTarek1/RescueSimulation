@@ -26,11 +26,12 @@ import javax.swing.JPanel;
 public class MainMenu extends JFrame implements MouseListener{
 	
 	private JPanel panel;
+	private JLabel Title;
 	private JLabel NewGame;
 	private JLabel Help;
 	private JLabel About;
 	private JLabel Quit;
-	
+	private int click = 0;
 	public MainMenu() {
 		
 		//Frame
@@ -42,12 +43,21 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		
 		//Panel
-		panel = new ImagePanel("icons/Main Menu Background(title).png");
+		panel = new ImagePanel("icons/Main Menu Background(empty).png");
 		panel.setSize(1250, 725);
 		panel.setBackground(Color.white);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
 	
+		
+		//Title
+		Title = new JLabel("",JLabel.CENTER);
+		ImageIcon tIcon = new ImageIcon("icons/Title.png");
+		Title.setIcon(tIcon);
+		Title.setAlignmentX(Component.CENTER_ALIGNMENT);
+		Title.setForeground(Color.DARK_GRAY);
+		Title.addMouseListener(this);
+		
 		//New Game
 		NewGame = new JLabel("",JLabel.CENTER);
 		ImageIcon nIcon = new ImageIcon("icons/new game.png");
@@ -82,7 +92,9 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		
 		//Layout
-		panel.add(Box.createRigidArea(new Dimension(0,200)));
+		panel.add(Box.createRigidArea(new Dimension(0,25)));
+		panel.add(Title);
+		panel.add(Box.createRigidArea(new Dimension(0,100)));
 		panel.add(NewGame);
 		panel.add(Box.createRigidArea(new Dimension(0,50)));
 		panel.add(Help);
@@ -103,7 +115,25 @@ public class MainMenu extends JFrame implements MouseListener{
 	public void mouseClicked(MouseEvent e) {		
 		JLabel temp = (JLabel) e.getSource();
 		
-		if(temp == NewGame) {
+		if(temp == Title) {
+			click++;
+			
+			if(click == 5) {
+				ImageIcon tIcon = new ImageIcon("icons/5.png");
+				Title.setIcon(tIcon);
+			}
+			
+			if(click == 10) {
+				ImageIcon tIcon = new ImageIcon("icons/10.png");
+				Title.setIcon(tIcon);
+			}
+			
+			if(click == 15) {
+				System.exit(0);
+			}
+		}
+		
+		else if(temp == NewGame) {
 			
 		}
 		else if (temp == About) {
@@ -118,18 +148,34 @@ public class MainMenu extends JFrame implements MouseListener{
 			System.exit(0);
 		}
 		
+
+		if(temp == Title) {
+			try {
+				PlaySound("sounds/Quack.wav");
+			} catch (UnsupportedAudioFileException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} catch (LineUnavailableException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		try {
-			PlaySound("sounds/Hero.wav");
-		} catch (UnsupportedAudioFileException e1) {
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		} catch (LineUnavailableException e1) {
-			e1.printStackTrace();
+		
+		if(e.getSource() != Title) {
+			try {
+				PlaySound("sounds/Hero.wav");
+			} catch (UnsupportedAudioFileException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} catch (LineUnavailableException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 	}
@@ -143,7 +189,11 @@ public class MainMenu extends JFrame implements MouseListener{
 	public void mouseEntered(MouseEvent e) {
 		JLabel temp = (JLabel) e.getSource();
 		
-		if(temp == NewGame) {
+		if(temp == Title) {
+			
+		}
+		
+		else if(temp == NewGame) {
 			ImageIcon nIcon = new ImageIcon("icons/new game1.png");
 			NewGame.setIcon(nIcon);
 		}
@@ -162,14 +212,16 @@ public class MainMenu extends JFrame implements MouseListener{
 			Quit.setIcon(qIcon);
 		}
 		
-		try {
-			PlaySound("sounds/bottle.wav");
-		} catch (UnsupportedAudioFileException e1) {
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		} catch (LineUnavailableException e1) {
-			e1.printStackTrace();
+		if(temp != Title) {
+			try {
+				PlaySound("sounds/bottle.wav");
+			} catch (UnsupportedAudioFileException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} catch (LineUnavailableException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 	}
