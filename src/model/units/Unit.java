@@ -2,6 +2,7 @@ package model.units;
 
 
 
+import exceptions.IncompatibleTargetException;
 import model.events.SOSResponder;
 import model.events.WorldListener;
 import model.infrastructure.ResidentialBuilding;
@@ -168,7 +169,7 @@ import simulation.Simulatable;
 			this.getWorldListener().assignAddress(this, 0,0);
 	}
 	
-	public void respond(Rescuable r) {
+	public void respond(Rescuable r) throws IncompatibleTargetException {
 		//Overridden in medicalUnit class
 			if(this.getTarget() != null && r!=this.getTarget()) {
 				if(this.getTarget() instanceof Citizen) {
@@ -218,6 +219,20 @@ import simulation.Simulatable;
 		}
 		
 		return 0;
+	}
+	public boolean canTreat(Rescuable r) {
+		if (r instanceof Citizen) {
+			Citizen target=(Citizen)r;
+			if(target.getBloodLoss()<=0 && target.getToxicity()<=0)
+				return false;
+			return true;
+		}else if(r instanceof ResidentialBuilding) {
+			ResidentialBuilding target=(ResidentialBuilding)r;
+			if(target.getFireDamage()<=0 && target.getFoundationDamage()<=0 && target.getGasLevel()<=0)
+				return false;
+			return true;
+		}
+		return false;
 	}
 	
 //constructor(s):
