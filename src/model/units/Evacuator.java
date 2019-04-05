@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import exceptions.CannotTreatException;
 import exceptions.IncompatibleTargetException;
 import exceptions.UnitException;
+import model.disasters.Collapse;
 import model.events.WorldListener;
 import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
@@ -54,8 +55,11 @@ public Evacuator(String id, Address location, int stepsPerCycle,int maxCapacity)
 			String message="What are you doing. you can not evacuate a citizen";
 			throw new IncompatibleTargetException(this, r, message);
 		}
-		if(!canTreat(r)) {
+		if(!canTreat(r) || r.getDisaster()==null) {
 			throw new CannotTreatException(this,r,"the Building is Safe");
+		}
+		if(!(r.getDisaster() instanceof Collapse)) {
+			throw new CannotTreatException(this,r,"the Evacuator treats only the collapse Disaster");
 		}
 		super.respond(r);
 	}

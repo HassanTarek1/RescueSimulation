@@ -1,9 +1,15 @@
 package model.units;
 
+import exceptions.CannotTreatException;
+import exceptions.IncompatibleTargetException;
+import exceptions.UnitException;
+import model.disasters.Fire;
 import model.disasters.GasLeak;
 import model.events.WorldListener;
 import model.infrastructure.ResidentialBuilding;
+import model.people.Citizen;
 import simulation.Address;
+import simulation.Rescuable;
 
 public class GasControlUnit extends FireUnit{
 
@@ -34,6 +40,19 @@ public class GasControlUnit extends FireUnit{
 			super.jobsDone();
 	}
 
+	public void respond(Rescuable r) throws UnitException {
+		if(r instanceof Citizen) {
+			String message="What are you doing. you can not extinguish a citizen";
+			throw new IncompatibleTargetException(this, r, message);
+		}
+		if(!canTreat(r)) {
+			throw new CannotTreatException(this,r, "the Building is Safe");
+		}
+		if(!(r.getDisaster() instanceof GasLeak)) {
+			throw new CannotTreatException(this,r,"the Fire Unit treats only GasLeak Disaster");
+		}
+		super.respond(r);
+	}
 	
 	public void jobsDone() {
 		ResidentialBuilding x = (ResidentialBuilding)this.getTarget();

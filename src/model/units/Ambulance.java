@@ -1,6 +1,9 @@
 package model.units;
 
+import exceptions.CannotTreatException;
 import exceptions.IncompatibleTargetException;
+import exceptions.UnitException;
+import model.disasters.Infection;
 import model.disasters.Injury;
 import model.events.WorldListener;
 import model.infrastructure.ResidentialBuilding;
@@ -48,6 +51,19 @@ public class Ambulance extends MedicalUnit{
 			super.jobsDone();
 	}
 	
+	public void respond(Rescuable r) throws UnitException {
+		if(r instanceof ResidentialBuilding) {
+			String message="What are you doing. you can not heal a building";
+			throw new IncompatibleTargetException(this, r, message);
+		}
+		if(!canTreat(r) || r.getDisaster()==null) {
+			throw new CannotTreatException(this,r,"the Citizen is Safe");
+		}
+		if(!(r.getDisaster() instanceof Injury)) {
+			throw new CannotTreatException(this,r,"the Disease Unit traets only the Injury");
+		}
+		super.respond(r);
+	}
 	
 	
 	

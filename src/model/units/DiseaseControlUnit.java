@@ -56,8 +56,14 @@ public class DiseaseControlUnit extends MedicalUnit{
 	
 	public void respond(Rescuable r) throws UnitException {
 		if(r instanceof ResidentialBuilding) {
-			String message="What are you doing. you can not cure a building";
+			String message="What are you doing. you can not heal a building";
 			throw new IncompatibleTargetException(this, r, message);
+		}
+		if(!canTreat(r) || r.getDisaster()==null) {
+			throw new CannotTreatException(this,r,"the Citizen is Safe");
+		}
+		if(!(r.getDisaster() instanceof Infection)) {
+			throw new CannotTreatException(this,r,"the Disease Unit traets only the infection");
 		}
 		super.respond(r);
 	}
