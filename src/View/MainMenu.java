@@ -108,7 +108,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		}
 		
 		else if (temp == Quit) {
-			dispose();
+			System.exit(0);
 		}
 		
 	}
@@ -127,17 +127,54 @@ public class MainMenu extends JFrame implements MouseListener{
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
+		JLabel temp = (JLabel) e.getSource();
+		
+		if(temp == NewGame) {
+			ImageIcon nIcon = new ImageIcon("new game1.png");
+			NewGame.setIcon(nIcon);
+		}
+		else if (temp == About) {
+			ImageIcon aIcon = new ImageIcon("About1.png");
+			About.setIcon(aIcon);
+		}
+		
+		else if (temp == Help) {
+			ImageIcon hIcon = new ImageIcon("Help1.png");
+			Help.setIcon(hIcon);
+		}
+		
+		else if (temp == Quit) {
+			ImageIcon qIcon = new ImageIcon("Quit1.png");
+			Quit.setIcon(qIcon);
+		}
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
+		JLabel temp = (JLabel) e.getSource();
 		
+		if(temp == NewGame) {
+			ImageIcon nIcon = new ImageIcon("new game.png");
+			NewGame.setIcon(nIcon);
+		}
+		else if (temp == About) {
+			ImageIcon aIcon = new ImageIcon("About.png");
+			About.setIcon(aIcon);
+		}
+		
+		else if (temp == Help) {
+			ImageIcon hIcon = new ImageIcon("Help.png");
+			Help.setIcon(hIcon);
+		}
+		
+		else if (temp == Quit) {
+			ImageIcon qIcon = new ImageIcon("Quit.png");
+			Quit.setIcon(qIcon);
+		}
+	
+	
 	}
-	
-	
 }
 
 class ImagePanel extends JPanel {
