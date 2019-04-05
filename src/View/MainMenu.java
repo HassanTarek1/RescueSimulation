@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -36,6 +37,8 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		//Frame
 		setSize(1250, 725);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ImageIcon icon = new ImageIcon("icons/MainIcon.jpg");
@@ -134,7 +137,9 @@ public class MainMenu extends JFrame implements MouseListener{
 		}
 		
 		else if(temp == NewGame) {
-			
+			setVisible(false);
+			Game game = new Game();
+			this.dispose();
 		}
 		else if (temp == About) {
 			
@@ -282,6 +287,11 @@ class ImagePanel extends JPanel {
 	  public void paintComponent(Graphics g) {
 	    g.drawImage(img, 0, 0, null);
 	  }
+	  
+	  public void setImage(ImageIcon img) {
+		    this.img = img.getImage();
+		    repaint();
+		}
 
 	}
 
