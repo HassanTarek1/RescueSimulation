@@ -130,21 +130,21 @@ public class MainMenu extends JFrame implements MouseListener{
 		JLabel temp = (JLabel) e.getSource();
 		
 		if(temp == NewGame) {
-			ImageIcon nIcon = new ImageIcon("new game1.png");
+			ImageIcon nIcon = new ImageIcon("icons/new game1.png");
 			NewGame.setIcon(nIcon);
 		}
 		else if (temp == About) {
-			ImageIcon aIcon = new ImageIcon("About1.png");
+			ImageIcon aIcon = new ImageIcon("icons/About1.png");
 			About.setIcon(aIcon);
 		}
 		
 		else if (temp == Help) {
-			ImageIcon hIcon = new ImageIcon("Help1.png");
+			ImageIcon hIcon = new ImageIcon("icons/Help1.png");
 			Help.setIcon(hIcon);
 		}
 		
 		else if (temp == Quit) {
-			ImageIcon qIcon = new ImageIcon("Quit1.png");
+			ImageIcon qIcon = new ImageIcon("icons/Quit1.png");
 			Quit.setIcon(qIcon);
 		}
 		
@@ -155,21 +155,21 @@ public class MainMenu extends JFrame implements MouseListener{
 		JLabel temp = (JLabel) e.getSource();
 		
 		if(temp == NewGame) {
-			ImageIcon nIcon = new ImageIcon("new game.png");
+			ImageIcon nIcon = new ImageIcon("icons/new game.png");
 			NewGame.setIcon(nIcon);
 		}
 		else if (temp == About) {
-			ImageIcon aIcon = new ImageIcon("About.png");
+			ImageIcon aIcon = new ImageIcon("icons/About.png");
 			About.setIcon(aIcon);
 		}
 		
 		else if (temp == Help) {
-			ImageIcon hIcon = new ImageIcon("Help.png");
+			ImageIcon hIcon = new ImageIcon("icons/Help.png");
 			Help.setIcon(hIcon);
 		}
 		
 		else if (temp == Quit) {
-			ImageIcon qIcon = new ImageIcon("Quit.png");
+			ImageIcon qIcon = new ImageIcon("icons/Quit.png");
 			Quit.setIcon(qIcon);
 		}
 	
