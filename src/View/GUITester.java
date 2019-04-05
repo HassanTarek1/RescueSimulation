@@ -1,4 +1,4 @@
-package view;
+package View;
 
 public class GUITester {
 	public static void main(String[] args) {
