@@ -18,6 +18,7 @@ import java.io.InputStream;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Box;
@@ -28,12 +29,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.Player;
-import sun.audio.AudioData;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
-import sun.audio.ContinuousAudioDataStream;
+//import javazoom.jl.decoder.JavaLayerException;
+//import javazoom.jl.player.Player;
+//import sun.audio.AudioData;
+//import sun.audio.AudioPlayer;
+//import sun.audio.AudioStream;
+//import sun.audio.ContinuousAudioDataStream;
 
 @SuppressWarnings("restriction")
 public class MainMenu extends JFrame implements MouseListener{
@@ -44,6 +45,7 @@ public class MainMenu extends JFrame implements MouseListener{
 	private JLabel Help;
 	private JLabel About;
 	private JLabel Quit;
+	private Clip intro;
 	private int click = 0;
 	@SuppressWarnings("resource")
 	public MainMenu() {
@@ -126,7 +128,10 @@ public class MainMenu extends JFrame implements MouseListener{
 		setVisible(true);
 		this.setLocationRelativeTo(null);
 		try {
-			Clip intro=PlaySound("sounds/intro.wav");
+			intro =PlaySound("sounds/intro.wav");
+			FloatControl volume= (FloatControl) intro.getControl(FloatControl.Type.MASTER_GAIN); 
+			volume.setValue(-30.0f);
+			intro.start();
 			intro.loop(Clip.LOOP_CONTINUOUSLY);
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
@@ -163,9 +168,10 @@ public class MainMenu extends JFrame implements MouseListener{
 		}
 		
 		else if(temp == NewGame) {
-			setVisible(false);
+			intro.stop();
 			Game game = new Game();
 			this.dispose();
+			
 		}
 		else if (temp == About) {
 			
@@ -182,7 +188,7 @@ public class MainMenu extends JFrame implements MouseListener{
 
 		if(temp == Title) {
 			try {
-				PlaySound("sounds/Quack.wav");
+				PlaySound("sounds/Quack.wav").start();
 			} catch (UnsupportedAudioFileException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {
@@ -199,7 +205,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		if(e.getSource() != Title) {
 			try {
-				PlaySound("sounds/Hero.wav");
+				PlaySound("sounds/Hero.wav").start();
 			} catch (UnsupportedAudioFileException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {
@@ -245,7 +251,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		if(temp != Title) {
 			try {
-				PlaySound("sounds/bottle.wav");
+				PlaySound("sounds/bottle.wav").start();
 			} catch (UnsupportedAudioFileException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {
@@ -287,7 +293,6 @@ public class MainMenu extends JFrame implements MouseListener{
 		AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(dir).getAbsoluteFile());
 		Clip clip = AudioSystem.getClip();
 		clip.open(audioInputStream);
-		clip.start();
 		return clip;
 	}
 }
