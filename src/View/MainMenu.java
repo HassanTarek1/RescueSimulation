@@ -9,7 +9,10 @@ import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -23,6 +26,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
+import sun.audio.AudioData;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+import sun.audio.ContinuousAudioDataStream;
+
+@SuppressWarnings("restriction")
 public class MainMenu extends JFrame implements MouseListener{
 	
 	private JPanel panel;
@@ -32,10 +44,11 @@ public class MainMenu extends JFrame implements MouseListener{
 	private JLabel About;
 	private JLabel Quit;
 	private int click = 0;
+	@SuppressWarnings("resource")
 	public MainMenu() {
 		
 		//Frame
-		setSize(1250, 725);
+		setSize(1280, 720);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ImageIcon icon = new ImageIcon("icons/MainIcon.jpg");
@@ -44,7 +57,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		//Panel
 		panel = new ImagePanel("icons/Main Menu Background(empty).png");
-		panel.setSize(1250, 725);
+		panel.setSize(1280, 720);
 		panel.setBackground(Color.white);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
@@ -108,6 +121,22 @@ public class MainMenu extends JFrame implements MouseListener{
 		//visibility
 		add(panel);
 		setVisible(true);
+		this.setLocationRelativeTo(null);
+		try {
+			Clip intro=PlaySound("sounds/intro.wav");
+			intro.loop(Clip.LOOP_CONTINUOUSLY);
+		} catch (UnsupportedAudioFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		
 	}
 
@@ -252,11 +281,12 @@ public class MainMenu extends JFrame implements MouseListener{
 	
 	}
 	
-	public void PlaySound(String dir) throws UnsupportedAudioFileException, IOException, LineUnavailableException {    
+	public Clip PlaySound(String dir) throws UnsupportedAudioFileException, IOException, LineUnavailableException {    
 		AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(dir).getAbsoluteFile());
 		Clip clip = AudioSystem.getClip();
 		clip.open(audioInputStream);
 		clip.start();
+		return clip;
 	}
 }
 
