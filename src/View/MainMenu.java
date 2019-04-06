@@ -98,7 +98,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		About.setForeground(Color.DARK_GRAY);
 		About.addMouseListener(this);
 		
-		//About
+		//Quit
 		Quit = new JLabel("",JLabel.CENTER);
 		ImageIcon qIcon = new ImageIcon("icons/Quit.png");
 		Quit.setIcon(qIcon);
@@ -129,13 +129,10 @@ public class MainMenu extends JFrame implements MouseListener{
 			Clip intro=PlaySound("sounds/intro.wav");
 			intro.loop(Clip.LOOP_CONTINUOUSLY);
 		} catch (UnsupportedAudioFileException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (LineUnavailableException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
