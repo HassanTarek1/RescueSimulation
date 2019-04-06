@@ -2,7 +2,15 @@ package View;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -23,6 +31,19 @@ public class Game extends JFrame {
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+	try {
+		Clip intro =PlaySound("sounds/Reach the summit.wav");
+		FloatControl volume= (FloatControl) intro.getControl(FloatControl.Type.MASTER_GAIN); 
+		volume.setValue(-35.0f);
+		intro.start();
+		intro.loop(Clip.LOOP_CONTINUOUSLY);
+	} catch (UnsupportedAudioFileException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
+	} catch (LineUnavailableException e) {
+		e.printStackTrace();
+	}
 	
 	panel = new ImagePanel("icons/cycle0.png");
 	
@@ -45,6 +66,13 @@ public class Game extends JFrame {
 	public void UpdateCycleImg(ImagePanel p) {
 		int indx = CurrentCycle%8;
 		p.setImage(DayNightCycle[indx]);
+	}
+	
+	public Clip PlaySound(String dir) throws UnsupportedAudioFileException, IOException, LineUnavailableException {    
+		AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(dir).getAbsoluteFile());
+		Clip clip = AudioSystem.getClip();
+		clip.open(audioInputStream);
+		return clip;
 	}
 
 }
