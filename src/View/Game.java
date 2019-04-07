@@ -15,6 +15,8 @@ import java.awt.TextArea;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -33,10 +35,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 
 
 
-public class Game extends JFrame{
+public class Game extends JFrame implements MouseListener{
 	
 	private ImagePanel panel;
 	private JPanel TopBar;
@@ -45,6 +48,8 @@ public class Game extends JFrame{
 	private ImageIcon[] DayNightCycle;
 	private ImagePanel[][] GridCells;
 	private int CurrentCycle = 0;
+	private JLabel backButton;
+	private Clip GameMusic;
 	
 	public Game() {
 		
@@ -58,7 +63,7 @@ public class Game extends JFrame{
 	
 	//Music
 	try {
-		Clip GameMusic =PlaySound("sounds/Reach the summit.wav");
+		GameMusic =PlaySound("sounds/Reach the summit.wav");
 		FloatControl volume= (FloatControl) GameMusic.getControl(FloatControl.Type.MASTER_GAIN); 
 		volume.setValue(-25.0f);
 		GameMusic.start();
@@ -136,6 +141,12 @@ public class Game extends JFrame{
 	setVisible(true);
 	setResizable(false);
 	
+	//buttons
+	ImageIcon backI=new ImageIcon("icons/BackButton.png");
+	backButton=new JLabel("",backI , SwingConstants.LEFT);
+	backButton.addMouseListener(this);
+	
+	TopBar.add(backButton);
 	}
 	
 	public void UpdateCycleImg(ImagePanel p) {
@@ -148,6 +159,45 @@ public class Game extends JFrame{
 		Clip clip = AudioSystem.getClip();
 		clip.open(audioInputStream);
 		return clip;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		if(arg0.getSource()==backButton) {
+			GameMusic.stop();
+			MainMenu menu=new MainMenu();
+			this.dispose();
+		}
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		if(arg0.getSource()==backButton) {
+			backButton.setIcon(new ImageIcon("icons/BackButton1.png"));
+		}
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		if(arg0.getSource()==backButton) {
+			backButton.setIcon(new ImageIcon("icons/BackButton.png"));
+		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
