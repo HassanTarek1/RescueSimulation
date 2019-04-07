@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 public class Game extends JFrame {
 	
 	private ImagePanel panel;
+	private ImageIcon TopBar;
 	private ImageIcon[] DayNightCycle;
 	private int CurrentCycle = 0;
 	
@@ -31,12 +32,14 @@ public class Game extends JFrame {
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+	
+	//Music
 	try {
-		Clip intro =PlaySound("sounds/Reach the summit.wav");
-		FloatControl volume= (FloatControl) intro.getControl(FloatControl.Type.MASTER_GAIN); 
-		volume.setValue(-35.0f);
-		intro.start();
-		intro.loop(Clip.LOOP_CONTINUOUSLY);
+		Clip GameMusic =PlaySound("sounds/Reach the summit.wav");
+		FloatControl volume= (FloatControl) GameMusic.getControl(FloatControl.Type.MASTER_GAIN); 
+		volume.setValue(-25.0f);
+		GameMusic.start();
+		GameMusic.loop(Clip.LOOP_CONTINUOUSLY);
 	} catch (UnsupportedAudioFileException e) {
 		e.printStackTrace();
 	} catch (IOException e) {
@@ -45,10 +48,16 @@ public class Game extends JFrame {
 		e.printStackTrace();
 	}
 	
+	//Main panel (background)(parent)
 	panel = new ImagePanel("icons/cycle0.png");
-	
 	panel.setSize(1425,802);
 	panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		
+	//Inside Main panel
+		
+		//Top bar
+		
+	
 	
 	//fill images
 	DayNightCycle = new ImageIcon[8];
