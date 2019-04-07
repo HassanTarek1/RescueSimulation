@@ -39,7 +39,8 @@ import javax.swing.JPanel;
 @SuppressWarnings("restriction")
 public class MainMenu extends JFrame implements MouseListener{
 	
-	private JPanel panel;
+	private ImagePanel panel;
+	private About AboutPanel;
 	private JLabel Title;
 	private JLabel NewGame;
 	private JLabel Help;
@@ -47,6 +48,7 @@ public class MainMenu extends JFrame implements MouseListener{
 	private JLabel Quit;
 	private Clip intro;
 	private int click = 0;
+	
 	@SuppressWarnings("resource")
 	public MainMenu() {
 		
@@ -60,10 +62,9 @@ public class MainMenu extends JFrame implements MouseListener{
 		setIconImage(icon.getImage());
 		
 		
-		//Panel
+		//Main Panel
 		panel = new ImagePanel("icons/Main Menu Background(empty).png");
 		panel.setSize(1280, 720);
-		panel.setBackground(Color.white);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
 	
@@ -76,7 +77,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		Title.setForeground(Color.DARK_GRAY);
 		Title.addMouseListener(this);
 		
-		//New Game
+		//New Game Button
 		NewGame = new JLabel("",JLabel.CENTER);
 		ImageIcon nIcon = new ImageIcon("icons/new game.png");
 		NewGame.setIcon(nIcon);
@@ -84,7 +85,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		NewGame.setForeground(Color.DARK_GRAY);
 		NewGame.addMouseListener(this);
 		
-		//Help
+		//Help Button
 		Help = new JLabel("",JLabel.CENTER);
 		ImageIcon hIcon = new ImageIcon("icons/Help.png");
 		Help.setIcon(hIcon);
@@ -92,7 +93,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		Help.setForeground(Color.DARK_GRAY);
 		Help.addMouseListener(this);
 		
-		//About
+		//About Button
 		About = new JLabel("",JLabel.CENTER);
 		ImageIcon aIcon = new ImageIcon("icons/About.png");
 		About.setIcon(aIcon);
@@ -100,7 +101,11 @@ public class MainMenu extends JFrame implements MouseListener{
 		About.setForeground(Color.DARK_GRAY);
 		About.addMouseListener(this);
 		
-		//Quit
+		//About panel
+		AboutPanel = new About();
+		
+		
+		//Quit Button
 		Quit = new JLabel("",JLabel.CENTER);
 		ImageIcon qIcon = new ImageIcon("icons/Quit.png");
 		Quit.setIcon(qIcon);
@@ -124,6 +129,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		
 		//visibility
+		add(AboutPanel);
 		add(panel);
 		setVisible(true);
 		this.setLocationRelativeTo(null);
@@ -174,6 +180,8 @@ public class MainMenu extends JFrame implements MouseListener{
 			
 		}
 		else if (temp == About) {
+			panel.setVisible(false);
+			AboutPanel.setVisible(true);
 			
 		}
 		
@@ -325,5 +333,5 @@ class ImagePanel extends JPanel {
 		    repaint();
 		}
 
-	}
+}
 
