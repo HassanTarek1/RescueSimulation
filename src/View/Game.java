@@ -85,6 +85,7 @@ public class Game extends JFrame implements MouseListener{
 	TopBar = new JPanel();
 	TopBar.setSize(1425,50);
 	
+	
 	//
 	//TODO remove later
 	TopBar.setBackground(Color.red);
