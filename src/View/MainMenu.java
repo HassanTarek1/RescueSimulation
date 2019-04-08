@@ -40,7 +40,7 @@ import javax.swing.JPanel;
 public class MainMenu extends JFrame implements MouseListener{
 	
 	private ImagePanel panel;
-	private JLabel AboutPanel;
+	private About AboutPanel;
 	private JLabel Title;
 	private JLabel NewGame;
 	private JLabel Help;
@@ -102,7 +102,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		About.addMouseListener(this);
 		
 		//About panel
-		AboutPanel = new JLabel();
+		AboutPanel = new About();
 		
 		
 		//Quit Button
