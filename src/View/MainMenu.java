@@ -175,7 +175,12 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		else if(temp == NewGame) {
 			intro.stop();
-			Game game = new Game();
+			
+			try {
+				Game game = new Game();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			this.dispose();
 			
 		}
