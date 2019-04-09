@@ -77,22 +77,27 @@ public class Game extends JFrame implements MouseListener{
 	}
 	
 	//Main panel (background)(parent)
-	panel = new ImagePanel("icons/cycle0.png");
+	panel = new ImagePanel("icons/Game panel/cycle0.png");
 	panel.setSize(1425,802);
 	panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
 	//Top Bar	
-	TopBar = new JPanel();
-	TopBar.setSize(1425,50);
-	
+	TopBar = new ImagePanel("icons/Game panel/Bar.png");
+	TopBar.setSize(1425,60);
 	
 	//
 	//TODO remove later
-	TopBar.setBackground(Color.red);
-	TopBar.setLayout(new BorderLayout());
+	TopBar.setLayout(new BoxLayout(TopBar, BoxLayout.LINE_AXIS));
 	//
 	panel.add(TopBar);
-	panel.add(Box.createRigidArea(new Dimension(0,25)));
+	panel.add(Box.createRigidArea(new Dimension(0,10)));
+		//Top Bar buttons
+		ImageIcon backI=new ImageIcon("icons/Game panel/BackButton.png");
+		backButton=new JLabel(backI);
+		backButton.addMouseListener(this);
+		backButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+		TopBar.add(Box.createRigidArea(new Dimension(15,0)));
+		TopBar.add(backButton);
 	
 	//Mid Area
 	MidArea = new JPanel();
@@ -115,7 +120,7 @@ public class Game extends JFrame implements MouseListener{
 	for (int i = 0; i < 10; i++) {
 		
 		for (int j = 0; j < 10; j++) {
-			ImagePanel cell = new ImagePanel("icons/green.png");
+			ImagePanel cell = new ImagePanel("icons/Game panel/green.png");
 			cell.addMouseListener(this);
 			//TODO add properties to each cells later
 			constraints.gridx = i;
@@ -124,7 +129,7 @@ public class Game extends JFrame implements MouseListener{
 			GridCells[i][j] = cell;
 		}
 	}
-	GridCells[4][7].setImage(new ImageIcon("icons/Cell.png"));
+	GridCells[4][7].setImage(new ImageIcon("icons/Game panel/green.png"));
 	MidArea.add(Grid);
 	
 	
@@ -135,7 +140,7 @@ public class Game extends JFrame implements MouseListener{
 	//fill images
 	DayNightCycle = new ImageIcon[8];
 	for (int i = 0; i < 8; i++) 
-		DayNightCycle[i] = new ImageIcon("icons/cycle"+i+".png");
+		DayNightCycle[i] = new ImageIcon("icons/Game panel/cycle"+i+".png");
 	
 	
 	//visibility
@@ -143,12 +148,6 @@ public class Game extends JFrame implements MouseListener{
 	setVisible(true);
 	setResizable(false);
 	
-	//buttons
-	ImageIcon backI=new ImageIcon("icons/BackButton.png");
-	backButton=new JLabel("",backI , SwingConstants.LEFT);
-	backButton.addMouseListener(this);
-	
-	TopBar.add(backButton);
 	}
 	
 	public void UpdateCycleImg(ImagePanel p) {
@@ -164,9 +163,9 @@ public class Game extends JFrame implements MouseListener{
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
+	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(arg0.getSource()==backButton) {
+		if(e.getSource()==backButton) {
 			GameMusic.stop();
 			MainMenu menu=new MainMenu();
 			this.dispose();
@@ -178,7 +177,7 @@ public class Game extends JFrame implements MouseListener{
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource()==backButton) {
-			//backButton.setIcon(new ImageIcon("icons/BackButton1.png"));
+			backButton.setIcon(new ImageIcon("icons/Game panel/BackButton1.png"));
 		}
 	}
 
@@ -186,22 +185,21 @@ public class Game extends JFrame implements MouseListener{
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource()==backButton) {
-			backButton.setIcon(new ImageIcon("icons/BackButton.png"));
+			backButton.setIcon(new ImageIcon("icons/Game panel/BackButton.png"));
 		}
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		ImagePanel b = (ImagePanel) e.getSource();
-		b.setImage(new ImageIcon("icons/green_pressed.png"));
+		
+		if(e.getSource() instanceof ImagePanel)
+			((ImagePanel) e.getSource()).setImage(new ImageIcon("icons/Game panel/green_pressed.png"));
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		ImagePanel b = (ImagePanel) e.getSource();
-		b.setImage(new ImageIcon("icons/green.png"));
+		if(e.getSource() instanceof ImagePanel)
+			((ImagePanel) e.getSource()).setImage(new ImageIcon("icons/Game panel/green.png"));
 		
 	}
 
