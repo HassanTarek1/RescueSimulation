@@ -85,6 +85,7 @@ public class Game extends JFrame implements MouseListener{
 	TopBar = new JPanel();
 	TopBar.setSize(1425,50);
 	
+	
 	//
 	//TODO remove later
 	TopBar.setBackground(Color.red);
@@ -114,15 +115,16 @@ public class Game extends JFrame implements MouseListener{
 	for (int i = 0; i < 10; i++) {
 		
 		for (int j = 0; j < 10; j++) {
-			ImagePanel cell = new ImagePanel("icons/Cell.png");
+			ImagePanel cell = new ImagePanel("icons/green.png");
+			cell.addMouseListener(this);
 			//TODO add properties to each cells later
 			constraints.gridx = i;
 			constraints.gridy = j;
 			Grid.add(cell,constraints);
 			GridCells[i][j] = cell;
-			constraints.gridy++;
 		}
 	}
+	GridCells[4][7].setImage(new ImageIcon("icons/Cell.png"));
 	MidArea.add(Grid);
 	
 	
@@ -173,30 +175,33 @@ public class Game extends JFrame implements MouseListener{
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
+	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(arg0.getSource()==backButton) {
-			backButton.setIcon(new ImageIcon("icons/BackButton1.png"));
+		if(e.getSource()==backButton) {
+			//backButton.setIcon(new ImageIcon("icons/BackButton1.png"));
 		}
 	}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {
+	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(arg0.getSource()==backButton) {
+		if(e.getSource()==backButton) {
 			backButton.setIcon(new ImageIcon("icons/BackButton.png"));
 		}
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
+	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+		ImagePanel b = (ImagePanel) e.getSource();
+		b.setImage(new ImageIcon("icons/green_pressed.png"));
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
+	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
+		ImagePanel b = (ImagePanel) e.getSource();
+		b.setImage(new ImageIcon("icons/green.png"));
 		
 	}
 

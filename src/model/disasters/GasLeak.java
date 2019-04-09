@@ -1,3 +1,4 @@
+
 package model.disasters;
 
 import exceptions.BuildingAlreadyCollapsedException;
