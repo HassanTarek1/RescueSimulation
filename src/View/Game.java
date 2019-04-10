@@ -19,6 +19,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.sound.sampled.AudioInputStream;
@@ -31,13 +32,19 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
 import controller.CommandCenter;
+import model.infrastructure.ResidentialBuilding;
+import model.people.Citizen;
 import simulation.Simulator;
 
 
@@ -45,13 +52,17 @@ import simulation.Simulator;
 public class Game extends JFrame implements MouseListener{
 	
 	private CommandCenter Game;
-	private Simulator sim;
 	private ImagePanel panel;
 	private JPanel TopBar;
 	private JPanel MidArea;
 	private JPanel midWest;
 	private JPanel midEast;
 	private JPanel Grid;
+	private JTextPane log;
+	private JPopupMenu selectorMenu;
+	private JMenuItem SelectorB;
+	private JMenuItem SelectorC;
+	private ImagePanel currCell;
 	private JPanel midWestTop;
 	private JPanel midWestBottom;
 	private JPanel midEastTop;
@@ -156,14 +167,34 @@ public class Game extends JFrame implements MouseListener{
 		
 			//Mid west Top contents
 			infoPanel = new ImagePanel("icons/Game panel/InfoPanel.png");
+			infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
 			infoPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 			midWestTop.add(infoPanel);
+				//info panel contents
+				log = new JTextPane();
+				log.setSize(500, 216);
+				log.setPreferredSize(log.getSize());
+				log.setMaximumSize(log.getPreferredSize());
+				log.add(Box.createRigidArea(new Dimension(0,50)));
+				log.add(Box.createRigidArea(new Dimension(50,0)));
+				infoPanel.add(log);
+				log.setAlignmentX(CENTER_ALIGNMENT);
 			
 			//Mid west Bottom contents
 			contentPanel = new ImagePanel("icons/Game panel/InfoPanel.png");
 			contentPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 			midWestBottom.add(contentPanel);
-
+			
+		//Popup menu
+			selectorMenu = new JPopupMenu();
+			SelectorB = new JMenuItem("Buildings");
+			SelectorC = new JMenuItem("Citizens");
+			SelectorB.addMouseListener(this);
+			SelectorC.addMouseListener(this);
+			
+			selectorMenu.add(SelectorB);
+			selectorMenu.add(SelectorC);
+			
 		//Grid (Mid center)
 		GridCells = new ImagePanel[10][10];
 		
@@ -182,6 +213,8 @@ public class Game extends JFrame implements MouseListener{
 				//TODO add properties to each cell later
 				constraints.gridx = i;
 				constraints.gridy = j;
+				cell.setXI(i);
+				cell.setYI(j);
 				Grid.add(cell,constraints);
 				GridCells[i][j] = cell;
 			}
@@ -225,18 +258,13 @@ public class Game extends JFrame implements MouseListener{
 			midEastBottom.add(Box.createRigidArea(new Dimension(10,0)));
 
 	//---------------------------------------------------------------------------	
-	
-	
-	
-	
-			
+		
 	//fill images
 	DayNightCycle = new ImageIcon[8];
 	for (int i = 0; i < 8; i++) 
 		DayNightCycle[i] = new ImageIcon("icons/Game panel/cycle"+i+".png");
 //---------------------------------------------------------------------------	
 	//visibility
-	
 	add(panel);
 	setVisible(true);
 	setResizable(false);
@@ -262,6 +290,12 @@ public class Game extends JFrame implements MouseListener{
 			GameMusic.stop();
 			MainMenu menu=new MainMenu();
 			this.dispose();
+		}
+		
+		if(e.getSource() instanceof ImagePanel) {
+			currCell = (ImagePanel) e.getSource();
+			selectorMenu.show(e.getComponent(),
+                e.getX(), e.getY());
 		}
 		
 	}
@@ -296,8 +330,14 @@ public class Game extends JFrame implements MouseListener{
 		
 	}
 	
-	public void getInfo() {
-		
+	public void FillSelectorB(JComboBox BB) {
+		ArrayList<String> vis = new ArrayList();
+		for(ResidentialBuilding currBuilding: Game.getVisibleBuildings()) {
+			if(currBuilding.getLocation().getX() == currCell.getXI() && 
+					currBuilding.getLocation().getY() == currCell.getYI()) {
+				vis.add("Building");
+			}
+		}
 	}
 
 }

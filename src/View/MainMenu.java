@@ -313,8 +313,26 @@ public class MainMenu extends JFrame implements MouseListener{
 class ImagePanel extends JPanel {
 
 	  private Image img;
+	  private int XI;
+	  private int YI;
 	  
-	  public ImagePanel(String img) {
+	  public int getXI() {
+		return XI;
+	}
+
+	public int getYI() {
+		return YI;
+	}
+
+	public void setXI(int xI) {
+		XI = xI;
+	}
+
+	public void setYI(int yI) {
+		YI = yI;
+	}
+
+	public ImagePanel(String img) {
 	    this(new ImageIcon(img).getImage());
 	  }
 
