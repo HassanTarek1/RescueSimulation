@@ -63,7 +63,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		
 		//Main Panel
-		panel = new ImagePanel("icons/Main Menu Background(empty).png");
+		panel = new ImagePanel("icons/Main menu/Main Menu Background(empty).png");
 		panel.setSize(1280, 720);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
@@ -71,7 +71,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		//Title
 		Title = new JLabel("",JLabel.CENTER);
-		ImageIcon tIcon = new ImageIcon("icons/Title.png");
+		ImageIcon tIcon = new ImageIcon("icons/Main menu/Title.png");
 		Title.setIcon(tIcon);
 		Title.setAlignmentX(Component.CENTER_ALIGNMENT);
 		Title.setForeground(Color.DARK_GRAY);
@@ -79,7 +79,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		//New Game Button
 		NewGame = new JLabel("",JLabel.CENTER);
-		ImageIcon nIcon = new ImageIcon("icons/new game.png");
+		ImageIcon nIcon = new ImageIcon("icons/Main menu/new game.png");
 		NewGame.setIcon(nIcon);
 		NewGame.setAlignmentX(Component.CENTER_ALIGNMENT);
 		NewGame.setForeground(Color.DARK_GRAY);
@@ -87,7 +87,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		//Help Button
 		Help = new JLabel("",JLabel.CENTER);
-		ImageIcon hIcon = new ImageIcon("icons/Help.png");
+		ImageIcon hIcon = new ImageIcon("icons/Main menu/Help.png");
 		Help.setIcon(hIcon);
 		Help.setAlignmentX(Component.CENTER_ALIGNMENT);
 		Help.setForeground(Color.DARK_GRAY);
@@ -95,7 +95,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		//About Button
 		About = new JLabel("",JLabel.CENTER);
-		ImageIcon aIcon = new ImageIcon("icons/About.png");
+		ImageIcon aIcon = new ImageIcon("icons/Main menu/About.png");
 		About.setIcon(aIcon);
 		About.setAlignmentX(Component.CENTER_ALIGNMENT);
 		About.setForeground(Color.DARK_GRAY);
@@ -107,7 +107,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		//Quit Button
 		Quit = new JLabel("",JLabel.CENTER);
-		ImageIcon qIcon = new ImageIcon("icons/Quit.png");
+		ImageIcon qIcon = new ImageIcon("icons/Main menu/Quit.png");
 		Quit.setIcon(qIcon);
 		Quit.setAlignmentX(Component.CENTER_ALIGNMENT);
 		Quit.setForeground(Color.DARK_GRAY);
@@ -175,7 +175,12 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		else if(temp == NewGame) {
 			intro.stop();
-			Game game = new Game();
+			
+			try {
+				Game game = new Game();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 			this.dispose();
 			
 		}
@@ -239,21 +244,21 @@ public class MainMenu extends JFrame implements MouseListener{
 		}
 		
 		else if(temp == NewGame) {
-			ImageIcon nIcon = new ImageIcon("icons/new game1.png");
+			ImageIcon nIcon = new ImageIcon("icons/Main menu/new game1.png");
 			NewGame.setIcon(nIcon);
 		}
 		else if (temp == About) {
-			ImageIcon aIcon = new ImageIcon("icons/About1.png");
+			ImageIcon aIcon = new ImageIcon("icons/Main menu/About1.png");
 			About.setIcon(aIcon);
 		}
 		
 		else if (temp == Help) {
-			ImageIcon hIcon = new ImageIcon("icons/Help1.png");
+			ImageIcon hIcon = new ImageIcon("icons/Main menu/Help1.png");
 			Help.setIcon(hIcon);
 		}
 		
 		else if (temp == Quit) {
-			ImageIcon qIcon = new ImageIcon("icons/Quit1.png");
+			ImageIcon qIcon = new ImageIcon("icons/Main menu/Quit1.png");
 			Quit.setIcon(qIcon);
 		}
 		
@@ -276,21 +281,21 @@ public class MainMenu extends JFrame implements MouseListener{
 		JLabel temp = (JLabel) e.getSource();
 		
 		if(temp == NewGame) {
-			ImageIcon nIcon = new ImageIcon("icons/new game.png");
+			ImageIcon nIcon = new ImageIcon("icons/Main menu/new game.png");
 			NewGame.setIcon(nIcon);
 		}
 		else if (temp == About) {
-			ImageIcon aIcon = new ImageIcon("icons/About.png");
+			ImageIcon aIcon = new ImageIcon("icons/Main menu/About.png");
 			About.setIcon(aIcon);
 		}
 		
 		else if (temp == Help) {
-			ImageIcon hIcon = new ImageIcon("icons/Help.png");
+			ImageIcon hIcon = new ImageIcon("icons/Main menu/Help.png");
 			Help.setIcon(hIcon);
 		}
 		
 		else if (temp == Quit) {
-			ImageIcon qIcon = new ImageIcon("icons/Quit.png");
+			ImageIcon qIcon = new ImageIcon("icons/Main menu/Quit.png");
 			Quit.setIcon(qIcon);
 		}
 	

@@ -13,7 +13,7 @@ public class About extends ImagePanel{
 	public About() {
 		
 		//panel
-		super("icons/Main Menu Background(empty).png");
+		super("icons/Main menu/Main Menu Background(empty).png");
 		setSize(1280, 720);
 		setVisible(false);
 		
