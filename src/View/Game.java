@@ -124,7 +124,7 @@ public class Game extends JFrame implements MouseListener{
 			GridCells[i][j] = cell;
 		}
 	}
-	GridCells[4][7].setImage(new ImageIcon("icons/Cell.png"));
+	//GridCells[4][7].setImage(new ImageIcon("icons/Cell.png"));
 	MidArea.add(Grid);
 	
 	
