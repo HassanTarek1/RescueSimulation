@@ -219,7 +219,9 @@ public class Game extends JFrame implements MouseListener{
 				GridCells[i][j] = cell;
 			}
 		}
-		MidArea.add(Grid);
+	MidArea.add(Grid);
+		
+	MidArea.add(Grid);
 		
 	//Middle east 
 	midEast = new JPanel();
@@ -257,19 +259,20 @@ public class Game extends JFrame implements MouseListener{
 			midEastBottom.add(unitPanel2);
 			midEastBottom.add(Box.createRigidArea(new Dimension(10,0)));
 
+
 	//---------------------------------------------------------------------------	
 		
 	//fill images
 	DayNightCycle = new ImageIcon[8];
 	for (int i = 0; i < 8; i++) 
 		DayNightCycle[i] = new ImageIcon("icons/Game panel/cycle"+i+".png");
-//---------------------------------------------------------------------------	
 	//visibility
 	add(panel);
 	setVisible(true);
 	setResizable(false);
+	}	
 	
-	}
+	
 	
 	public void UpdateCycleImg(ImagePanel p) {
 		int indx = CurrentCycle%8;
