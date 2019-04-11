@@ -51,7 +51,6 @@ import simulation.Simulator;
 
 public class Game extends JFrame implements MouseListener{
 	
-	private CommandCenter Game;
 	private ImagePanel panel;
 	private JPanel TopBar;
 	private JPanel MidArea;
@@ -59,9 +58,6 @@ public class Game extends JFrame implements MouseListener{
 	private JPanel midEast;
 	private JPanel Grid;
 	private JTextPane log;
-	private JPopupMenu selectorMenu;
-	private JMenuItem SelectorB;
-	private JMenuItem SelectorC;
 	private ImagePanel currCell;
 	private JPanel label1;
 	private JPanel label2;
@@ -89,7 +85,6 @@ public class Game extends JFrame implements MouseListener{
 	
 	public Game() throws Exception {
 		
-	Game = new CommandCenter();
 	this.setSize(1425,802);
 	ImageIcon icon = new ImageIcon("icons/MainIcon.jpg");
 	setIconImage(icon.getImage());
@@ -218,15 +213,6 @@ public class Game extends JFrame implements MouseListener{
 			contentPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 			midWestBottom.add(contentPanel);
 			
-		//Popup menu
-			selectorMenu = new JPopupMenu();
-			SelectorB = new JMenuItem("Buildings");
-			SelectorC = new JMenuItem("Citizens");
-			SelectorB.addMouseListener(this);
-			SelectorC.addMouseListener(this);
-			
-			selectorMenu.add(SelectorB);
-			selectorMenu.add(SelectorC);
 			
 		//Grid (Mid center)
 		GridCells = new ImagePanel[10][10];
@@ -375,13 +361,7 @@ public class Game extends JFrame implements MouseListener{
 			GameMusic.stop();
 			MainMenu menu=new MainMenu();
 			this.dispose();
-		}
-		
-		if(e.getSource() instanceof ImagePanel) {
-			currCell = (ImagePanel) e.getSource();
-			selectorMenu.show(e.getComponent(),
-                e.getX(), e.getY());
-		}
+		}		
 		
 	}
 

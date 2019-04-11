@@ -1,7 +1,10 @@
 package controller;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import View.Game;
 import model.events.SOSListener;
 import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
@@ -9,8 +12,9 @@ import model.units.Unit;
 import simulation.Rescuable;
 import simulation.Simulator;
 
-public class CommandCenter implements SOSListener{
+public class CommandCenter implements SOSListener,MouseListener{
 	private Simulator engine;
+	private Game GUI;
 	
 	private ArrayList<ResidentialBuilding> visibleBuildings;
 	
@@ -24,6 +28,8 @@ public class CommandCenter implements SOSListener{
 		visibleBuildings = new ArrayList<>();
 		visibleCitizens = new ArrayList<>();
 		emergencyUnits = new ArrayList<>();
+		GUI = new Game();
+		
 	}
 
 	
@@ -36,6 +42,41 @@ public class CommandCenter implements SOSListener{
 			visibleBuildings.add((ResidentialBuilding)r);
 			return;
 		}
+		
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}	
 }
