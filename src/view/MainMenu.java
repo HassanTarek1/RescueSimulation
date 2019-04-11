@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -173,17 +173,17 @@ public class MainMenu extends JFrame implements MouseListener{
 			}
 		}
 		
-		else if(temp == NewGame) {
-			intro.stop();
-			
-			try {
-				Game game = new Game();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-			this.dispose();
-			
-		}
+//		else if(temp == NewGame) {
+//			intro.stop();
+//			
+//			try {
+//				Game game = new Game();
+//			} catch (Exception e1) {
+//				e1.printStackTrace();
+//			}
+//			this.dispose();
+//			
+//		}
 		else if (temp == About) {
 			panel.setVisible(false);
 			AboutPanel.setVisible(true);
@@ -309,52 +309,3 @@ public class MainMenu extends JFrame implements MouseListener{
 		return clip;
 	}
 }
-
-class ImagePanel extends JPanel {
-
-	  private Image img;
-	  private int XI;
-	  private int YI;
-	  
-	  public int getXI() {
-		return XI;
-	}
-
-	public int getYI() {
-		return YI;
-	}
-
-	public void setXI(int xI) {
-		XI = xI;
-	}
-
-	public void setYI(int yI) {
-		YI = yI;
-	}
-
-	public ImagePanel(String img) {
-	    this(new ImageIcon(img).getImage());
-	  }
-
-	  public ImagePanel(Image img) {
-	    this.img = img;
-	    Dimension size = new Dimension(img.getWidth(null), img.getHeight(null));
-	    
-	    setPreferredSize(size);
-	    setMinimumSize(size);
-	    setMaximumSize(size);
-	    setSize(size);
-	    setLayout(null);
-	  }
-
-	  public void paintComponent(Graphics g) {
-	    g.drawImage(img, 0, 0, null);
-	  }
-	  
-	  public void setImage(ImageIcon img) {
-		    this.img = img.getImage();
-		    repaint();
-		}
-
-}
-
