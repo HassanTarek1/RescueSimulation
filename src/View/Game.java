@@ -63,6 +63,12 @@ public class Game extends JFrame implements MouseListener{
 	private JMenuItem SelectorB;
 	private JMenuItem SelectorC;
 	private ImagePanel currCell;
+	private JPanel label1;
+	private JPanel label2;
+	private JPanel label3;
+	private JPanel label4;
+	private JPanel label5;
+	private JPanel midEastCenter;
 	private JPanel midWestTop;
 	private JPanel midWestBottom;
 	private JPanel midEastTop;
@@ -71,6 +77,9 @@ public class Game extends JFrame implements MouseListener{
 	private ImagePanel contentPanel;
 	private ImagePanel unitPanel;
 	private ImagePanel unitPanel2;
+	private ImagePanel unitPanel3;
+	private JLabel availableUnits;
+	private JLabel respondingunits;
 	private ImageIcon[] DayNightCycle;
 	private ImagePanel[][] GridCells;
 	private int CurrentCycle = 0;
@@ -149,6 +158,18 @@ public class Game extends JFrame implements MouseListener{
 		
 	
 		//Mid west contents
+	    label4 = new JPanel();
+	    label4.setLayout(new BoxLayout(label4, BoxLayout.LINE_AXIS));
+	    label4.setOpaque(false);
+	    label4.setSize(300, 16);
+	    midWest.add(label4);
+	    respondingunits = new JLabel("",JLabel.LEFT);
+	    ImageIcon DIcon = new ImageIcon("icons/Game panel/log.png");
+	    respondingunits.setIcon(DIcon);
+	    respondingunits.setAlignmentX(Component.LEFT_ALIGNMENT);
+	    label4.add(respondingunits);
+	    midWest.add(Box.createRigidArea(new Dimension(0,10)));
+	    
 		midWestTop = new JPanel();
 		midWestTop.setLayout(new BoxLayout(midWestTop, BoxLayout.LINE_AXIS));
 		midWestTop.setSize(500, 675/2);
@@ -157,6 +178,18 @@ public class Game extends JFrame implements MouseListener{
 		midWest.add(midWestTop);
 		
 		midWest.add(Box.createRigidArea(new Dimension(0,25)));
+		
+		label5 = new JPanel();
+	    label5.setLayout(new BoxLayout(label5, BoxLayout.LINE_AXIS));
+	    label5.setOpaque(false);
+	    label5.setSize(300, 16);
+	    midWest.add(label5);
+	    respondingunits = new JLabel("",JLabel.LEFT);
+	    ImageIcon EIcon = new ImageIcon("icons/Game panel/info.png");
+	    respondingunits.setIcon(EIcon);
+	    respondingunits.setAlignmentX(Component.LEFT_ALIGNMENT);
+	    label5.add(respondingunits);
+	    midWest.add(Box.createRigidArea(new Dimension(0,10)));
 		
 		midWestBottom = new JPanel();
 		midWestBottom.setLayout(new BoxLayout(midWestBottom, BoxLayout.LINE_AXIS));
@@ -232,13 +265,57 @@ public class Game extends JFrame implements MouseListener{
 	MidArea.add(midEast);
 	midEast.add(Box.createRigidArea(new Dimension(0,10)));
 		//Middle east contents
+		label1 = new JPanel();
+		label1.setLayout(new BoxLayout(label1, BoxLayout.LINE_AXIS));
+		label1.setOpaque(false);
+		label1.setSize(300, 16);
+		midEast.add(label1);
+		availableUnits = new JLabel("",JLabel.LEFT);
+		ImageIcon AIcon = new ImageIcon("icons/Game panel/Available Units.png");
+		availableUnits.setIcon(AIcon);
+		availableUnits.setAlignmentX(Component.LEFT_ALIGNMENT);
+		label1.add(availableUnits);
+		midEast.add(Box.createRigidArea(new Dimension(0,10)));
+	
 		midEastTop = new JPanel();
 		midEastTop.setLayout(new BoxLayout(midEastTop, BoxLayout.LINE_AXIS));
 		midEastTop.setSize(500, 675/2);
 		midEastTop.setOpaque(false);
 		midEast.add(midEastTop);
 		
-		midEast.add(Box.createRigidArea(new Dimension(0,25)));
+		midEast.add(Box.createRigidArea(new Dimension(0,30)));
+		
+		label2 = new JPanel();
+		label2.setLayout(new BoxLayout(label2, BoxLayout.LINE_AXIS));
+		label2.setOpaque(false);
+		label2.setSize(300, 16);
+		midEast.add(label2);
+		respondingunits = new JLabel("",JLabel.LEFT);
+		ImageIcon BIcon = new ImageIcon("icons/Game panel/respondingunits.png");
+		respondingunits.setIcon(BIcon);
+		respondingunits.setAlignmentX(Component.LEFT_ALIGNMENT);
+		label2.add(respondingunits);
+		midEast.add(Box.createRigidArea(new Dimension(0,10)));
+		
+		midEastCenter = new JPanel();
+		midEastCenter.setLayout(new BoxLayout(midEastCenter, BoxLayout.LINE_AXIS));
+		midEastCenter.setSize(500, 675/2);
+		midEastCenter.setOpaque(false);
+		midEast.add(midEastCenter);
+		
+		midEast.add(Box.createRigidArea(new Dimension(0,30)));
+		
+		label3 = new JPanel();
+		label3.setLayout(new BoxLayout(label3, BoxLayout.LINE_AXIS));
+		label3.setOpaque(false);
+		label3.setSize(300, 16);
+		midEast.add(label3);
+		respondingunits = new JLabel("",JLabel.LEFT);
+		ImageIcon CIcon = new ImageIcon("icons/Game panel/treatingunits.png");
+		respondingunits.setIcon(CIcon);
+		respondingunits.setAlignmentX(Component.LEFT_ALIGNMENT);
+		label3.add(respondingunits);
+		midEast.add(Box.createRigidArea(new Dimension(0,10)));
 		
 		midEastBottom = new JPanel();
 		midEastBottom.setLayout(new BoxLayout(midEastBottom, BoxLayout.LINE_AXIS));
@@ -247,14 +324,19 @@ public class Game extends JFrame implements MouseListener{
 		midEast.add(midEastBottom);
 		
 			//Middle east Top contents
-			unitPanel = new ImagePanel("icons/Game panel/InfoPanel.png");
+			unitPanel = new ImagePanel("icons/Game panel/UnitPanel.png");
 			unitPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
 			midEastTop.add(unitPanel);
 			midEastTop.add(Box.createRigidArea(new Dimension(10,0)));
-
+			
+			//Middle east Center contents
+			unitPanel3 = new ImagePanel("icons/Game panel/UnitPanel.png");
+			unitPanel3.setAlignmentX(Component.RIGHT_ALIGNMENT);
+			midEastCenter.add(unitPanel3);
+			midEastCenter.add(Box.createRigidArea(new Dimension(10,0)));
 			
 			//Middle east Bottom contents
-			unitPanel2 = new ImagePanel("icons/Game panel/InfoPanel.png");
+			unitPanel2 = new ImagePanel("icons/Game panel/UnitPanel.png");
 			unitPanel2.setAlignmentX(Component.RIGHT_ALIGNMENT);
 			midEastBottom.add(unitPanel2);
 			midEastBottom.add(Box.createRigidArea(new Dimension(10,0)));
@@ -333,15 +415,7 @@ public class Game extends JFrame implements MouseListener{
 		
 	}
 	
-	public void FillSelectorB(JComboBox BB) {
-		ArrayList<String> vis = new ArrayList();
-		for(ResidentialBuilding currBuilding: Game.getVisibleBuildings()) {
-			if(currBuilding.getLocation().getX() == currCell.getXI() && 
-					currBuilding.getLocation().getY() == currCell.getYI()) {
-				vis.add("Building");
-			}
-		}
-	}
+		
 
 }
 

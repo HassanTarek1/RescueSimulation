@@ -159,12 +159,12 @@ public class MainMenu extends JFrame implements MouseListener{
 			click++;
 			
 			if(click == 5) {
-				ImageIcon tIcon = new ImageIcon("icons/5.png");
+				ImageIcon tIcon = new ImageIcon("icons/main menu/5.png");
 				Title.setIcon(tIcon);
 			}
 			
 			if(click == 10) {
-				ImageIcon tIcon = new ImageIcon("icons/10.png");
+				ImageIcon tIcon = new ImageIcon("icons/main menu/10.png");
 				Title.setIcon(tIcon);
 			}
 			
