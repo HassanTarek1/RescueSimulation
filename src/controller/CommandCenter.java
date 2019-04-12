@@ -1,5 +1,7 @@
 package controller;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import model.events.SOSListener;
@@ -8,9 +10,11 @@ import model.people.Citizen;
 import model.units.Unit;
 import simulation.Rescuable;
 import simulation.Simulator;
+import view.GameGUI;
 
 public class CommandCenter implements SOSListener{
 	private Simulator engine;
+	private GameGUI GUI;
 	
 	private ArrayList<ResidentialBuilding> visibleBuildings;
 	
@@ -24,6 +28,8 @@ public class CommandCenter implements SOSListener{
 		visibleBuildings = new ArrayList<>();
 		visibleCitizens = new ArrayList<>();
 		emergencyUnits = new ArrayList<>();
+		GUI = new GameGUI(this);
+		
 	}
 
 	
@@ -37,5 +43,8 @@ public class CommandCenter implements SOSListener{
 			return;
 		}
 		
-	}	
+	}
+
+
+	
 }
