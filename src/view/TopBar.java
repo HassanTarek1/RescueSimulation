@@ -8,36 +8,55 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class TopBar extends ImagePanel{
 	private MouseListener listener;
 	private Button muteButton;
 	private Button backButton;
+	private Button endCycle;
+	
 	public TopBar(String img,MouseListener e) {
 		super(img);
 		listener = e;
 		setSize(1425,60);
-		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+		setLayout(null);
 		
 		//Buttons
 			//Back
 			backButton = new Button("icons/Game panel/BackButton.png");
 			backButton.addMouseListener(listener);
-			backButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-			add(Box.createRigidArea(new Dimension(15,0)));
+			//backButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+			//add(Box.createRigidArea(new Dimension(15,0)));
 			add(backButton);
-			
+			backButton.setLocation(10, 0);
+			backButton.setSize(60,60);
 			//Mute
 			muteButton=new Button("icons/Game panel/Mute.png");
 			//muteButton.addMouseListener(this);
 			muteButton.setAlignmentX(Component.LEFT_ALIGNMENT);
 			add(Box.createRigidArea(new Dimension(15,0)));
 			add(muteButton);
+			
+			//endCycle
+			endCycle=new Button("icons/Game panel/endCycle.png");
+			endCycle.addMouseListener(listener);
+			//endCycle.setAlignmentX(Component.LEFT_ALIGNMENT);
+			//add(Box.createRigidArea(new Dimension(15,0)));
+			this.add(endCycle);
+			endCycle.setLocation(1150, 0);
+			endCycle.setSize(210,90);;
 	}
 	public Button getMuteButton() {
 		return muteButton;
 	}
 	public Button getBackButton() {
 		return backButton;
+	}
+	public MouseListener getListener() {
+		return listener;
+	}
+	public Button getEndCycle() {
+		return endCycle;
 	}
 }

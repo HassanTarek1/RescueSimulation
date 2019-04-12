@@ -52,6 +52,10 @@ public class MainMenu extends JFrame implements MouseListener{
 	private int click = 0;
 	private GameGUI game;
 	
+	public GameGUI getGame() {
+		return game;
+	}
+
 	public CommandCenter getController() {
 		return controller;
 	}
@@ -72,7 +76,13 @@ public class MainMenu extends JFrame implements MouseListener{
 		ImageIcon icon = new ImageIcon("icons/MainIcon.jpg");
 		setIconImage(icon.getImage());
 		this.controller = controller;	
-
+		try {
+			game=new GameGUI(controller);
+			game.setVisible(false);
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		
 		//Main Panel
 		panel = new ImagePanel("icons/Main menu/Main Menu Background(empty).png");
@@ -149,8 +159,12 @@ public class MainMenu extends JFrame implements MouseListener{
 		}
 		add(AboutPanel);
 		add(panel);
+		
 		setVisible(true);
 		this.setLocationRelativeTo(null);
+		
+		//music
+		game.getGameMusic().stop();;
 		try {
 			intro =PlaySound("sounds/intro.wav");
 			FloatControl volume= (FloatControl) intro.getControl(FloatControl.Type.MASTER_GAIN); 
@@ -195,7 +209,9 @@ public class MainMenu extends JFrame implements MouseListener{
 			intro.stop();
 			
 			try {
-				game = new GameGUI(this.getController());
+				game.setVisible(true);
+				game.getGameMusic().start();
+				game.getGameMusic().loop(Clip.LOOP_CONTINUOUSLY);
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}

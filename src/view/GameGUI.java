@@ -23,6 +23,9 @@ public class GameGUI extends JFrame implements MouseListener{
 	private Clip GameMusic;
 	private CommandCenter controller;
 	
+
+
+
 	public CommandCenter getController() {
 		return controller;
 	}
@@ -31,6 +34,36 @@ public class GameGUI extends JFrame implements MouseListener{
 
 	public void setController(CommandCenter controller) {
 		this.controller = controller;
+	}
+
+
+
+	public MainPanel getPanel() {
+		return panel;
+	}
+
+
+
+	
+
+
+	
+	public ImageIcon[] getDayNightCycle() {
+		return DayNightCycle;
+	}
+
+
+
+	
+	public int getCurrentCycle() {
+		return CurrentCycle;
+	}
+
+
+
+	
+	public Clip getGameMusic() {
+		return GameMusic;
 	}
 
 
@@ -105,6 +138,9 @@ public class GameGUI extends JFrame implements MouseListener{
 		if(e.getSource() == panel.getTopBar().getBackButton()) {
 			panel.getTopBar().getBackButton().setIcon(new ImageIcon("icons/Game panel/BackButton1.png"));
 		}
+		else if(e.getSource() == panel.getTopBar().getEndCycle()) {
+			panel.getTopBar().getEndCycle().setIcon(new ImageIcon("icons/Game panel/endCycle1.png"));
+		}
 	}
 
 	@Override
@@ -112,6 +148,9 @@ public class GameGUI extends JFrame implements MouseListener{
 		// TODO Auto-generated method stub
 		if(e.getSource() == panel.getTopBar().getBackButton()) {
 			panel.getTopBar().getBackButton().setIcon(new ImageIcon("icons/Game panel/BackButton.png"));
+		}
+		else if(e.getSource() == panel.getTopBar().getEndCycle()) {
+			panel.getTopBar().getEndCycle().setIcon(new ImageIcon("icons/Game panel/endCycle.png"));
 		}
 	}
 

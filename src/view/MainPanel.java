@@ -10,11 +10,17 @@ public class MainPanel extends ImagePanel{
 	private MouseListener listener;
 	private TopBar TopBar;
 	private MidArea midArea;
+	
+	//getters
 	public TopBar getTopBar() {
 		return TopBar;
 	}
 	public MidArea getMidArea() {
 		return midArea;
+	}
+	
+	public MouseListener getListener() {
+		return listener;
 	}
 	public MainPanel(String img,MouseListener e) {
 		super(img);

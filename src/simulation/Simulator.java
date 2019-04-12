@@ -247,6 +247,7 @@ public class Simulator implements WorldListener{
 				executedDisasters.add(currDisaster);
 				currDisaster.strike();
 				Rescuable target = currDisaster.getTarget();
+				emergencyService.receiveSOSCall(target);
 				if(target instanceof ResidentialBuilding) {
 					
 					if (currDisaster instanceof Fire) {
