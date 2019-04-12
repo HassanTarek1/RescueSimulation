@@ -26,23 +26,26 @@ public class TopBar extends ImagePanel{
 			//Back
 			backButton = new Button("icons/Game panel/BackButton.png");
 			backButton.addMouseListener(listener);
-			//backButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-			//add(Box.createRigidArea(new Dimension(15,0)));
+			backButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+			add(Box.createRigidArea(new Dimension(15,0)));
 			add(backButton);
 			backButton.setLocation(10, 0);
 			backButton.setSize(60,60);
+			
 			//Mute
-			muteButton=new Button("icons/Game panel/Mute.png");
-			//muteButton.addMouseListener(this);
+			muteButton=new Button("icons/Game panel/mute.png");
+			muteButton.addMouseListener(listener);
 			muteButton.setAlignmentX(Component.LEFT_ALIGNMENT);
 			add(Box.createRigidArea(new Dimension(15,0)));
 			add(muteButton);
+			muteButton.setLocation(120, 12);
+			muteButton.setSize(40,40);
 			
 			//endCycle
 			endCycle=new Button("icons/Game panel/endCycle.png");
 			endCycle.addMouseListener(listener);
-			//endCycle.setAlignmentX(Component.LEFT_ALIGNMENT);
-			//add(Box.createRigidArea(new Dimension(15,0)));
+			endCycle.setAlignmentX(Component.LEFT_ALIGNMENT);
+			add(Box.createRigidArea(new Dimension(15,0)));
 			this.add(endCycle);
 			endCycle.setLocation(1150, 0);
 			endCycle.setSize(210,90);;
