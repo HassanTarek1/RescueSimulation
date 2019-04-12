@@ -17,15 +17,27 @@ import javax.swing.JFrame;
 import controller.CommandCenter;
 
 public class GameGUI extends JFrame implements MouseListener{
-	private CommandCenter controller;
 	private MainPanel panel;
 	private ImageIcon[] DayNightCycle;
 	private int CurrentCycle = 0;
 	private Clip GameMusic;
+	private CommandCenter controller;
 	
+	public CommandCenter getController() {
+		return controller;
+	}
+
+
+
+	public void setController(CommandCenter controller) {
+		this.controller = controller;
+	}
+
+
+
 	public GameGUI(CommandCenter Controller) throws Exception {
-	this.controller = controller;	
 	this.setSize(1425,802);
+	this.setController(controller);
 	ImageIcon icon = new ImageIcon("icons/MainIcon.jpg");
 	setIconImage(icon.getImage());
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,7 +93,7 @@ public class GameGUI extends JFrame implements MouseListener{
 		// TODO Auto-generated method stub
 		if(e.getSource() == panel.getTopBar().getBackButton()) {
 			GameMusic.stop();
-			MainMenu menu=new MainMenu();
+			MainMenu menu=new MainMenu(this.getController());
 			this.dispose();
 		}		
 		

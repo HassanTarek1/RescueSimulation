@@ -28,6 +28,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controller.CommandCenter;
+
 
 //import javazoom.jl.decoder.JavaLayerException;
 //import javazoom.jl.player.Player;
@@ -38,7 +40,7 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("restriction")
 public class MainMenu extends JFrame implements MouseListener{
-	
+	private CommandCenter controller;
 	private ImagePanel panel;
 	private About AboutPanel;
 	private JLabel Title;
@@ -49,8 +51,16 @@ public class MainMenu extends JFrame implements MouseListener{
 	private Clip intro;
 	private int click = 0;
 	
+	public CommandCenter getController() {
+		return controller;
+	}
+
+	public void setController(CommandCenter controller) {
+		this.controller = controller;
+	}
+	
 	@SuppressWarnings("resource")
-	public MainMenu() {
+	public MainMenu(CommandCenter Controller) {
 		
 		//Frame
 		setSize(1280, 720);
@@ -60,7 +70,8 @@ public class MainMenu extends JFrame implements MouseListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ImageIcon icon = new ImageIcon("icons/MainIcon.jpg");
 		setIconImage(icon.getImage());
-		
+		this.controller = controller;	
+
 		
 		//Main Panel
 		panel = new ImagePanel("icons/Main menu/Main Menu Background(empty).png");
@@ -173,17 +184,17 @@ public class MainMenu extends JFrame implements MouseListener{
 			}
 		}
 		
-//		else if(temp == NewGame) {
-//			intro.stop();
-//			
-//			try {
-//				Game game = new Game();
-//			} catch (Exception e1) {
-//				e1.printStackTrace();
-//			}
-//			this.dispose();
-//			
-//		}
+		else if(temp == NewGame) {
+			intro.stop();
+			
+			try {
+				GameGUI game = new GameGUI(this.getController());
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			this.dispose();
+			
+		}
 		else if (temp == About) {
 			panel.setVisible(false);
 			AboutPanel.setVisible(true);
@@ -301,6 +312,7 @@ public class MainMenu extends JFrame implements MouseListener{
 	
 	
 	}
+	
 	
 	public Clip PlaySound(String dir) throws UnsupportedAudioFileException, IOException, LineUnavailableException {    
 		AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(dir).getAbsoluteFile());

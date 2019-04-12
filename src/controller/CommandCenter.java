@@ -11,10 +11,11 @@ import model.units.Unit;
 import simulation.Rescuable;
 import simulation.Simulator;
 import view.GameGUI;
+import view.MainMenu;
 
 public class CommandCenter implements SOSListener{
 	private Simulator engine;
-	private GameGUI GUI;
+	private MainMenu GUI;
 	
 	private ArrayList<ResidentialBuilding> visibleBuildings;
 	
@@ -28,7 +29,7 @@ public class CommandCenter implements SOSListener{
 		visibleBuildings = new ArrayList<>();
 		visibleCitizens = new ArrayList<>();
 		emergencyUnits = new ArrayList<>();
-		GUI = new GameGUI(this);
+		GUI = new MainMenu(this);
 		
 	}
 

@@ -4,7 +4,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseListener;
-import java.net.http.WebSocket.Listener;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
