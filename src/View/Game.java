@@ -333,15 +333,15 @@ public class Game extends JFrame implements MouseListener{
 		
 	}
 	
-	public void FillSelectorB(JComboBox BB) {
-		ArrayList<String> vis = new ArrayList();
-		for(ResidentialBuilding currBuilding: Game.getVisibleBuildings()) {
-			if(currBuilding.getLocation().getX() == currCell.getXI() && 
-					currBuilding.getLocation().getY() == currCell.getYI()) {
-				vis.add("Building");
-			}
-		}
-	}
+//	public void FillSelectorB(JComboBox BB) {
+//		ArrayList<String> vis = new ArrayList();
+//		for(ResidentialBuilding currBuilding: Game.getVisibleBuildings()) {
+//			if(currBuilding.getLocation().getX() == currCell.getXI() && 
+//					currBuilding.getLocation().getY() == currCell.getYI()) {
+//				vis.add("Building");
+//			}
+//		}
+//	}
 
 }
 
