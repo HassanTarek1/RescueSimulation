@@ -34,7 +34,7 @@ public class Grid extends JPanel{
 		for (int i = 0; i < 10; i++) {
 			
 			for (int j = 0; j < 10; j++) {
-				Cell cell = new Cell("icons/Game panel/green.png",i,j);
+				Cell cell = new Cell("icons/Game panel/citizen.png",i,j);
 				cell.addMouseListener(listener);
 				//TODO add properties to each cell later
 				constraints.gridx = i;

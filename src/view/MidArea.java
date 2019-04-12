@@ -11,6 +11,27 @@ public class MidArea extends JPanel{
 	private MidWest midWest;
 	private Grid midGrid;
 	private MiddleEast middleEast;
+	
+	//getters
+	
+	public MouseListener getListener() {
+		return listener;
+	}
+
+	
+	public MidWest getMidWest() {
+		return midWest;
+	}
+
+	
+	public Grid getMidGrid() {
+		return midGrid;
+	}
+
+	public MiddleEast getMiddleEast() {
+		return middleEast;
+	}
+
 	public MidArea(MouseListener e) {
 		super();
 		listener = e;
@@ -30,4 +51,5 @@ public class MidArea extends JPanel{
 		middleEast = new MiddleEast();
 		add(middleEast);
 	}
-}
+
+	}
