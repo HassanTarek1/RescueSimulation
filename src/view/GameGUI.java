@@ -36,7 +36,7 @@ public class GameGUI extends JFrame implements MouseListener{
 
 
 	public GameGUI(CommandCenter Controller) throws Exception {
-	this.setSize(1425,802);
+	this.setSize(1366,802);
 	this.setController(controller);
 	ImageIcon icon = new ImageIcon("icons/MainIcon.jpg");
 	setIconImage(icon.getImage());
