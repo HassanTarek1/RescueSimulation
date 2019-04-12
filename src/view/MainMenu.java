@@ -50,7 +50,6 @@ public class MainMenu extends JFrame implements MouseListener{
 	private JLabel Quit;
 	private Clip intro;
 	private int click = 0;
-	private GameGUI game;
 	
 	public CommandCenter getController() {
 		return controller;
@@ -141,12 +140,6 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		
 		//visibility
-		try {
-			
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		add(AboutPanel);
 		add(panel);
 		setVisible(true);
@@ -195,7 +188,7 @@ public class MainMenu extends JFrame implements MouseListener{
 			intro.stop();
 			
 			try {
-				game = new GameGUI(this.getController());
+				GameGUI game = new GameGUI(this.getController());
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}

@@ -20,28 +20,28 @@ public class MiddleEast extends JPanel{
 		setSize(500, 675);
 		setOpaque(false);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		add(Box.createRigidArea(new Dimension(0,0)));
+		add(Box.createRigidArea(new Dimension(0,10)));
 		
 		//Contents
 		availableUnits = new WrappedLabel("","icons/Game panel/Available Units.png");
 		add(availableUnits);
-		add(Box.createRigidArea(new Dimension(0,0)));
+		add(Box.createRigidArea(new Dimension(0,10)));
 		
 		top = new MiddleEastTop();
 		add(top);
-		add(Box.createRigidArea(new Dimension(0,0)));
+		add(Box.createRigidArea(new Dimension(0,30)));
 		
 		respondingUnits = new WrappedLabel("","icons/Game panel/respondingunits.png");
 		add(respondingUnits);
-		add(Box.createRigidArea(new Dimension(0,0)));
+		add(Box.createRigidArea(new Dimension(0,10)));
 		
 		center = new MiddleEastCenter();
 		add(center);
-		add(Box.createRigidArea(new Dimension(0,0)));
+		add(Box.createRigidArea(new Dimension(0,30)));
 		
 		treatingUnits = new WrappedLabel("","icons/Game panel/treatingunits.png");
 		add(treatingUnits);
-		add(Box.createRigidArea(new Dimension(0,0)));
+		add(Box.createRigidArea(new Dimension(0,10)));
 		
 		bottom = new MiddleEastBottom();
 		add(bottom);
