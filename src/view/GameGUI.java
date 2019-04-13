@@ -128,7 +128,19 @@ public class GameGUI extends JFrame implements MouseListener{
 			GameMusic.stop();
 			MainMenu menu=new MainMenu(this.getController());
 			this.dispose();
-		}		
+		}
+		else if(e.getSource() == panel.getTopBar().getMuteButton()) {
+			Button mute=panel.getTopBar().getMuteButton();
+			if(GameMusic.isActive()) {
+				mute.setIcon(new ImageIcon("icons/Game panel/mute1.png"));
+				GameMusic.stop();
+			}
+			else {
+				mute.setIcon(new ImageIcon("icons/Game panel/mute.png"));
+				GameMusic.start();
+				GameMusic.loop(Clip.LOOP_CONTINUOUSLY);
+			}
+		}
 		
 	}
 
@@ -141,6 +153,12 @@ public class GameGUI extends JFrame implements MouseListener{
 		else if(e.getSource() == panel.getTopBar().getEndCycle()) {
 			panel.getTopBar().getEndCycle().setIcon(new ImageIcon("icons/Game panel/endCycle1.png"));
 		}
+		else if(e.getSource() == panel.getTopBar().getMuteButton()) {
+			if(GameMusic.isActive())
+				panel.getTopBar().getMuteButton().setIcon(new ImageIcon("icons/Game panel/muteB.png"));
+			else
+				panel.getTopBar().getMuteButton().setIcon(new ImageIcon("icons/Game panel/mute1B.png"));
+		}
 	}
 
 	@Override
@@ -151,6 +169,11 @@ public class GameGUI extends JFrame implements MouseListener{
 		}
 		else if(e.getSource() == panel.getTopBar().getEndCycle()) {
 			panel.getTopBar().getEndCycle().setIcon(new ImageIcon("icons/Game panel/endCycle.png"));
+		}else if(e.getSource() == panel.getTopBar().getMuteButton()) {
+			if(GameMusic.isActive())
+				panel.getTopBar().getMuteButton().setIcon(new ImageIcon("icons/Game panel/mute.png"));
+			else
+				panel.getTopBar().getMuteButton().setIcon(new ImageIcon("icons/Game panel/mute1.png"));
 		}
 	}
 
