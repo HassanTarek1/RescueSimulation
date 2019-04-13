@@ -6,7 +6,10 @@ import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -139,13 +142,27 @@ public class MainMenu extends JFrame implements MouseListener{
 		Quit.addMouseListener(this);
 		
 		//muteButton
+		
+		JPanel topLeftContainer = new JPanel();
+		GridBagConstraints constraints = new GridBagConstraints();
+		topLeftContainer.setLayout(new GridBagLayout());
+		topLeftContainer.setOpaque(false);
+		topLeftContainer.setSize(1280, 40);
+		topLeftContainer.setMaximumSize(topLeftContainer.getSize());
+		
+		constraints.weightx = 1;
+		constraints.weighty = 0.5;
+		constraints.insets = new Insets(5, 10, 0, 0);
+		constraints.anchor = GridBagConstraints.NORTHWEST;
+		
 		muteButton=new Button("icons/Game panel/mute.png");
+		topLeftContainer.add(muteButton,constraints);
 		muteButton.addMouseListener(this);
 		muteButton.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		//Layout
 		panel.add(Box.createRigidArea(new Dimension(0,5)));
-		panel.add(muteButton);
+		panel.add(topLeftContainer);
 		panel.add(Box.createRigidArea(new Dimension(0,10)));
 		panel.add(Title);
 		panel.add(Box.createRigidArea(new Dimension(0,50)));
@@ -243,10 +260,25 @@ public class MainMenu extends JFrame implements MouseListener{
 		}
 		else if(e.getSource() == muteButton) {
 			if(intro.isActive()) {
+				if(e.getSource() == muteButton)
+					
+					try {
+						PlaySound("sounds/confirm 1.wav").start();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+					}
+				
 				muteButton.setIcon(new ImageIcon("icons/Game panel/mute1.png"));
 				intro.stop();
 			}
 			else {
+				
+				try {
+					PlaySound("sounds/cancel 1.wav").start();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+				}
+				
 				muteButton.setIcon(new ImageIcon("icons/Game panel/mute.png"));
 				intro.start();
 				intro.loop(Clip.LOOP_CONTINUOUSLY);
@@ -273,7 +305,8 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		if(e.getSource() != Title) {
 			try {
-				PlaySound("sounds/Hero.wav").start();
+				if(e.getSource() != muteButton)
+					PlaySound("sounds/Hero.wav").start();	
 			} catch (UnsupportedAudioFileException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {

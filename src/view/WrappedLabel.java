@@ -20,4 +20,7 @@ public class WrappedLabel extends JPanel{
 	    label.setAlignmentX(Component.LEFT_ALIGNMENT);
 	    add(label);
 	}
+	public JLabel getLabel() {
+		return label;
+	}
 }
