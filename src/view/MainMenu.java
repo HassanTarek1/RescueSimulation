@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -27,6 +28,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SpringLayout.Constraints;
 
 import controller.CommandCenter;
 
@@ -51,6 +53,7 @@ public class MainMenu extends JFrame implements MouseListener{
 	private Clip intro;
 	private int click = 0;
 	private GameGUI game;
+	private Button muteButton;
 	
 	public GameGUI getGame() {
 		return game;
@@ -135,11 +138,17 @@ public class MainMenu extends JFrame implements MouseListener{
 		Quit.setForeground(Color.DARK_GRAY);
 		Quit.addMouseListener(this);
 		
+		//muteButton
+		muteButton=new Button("icons/Game panel/mute.png");
+		muteButton.addMouseListener(this);
+		muteButton.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		//Layout
-		panel.add(Box.createRigidArea(new Dimension(0,25)));
+		panel.add(Box.createRigidArea(new Dimension(0,5)));
+		panel.add(muteButton);
+		panel.add(Box.createRigidArea(new Dimension(0,10)));
 		panel.add(Title);
-		panel.add(Box.createRigidArea(new Dimension(0,100)));
+		panel.add(Box.createRigidArea(new Dimension(0,50)));
 		panel.add(NewGame);
 		panel.add(Box.createRigidArea(new Dimension(0,50)));
 		panel.add(Help);
@@ -147,6 +156,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		panel.add(About);
 		panel.add(Box.createRigidArea(new Dimension(0,50)));
 		panel.add(Quit);
+		
 		
 		
 		
@@ -231,6 +241,17 @@ public class MainMenu extends JFrame implements MouseListener{
 		else if (temp == Quit) {
 			System.exit(0);
 		}
+		else if(e.getSource() == muteButton) {
+			if(intro.isActive()) {
+				muteButton.setIcon(new ImageIcon("icons/Game panel/mute1.png"));
+				intro.stop();
+			}
+			else {
+				muteButton.setIcon(new ImageIcon("icons/Game panel/mute.png"));
+				intro.start();
+				intro.loop(Clip.LOOP_CONTINUOUSLY);
+			}
+		}
 		
 
 		if(temp == Title) {
@@ -295,6 +316,12 @@ public class MainMenu extends JFrame implements MouseListener{
 			ImageIcon qIcon = new ImageIcon("icons/Main menu/Quit1.png");
 			Quit.setIcon(qIcon);
 		}
+		else if(e.getSource() == muteButton) {
+			if(intro.isActive())
+				muteButton.setIcon(new ImageIcon("icons/Game panel/muteB.png"));
+			else
+				muteButton.setIcon(new ImageIcon("icons/Game panel/mute1B.png"));
+		}
 		
 		if(temp != Title) {
 			try {
@@ -331,6 +358,12 @@ public class MainMenu extends JFrame implements MouseListener{
 		else if (temp == Quit) {
 			ImageIcon qIcon = new ImageIcon("icons/Main menu/Quit.png");
 			Quit.setIcon(qIcon);
+		}
+		else if(e.getSource() == muteButton) {
+			if(intro.isActive())
+				muteButton.setIcon(new ImageIcon("icons/Game panel/mute.png"));
+			else
+				muteButton.setIcon(new ImageIcon("icons/Game panel/mute1.png"));
 		}
 	
 	
