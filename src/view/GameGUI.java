@@ -149,16 +149,55 @@ public class GameGUI extends JFrame implements MouseListener{
 		// TODO Auto-generated method stub
 		if(e.getSource() == panel.getTopBar().getBackButton()) {
 			panel.getTopBar().getBackButton().setIcon(new ImageIcon("icons/Game panel/BackButton1.png"));
+			try {
+				PlaySound("sounds/Morse.wav").start();
+			} catch (UnsupportedAudioFileException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (LineUnavailableException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		else if(e.getSource() == panel.getTopBar().getEndCycle()) {
 			panel.getTopBar().getEndCycle().setIcon(new ImageIcon("icons/Game panel/endCycle1.png"));
+			panel.getTopBar().getEndCycle().setLocation(1150,13);
+			panel.getTopBar().getEndCycle().setSize(168,35);
+			try {
+				PlaySound("sounds/Morse.wav").start();
+			} catch (UnsupportedAudioFileException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (LineUnavailableException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		else if(e.getSource() == panel.getTopBar().getMuteButton()) {
 			if(GameMusic.isActive())
 				panel.getTopBar().getMuteButton().setIcon(new ImageIcon("icons/Game panel/muteB.png"));
 			else
 				panel.getTopBar().getMuteButton().setIcon(new ImageIcon("icons/Game panel/mute1B.png"));
+			try {
+				PlaySound("sounds/Morse.wav").start();
+			} catch (UnsupportedAudioFileException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (LineUnavailableException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
+		
 	}
 
 	@Override
@@ -169,6 +208,9 @@ public class GameGUI extends JFrame implements MouseListener{
 		}
 		else if(e.getSource() == panel.getTopBar().getEndCycle()) {
 			panel.getTopBar().getEndCycle().setIcon(new ImageIcon("icons/Game panel/endCycle.png"));
+			panel.getTopBar().getEndCycle().setLocation(1150,17);
+			panel.getTopBar().getEndCycle().setSize(135,25);
+
 		}else if(e.getSource() == panel.getTopBar().getMuteButton()) {
 			if(GameMusic.isActive())
 				panel.getTopBar().getMuteButton().setIcon(new ImageIcon("icons/Game panel/mute.png"));
