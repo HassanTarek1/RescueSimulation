@@ -38,7 +38,7 @@ public class TopBar extends ImagePanel{
 			muteButton.setAlignmentX(Component.LEFT_ALIGNMENT);
 			add(Box.createRigidArea(new Dimension(15,0)));
 			add(muteButton);
-			muteButton.setLocation(120, 12);
+			muteButton.setLocation(70,10);
 			muteButton.setSize(40,40);
 			
 			//endCycle
