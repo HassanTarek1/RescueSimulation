@@ -260,10 +260,25 @@ public class MainMenu extends JFrame implements MouseListener{
 		}
 		else if(e.getSource() == muteButton) {
 			if(intro.isActive()) {
+				if(e.getSource() == muteButton)
+					
+					try {
+						PlaySound("sounds/confirm 1.wav").start();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+					}
+				
 				muteButton.setIcon(new ImageIcon("icons/Game panel/mute1.png"));
 				intro.stop();
 			}
 			else {
+				
+				try {
+					PlaySound("sounds/cancel 1.wav").start();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+				}
+				
 				muteButton.setIcon(new ImageIcon("icons/Game panel/mute.png"));
 				intro.start();
 				intro.loop(Clip.LOOP_CONTINUOUSLY);
@@ -290,7 +305,8 @@ public class MainMenu extends JFrame implements MouseListener{
 		
 		if(e.getSource() != Title) {
 			try {
-				PlaySound("sounds/Hero.wav").start();
+				if(e.getSource() != muteButton)
+					PlaySound("sounds/Hero.wav").start();	
 			} catch (UnsupportedAudioFileException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {
