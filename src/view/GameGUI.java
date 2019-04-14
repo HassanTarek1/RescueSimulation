@@ -6,6 +6,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.ResourceBundle.Control;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -15,6 +18,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import controller.CommandCenter;
+import model.infrastructure.ResidentialBuilding;
 
 public class GameGUI extends JFrame implements MouseListener{
 	private MainPanel panel;
@@ -70,7 +74,7 @@ public class GameGUI extends JFrame implements MouseListener{
 
 	public GameGUI(CommandCenter Controller) throws Exception {
 	this.setSize(1366,802);
-	this.setController(controller);
+	this.controller=Controller;
 	ImageIcon icon = new ImageIcon("icons/MainIcon.jpg");
 	setIconImage(icon.getImage());
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -93,7 +97,7 @@ public class GameGUI extends JFrame implements MouseListener{
 	}
 //---------------------------------------------------------------------------
 	//Main panel (background)(parent)
-	panel = new MainPanel("icons/Game panel/cycle0.png",this);
+	panel = new MainPanel("icons/Game panel/cycle0.png",this,controller);
 //---------------------------------------------------------------------------	
 	
 	//fill day/night cycle images
@@ -141,6 +145,10 @@ public class GameGUI extends JFrame implements MouseListener{
 				GameMusic.loop(Clip.LOOP_CONTINUOUSLY);
 			}
 		}
+		else if(e.getSource()==panel.getTopBar().getEndCycle()) {
+			CurrentCycle++;
+			nextCycleGUI();
+		}
 		
 	}
 
@@ -149,23 +157,6 @@ public class GameGUI extends JFrame implements MouseListener{
 		// TODO Auto-generated method stub
 		if(e.getSource() == panel.getTopBar().getBackButton()) {
 			panel.getTopBar().getBackButton().setIcon(new ImageIcon("icons/Game panel/BackButton1.png"));
-			try {
-				PlaySound("sounds/Morse.wav").start();
-			} catch (UnsupportedAudioFileException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (LineUnavailableException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		else if(e.getSource() == panel.getTopBar().getEndCycle()) {
-			panel.getTopBar().getEndCycle().setIcon(new ImageIcon("icons/Game panel/endCycle1.png"));
-			panel.getTopBar().getEndCycle().setLocation(1150,13);
-			panel.getTopBar().getEndCycle().setSize(168,35);
 			try {
 				PlaySound("sounds/Morse.wav").start();
 			} catch (UnsupportedAudioFileException e1) {
@@ -206,12 +197,7 @@ public class GameGUI extends JFrame implements MouseListener{
 		if(e.getSource() == panel.getTopBar().getBackButton()) {
 			panel.getTopBar().getBackButton().setIcon(new ImageIcon("icons/Game panel/BackButton.png"));
 		}
-		else if(e.getSource() == panel.getTopBar().getEndCycle()) {
-			panel.getTopBar().getEndCycle().setIcon(new ImageIcon("icons/Game panel/endCycle.png"));
-			panel.getTopBar().getEndCycle().setLocation(1150,17);
-			panel.getTopBar().getEndCycle().setSize(135,25);
-
-		}else if(e.getSource() == panel.getTopBar().getMuteButton()) {
+		else if(e.getSource() == panel.getTopBar().getMuteButton()) {
 			if(GameMusic.isActive())
 				panel.getTopBar().getMuteButton().setIcon(new ImageIcon("icons/Game panel/mute.png"));
 			else
@@ -230,6 +216,14 @@ public class GameGUI extends JFrame implements MouseListener{
 	public void mouseReleased(MouseEvent e) {
 		if(e.getSource() instanceof Cell)
 			((ImagePanel) e.getSource()).setImage(new ImageIcon("icons/Game panel/green.png"));
+		
+	}
+	public void nextCycleGUI() {
+		CurrentCycle++;
+		UpdateCycleImg(panel);
+		
+		controller.updateCitizens(this);
+		controller.updateBuildings(this);
 		
 	}
 	

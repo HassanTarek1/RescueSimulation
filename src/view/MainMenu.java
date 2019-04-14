@@ -81,7 +81,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ImageIcon icon = new ImageIcon("icons/MainIcon.jpg");
 		setIconImage(icon.getImage());
-		this.controller = controller;	
+		this.controller = Controller;	
 		try {
 			game=new GameGUI(controller);
 			game.setVisible(false);

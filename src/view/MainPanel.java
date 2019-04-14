@@ -10,6 +10,7 @@ public class MainPanel extends ImagePanel{
 	private MouseListener listener;
 	private TopBar TopBar;
 	private MidArea midArea;
+	private MouseListener cont;
 	
 	//getters
 	public TopBar getTopBar() {
@@ -22,14 +23,14 @@ public class MainPanel extends ImagePanel{
 	public MouseListener getListener() {
 		return listener;
 	}
-	public MainPanel(String img,MouseListener e) {
+	public MainPanel(String img,MouseListener e,MouseListener cont) {
 		super(img);
 		listener = e;
 		setSize(1425,802);
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		
+		this.cont=cont;
 		//TopBar
-		TopBar = new TopBar("icons/Game panel/Bar5.png",listener);
+		TopBar = new TopBar("icons/Game panel/Bar5.png",listener,cont);
 		add(TopBar);
 		add(Box.createRigidArea(new Dimension(0,10)));
 

@@ -15,12 +15,13 @@ public class TopBar extends ImagePanel{
 	private Button muteButton;
 	private Button backButton;
 	private Button endCycle;
-	
-	public TopBar(String img,MouseListener e) {
+	private MouseListener cont;
+	public TopBar(String img,MouseListener e,MouseListener cont) {
 		super(img);
 		listener = e;
 		setSize(1425,60);
 		setLayout(null);
+		this.cont=cont;
 		
 		//Buttons
 			//Back
@@ -43,12 +44,13 @@ public class TopBar extends ImagePanel{
 			
 			//endCycle
 			endCycle=new Button("icons/Game panel/endCycle.png");
-			endCycle.addMouseListener(listener);
+			//endCycle.addMouseListener(listener);
 			endCycle.setAlignmentX(Component.LEFT_ALIGNMENT);
 			add(Box.createRigidArea(new Dimension(15,0)));
 			this.add(endCycle);
 			endCycle.setLocation(1150,17);
 			endCycle.setSize(135,25);;
+			endCycle.addMouseListener(cont);
 	}
 	public Button getMuteButton() {
 		return muteButton;

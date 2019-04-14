@@ -21,4 +21,7 @@ public class MidWestTop extends JPanel{
 		
 		
 	}
+	public LogPanel getLog() {
+		return log;
+	}
 }

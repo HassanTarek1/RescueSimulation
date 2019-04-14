@@ -38,7 +38,7 @@ public class Simulator implements WorldListener{
 	private Address[][]world ;
 	private SOSListener emergencyService;
 	
-	//constructor:
+		//constructor:
 	public Simulator() {}
 	public Simulator(SOSListener emergencyService) throws Exception {
 		
@@ -247,7 +247,6 @@ public class Simulator implements WorldListener{
 				executedDisasters.add(currDisaster);
 				currDisaster.strike();
 				Rescuable target = currDisaster.getTarget();
-				emergencyService.receiveSOSCall(target);
 				if(target instanceof ResidentialBuilding) {
 					
 					if (currDisaster instanceof Fire) {

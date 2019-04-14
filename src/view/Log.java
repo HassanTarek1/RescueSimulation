@@ -2,21 +2,27 @@ package view;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.ScrollPane;
+import java.awt.TextArea;
 
 import javax.swing.Box;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 
-public class Log extends JTextArea{
-	public Log() {
-		super();
-		setSize(500, 216);
-		setEditable(false);
+public class Log extends JScrollPane{
+	public Log(JTextArea text) {
+		super(text);
 		setPreferredSize(this.getSize());
 		setMaximumSize(this.getPreferredSize());
+		
+		this.setWheelScrollingEnabled(true);
+		
 		add(Box.createRigidArea(new Dimension(0,50)));
 		add(Box.createRigidArea(new Dimension(50,0)));
 		setAlignmentX(Component.CENTER_ALIGNMENT);
+		this.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	}
 
 }

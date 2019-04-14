@@ -37,4 +37,16 @@ public class MidWest extends JPanel{
 		add(bottom);
 		
 	}
+	public MidWestTop getTop() {
+		return top;
+	}
+	public MidWestBottom getBottom() {
+		return bottom;
+	}
+	public WrappedLabel getLog() {
+		return Log;
+	}
+	public WrappedLabel getInfo() {
+		return info;
+	}
 }

@@ -1,5 +1,6 @@
 package model.disasters;
 
+
 import exceptions.BuildingAlreadyCollapsedException;
 import model.infrastructure.ResidentialBuilding;
 
@@ -26,6 +27,10 @@ public class Collapse extends Disaster{
 	}
 	public void cycleStep() throws BuildingAlreadyCollapsedException {
 		strike();
+	}
+	
+	public String toString() {
+		return "Collapse on Building in location "+ this.getTarget().getLocation();
 	}
 	
 }

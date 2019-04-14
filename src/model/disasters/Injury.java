@@ -27,4 +27,7 @@ public class Injury extends Disaster{
 		target.setBloodLoss(oldBlood+10);
 
 	}
+	public String toString() {
+		return "Injury on Citizen in location "+ this.getTarget().getLocation();
+	}
 }

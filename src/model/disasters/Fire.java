@@ -24,5 +24,8 @@ public class Fire extends Disaster {
 	public void cycleStep() throws BuildingAlreadyCollapsedException {
 		strike();
 	}
+	public String toString() {
+		return "Fire on Building in location "+ this.getTarget().getLocation();
+	}
 
 }
