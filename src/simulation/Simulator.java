@@ -244,6 +244,7 @@ public class Simulator implements WorldListener{
 			
 			if(currDisaster.getStartCycle() == currentCycle) {
 				plannedDisasters.remove(i);
+				i--;
 				executedDisasters.add(currDisaster);
 				currDisaster.strike();
 				Rescuable target = currDisaster.getTarget();
