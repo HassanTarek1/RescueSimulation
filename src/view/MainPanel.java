@@ -35,7 +35,7 @@ public class MainPanel extends ImagePanel{
 		add(Box.createRigidArea(new Dimension(0,10)));
 
 		//Mid Area
-		midArea = new MidArea(listener);
+		midArea = new MidArea(listener,cont);
 		add(midArea);
 		
 	}

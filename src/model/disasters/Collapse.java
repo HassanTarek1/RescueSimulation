@@ -30,7 +30,7 @@ public class Collapse extends Disaster{
 	}
 	
 	public String toString() {
-		return "Collapse on Building in location "+ this.getTarget().getLocation();
+		return "Collapse on Building ";
 	}
 	
 }

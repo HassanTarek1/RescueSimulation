@@ -145,10 +145,7 @@ public class GameGUI extends JFrame implements MouseListener{
 				GameMusic.loop(Clip.LOOP_CONTINUOUSLY);
 			}
 		}
-		else if(e.getSource()==panel.getTopBar().getEndCycle()) {
-			CurrentCycle++;
-			nextCycleGUI();
-		}
+		
 		
 	}
 
@@ -208,20 +205,16 @@ public class GameGUI extends JFrame implements MouseListener{
 	@Override
 	public void mousePressed(MouseEvent e) {
 		
-		if(e.getSource() instanceof Cell)
-			((ImagePanel) e.getSource()).setImage(new ImageIcon("icons/Game panel/green_pressed.png"));
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if(e.getSource() instanceof Cell)
-			((ImagePanel) e.getSource()).setImage(new ImageIcon("icons/Game panel/green.png"));
+		
 		
 	}
 	public void nextCycleGUI() {
-		CurrentCycle++;
+		this.CurrentCycle+=1;
 		UpdateCycleImg(panel);
-		
 		controller.updateCitizens(this);
 		controller.updateBuildings(this);
 		

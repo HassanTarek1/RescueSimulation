@@ -23,6 +23,8 @@ public class Log extends JScrollPane{
 		add(Box.createRigidArea(new Dimension(50,0)));
 		setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		this.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 	}
+
 
 }

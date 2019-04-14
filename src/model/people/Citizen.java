@@ -166,6 +166,24 @@ public class Citizen implements Simulatable,Rescuable{
 			this.state = CitizenState.IN_TROUBLE;
 		
 	}
+	public String toString() {
+		String s="This Citizen is located in : "+location.toString()+"\n"+
+	"Name : "+name+"\n"+"Age : "+age+"\n"+"National ID : "+nationalID+"\n"+
+				"Citizen's hp : "+hp+"\n"+"Citizen's blood loss : "+bloodLoss+"\n"+
+	"Citizen's toxicity : "+toxicity+"\n"+"Citizen's state : "+state+"\n";
+		if (this.getDisaster()!=null) 
+			s+="Citizen's disaster : "+this.getDisaster().toString();
+		return s;
+	}
+	public String occupant() {
+		String s="Name : "+name+"\n"+"Age : "+age+"\n"+"National ID : "+nationalID+"\n"+
+				"Citizen's hp : "+hp+"\n"+"Citizen's blood loss : "+bloodLoss+"\n"+
+				"Citizen's toxicity : "+toxicity+"\n"+"Citizen's state : "+state+"\n";
+		if (this.getDisaster()!=null) 
+			s+="Citizen's disaster : "+this.getDisaster().toString()+"\n";
+		s+="-----------------"+"\n";
+		return s;
+	}
 	
 	
 //constructor(s):

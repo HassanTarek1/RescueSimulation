@@ -11,7 +11,9 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 
+import com.sun.prism.Image;
 
 import exceptions.BuildingAlreadyCollapsedException;
 import exceptions.DisasterException;
@@ -38,13 +40,10 @@ public class CommandCenter implements SOSListener, MouseListener {
 	
 	public CommandCenter() throws Exception {
 		engine = new Simulator(this);
-		visibleBuildings = new ArrayList<>();
-		visibleCitizens = new ArrayList<>();
-		emergencyUnits = new ArrayList<>();
+		visibleBuildings = new ArrayList<ResidentialBuilding>();
+		visibleCitizens = new ArrayList<Citizen>();
+		emergencyUnits = new ArrayList<Unit>();
 		GUI = new MainMenu(this);
-		GameGUI game=GUI.getGame();
-		updateCitizens(game);
-		updateBuildings(game);
 		
 		
 	}
@@ -122,6 +121,10 @@ public class CommandCenter implements SOSListener, MouseListener {
 				e1.printStackTrace();
 			}
 		}
+		else if(e.getSource() instanceof view.Cell) {
+			
+			updateInfo((view.Cell)e.getSource());
+		}
 	}
 
 
@@ -160,6 +163,7 @@ public class CommandCenter implements SOSListener, MouseListener {
 				e1.printStackTrace();
 			}
 		}
+		
 	}
 
 
@@ -175,27 +179,55 @@ public class CommandCenter implements SOSListener, MouseListener {
 		}
 	}
 	public void updateLog(GameGUI game) {
-		//System.out.println(visibleBuildings.toString());
-		System.out.println(visibleCitizens.toString());
 		logText+="  Cycle: "+ GUI.getGame().getCurrentCycle()+"\n";
 		for (Citizen citizen : visibleCitizens) {
-			//System.out.println(citizen.getDisaster());
 			if(citizen.getDisaster().isActive() && 
 					citizen.getDisaster().getStartCycle()==GUI.getGame().getCurrentCycle()) {
-			 logText=logText+"  "+citizen.getDisaster().toString()+"\n";
+			 logText=logText+"  "+citizen.getDisaster().toString()+"in location "+citizen.getLocation().toString()+"\n";
 			}
 		}
 		for (ResidentialBuilding building: visibleBuildings) {
 			if(building.getDisaster().isActive() && 
 					building.getDisaster().getStartCycle()==GUI.getGame().getCurrentCycle()) {
-				logText=logText+"  "+building.getDisaster().toString()+"\n";
+				logText=logText+"  "+building.getDisaster().toString()+"in location "+building.getLocation().toString()+"\n";
 			}
 		}
 		logText+="------------------------------------------"+"\n";
-		game.getPanel().getMidArea().getMidWest().getTop().getLog().getLogTextArea().setText(logText);
+		JTextArea logTextArea=game.getPanel().getMidArea().getMidWest().getTop().getLog().getLogTextArea();
+		logTextArea.setText(logText);
+		logTextArea.setSize(logTextArea.getSize().width,logTextArea.getSize().height+10);
 	}
-	
-
+	public void updateInfo(view.Cell cell) {
+		String s="";
+		int x=cell.getIndxX();
+		int y=cell.getIndxY();
+		Citizen c=citizenInCell(x, y);
+		ResidentialBuilding b=buildingInCell(x, y);
+		JTextArea text=GUI.getGame().getPanel().getMidArea().getMidWest().getBottom().getInfo().getTextArea();
+		if(c==null && b!=null) 
+			s=b.toString();
+		else if (c!=null && b==null)
+			s=c.toString();
+		else if(c!=null && b!=null)
+			s=b.toString();
+		int length=s.length();
+		text.setSize((int) text.getSize().width, text.getSize().height+length*10);
+		text.setText(s);
+	}
+	public Citizen citizenInCell(int x,int y) {
+		for (Citizen citizen :visibleCitizens ) {
+			if(x==citizen.getLocation().getX() && y==citizen.getLocation().getY())
+				return citizen;
+		}
+		return null;
+	}
+	public ResidentialBuilding buildingInCell(int x,int y) {
+		for (ResidentialBuilding building :visibleBuildings) {
+			if(x==building.getLocation().getX() && y==building.getLocation().getY())
+				return building;
+		}
+		return null;
+	}
 
 	
 }

@@ -25,7 +25,7 @@ public class Fire extends Disaster {
 		strike();
 	}
 	public String toString() {
-		return "Fire on Building in location "+ this.getTarget().getLocation();
+		return "Fire on Building ";
 	}
 
 }

@@ -7,13 +7,17 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-class ImagePanel extends JPanel {
+public class ImagePanel extends JPanel {
 
 	  private Image img;
 	  private int indxX;
 	  private int indxY;
 	  
 
+
+	public Image getImg() {
+		return img;
+	}
 
 	public int getIndxX() {
 		return indxX;
