@@ -175,11 +175,8 @@ public class CommandCenter implements SOSListener, MouseListener {
 		}
 	}
 	public void updateLog(GameGUI game) {
-		//System.out.println(visibleBuildings.toString());
-		System.out.println(visibleCitizens.toString());
 		logText+="  Cycle: "+ GUI.getGame().getCurrentCycle()+"\n";
 		for (Citizen citizen : visibleCitizens) {
-			//System.out.println(citizen.getDisaster());
 			if(citizen.getDisaster().isActive() && 
 					citizen.getDisaster().getStartCycle()==GUI.getGame().getCurrentCycle()) {
 			 logText=logText+"  "+citizen.getDisaster().toString()+"\n";

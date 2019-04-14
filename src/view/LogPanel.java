@@ -14,13 +14,13 @@ public class LogPanel extends ImagePanel{
 	public LogPanel(String img) {
 		super(img);
 		logTextArea = new JTextArea();
-		logTextArea.setSize(500, 216);
+		//logTextArea.setSize(290, 257);
 		logTextArea.setPreferredSize(this.getSize());
 		logTextArea.setEditable(false);
 		logTextArea.setPreferredSize(this.getSize());
 		logTextArea.setMaximumSize(this.getPreferredSize());
+		logTextArea.setOpaque(false);
 		
-		logTextArea.setPreferredSize(this.getSize());
 		log = new Log(logTextArea);
 		
 		setLayout(new GridLayout());
