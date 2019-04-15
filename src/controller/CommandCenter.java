@@ -25,6 +25,7 @@ import simulation.Simulator;
 import view.Button;
 import view.GameGUI;
 import view.MainMenu;
+import view.WrappedLabel;
 
 public class CommandCenter implements SOSListener, MouseListener {
 	private Simulator engine;
@@ -90,7 +91,8 @@ public class CommandCenter implements SOSListener, MouseListener {
 			int xC=citizen.getLocation().getX();
 			int yC=citizen.getLocation().getY();
 			view.Cell cell=cells[xC][yC];
-			cell.setImage(new ImageIcon("icons/Game panel/citizen.png"));
+			//Button label = new Button("icons/Game panel/citizen.png");
+			cell.getCitizen().setVisible(true);
 		}
 	}
 	public void updateBuildings(GameGUI game) {
@@ -99,7 +101,8 @@ public class CommandCenter implements SOSListener, MouseListener {
 			int xC=building.getLocation().getX();
 			int yC=building.getLocation().getY();
 			view.Cell cell=cells[xC][yC];
-			cell.setImage(new ImageIcon("icons/Game panel/building.png"));
+//			cell.setImage(new ImageIcon("icons/Game panel/building.png"));
+			cell.getBuilding().setVisible(true);
 		}
 	}
 
@@ -178,7 +181,8 @@ public class CommandCenter implements SOSListener, MouseListener {
 		}
 	}
 	public void updateLog(GameGUI game) {
-		logText+="  Cycle: "+ GUI.getGame().getCurrentCycle()+"\n";
+		logText+="  Cycle: "+ GUI.getGame().getCurrentCycle()+"\n\n";
+
 		for (Citizen citizen : visibleCitizens) {
 			if(citizen.getDisaster().isActive() && 
 					citizen.getDisaster().getStartCycle()==GUI.getGame().getCurrentCycle()) {
