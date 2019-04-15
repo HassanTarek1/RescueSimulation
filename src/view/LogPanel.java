@@ -1,39 +1,39 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import java.awt.Dimension;
+import java.awt.ScrollPane;
+import java.awt.TextArea;
 
-import javax.swing.BoxLayout;
+import javax.swing.Box;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.ScrollPaneLayout;
+import javax.swing.border.LineBorder;
 
-public class LogPanel extends ImagePanel{
-	private Log log;
-	private JTextArea logTextArea;
-	public LogPanel(String img) {
-		super(img);
-		logTextArea = new JTextArea();
-		logTextArea.setSize(320, 220);
-		logTextArea.setEditable(false);
-		logTextArea.setFont(new java.awt.Font("Helvitica",1,14));
-		logTextArea.setOpaque(false);
-		
-		log = new Log(logTextArea);
-		
-		setLayout(new GridLayout());
-		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.gridx = 100;
-		constraints.gridy = 100;
-		setAlignmentX(Component.LEFT_ALIGNMENT);
-		
-		//Contents
-		add(log,constraints);
+public class LogPanel extends JScrollPane{
+private JTextArea textArea;
+	
+	public JTextArea getTextArea() {
+		return textArea;
 	}
-	public Log getLog() {
-		return log;
+
+	public LogPanel(JTextArea textArea) {
+		super(textArea);
+		this.textArea=textArea;
+		this.setSize(textArea.getSize());
+		this.setPreferredSize(this.getSize());
+		setMaximumSize(this.getPreferredSize());
+		this.setLayout(new ScrollPaneLayout());
+		this.setWheelScrollingEnabled(true);
+		setAlignmentX(Component.CENTER_ALIGNMENT);
+		this.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		this.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		//new
 	}
-	public JTextArea getLogTextArea() {
-		return logTextArea;
-	}
+
+
 }

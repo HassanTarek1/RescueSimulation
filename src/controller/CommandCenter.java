@@ -1,7 +1,7 @@
 package controller;
 
 
-import java.awt.event.MouseEvent;
+import java.awt.event.MouseEvent; 
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -195,7 +195,7 @@ public class CommandCenter implements SOSListener, MouseListener {
 			}
 		}
 		logText+="------------------------------------------"+"\n";
-		JTextArea logTextArea=game.getPanel().getMidArea().getMidWest().getTop().getLog().getLogTextArea();
+		JTextArea logTextArea=game.getPanel().getMidArea().getMidWest().getTop().getLog().getTextArea();
 		logTextArea.setText(logText);
 		logTextArea.setSize(logTextArea.getSize().width,logTextArea.getSize().height+10);
 	}
