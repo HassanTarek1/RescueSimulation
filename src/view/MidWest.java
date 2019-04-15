@@ -24,7 +24,8 @@ public class MidWest extends JPanel{
 		add(Log);
 		add(Box.createRigidArea(new Dimension(0,0)));
 		
-		top = new MidWestTop();
+		top = new MidWestTop("icons/Game panel/InfoPanel.png");
+		add(Box.createRigidArea(new Dimension(10,0)));
 		add(top);
 		add(Box.createRigidArea(new Dimension(0,0)));
 		
@@ -33,7 +34,8 @@ public class MidWest extends JPanel{
 		add(info);
 		add(Box.createRigidArea(new Dimension(0,0)));
 		
-		bottom = new MidWestBottom();
+		bottom = new MidWestBottom("icons/Game panel/InfoPanel.png");
+		add(Box.createRigidArea(new Dimension(10,0)));
 		add(bottom);
 		
 	}

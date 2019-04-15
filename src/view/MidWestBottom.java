@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.Box;
@@ -7,24 +8,28 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-public class MidWestBottom extends JPanel{
+public class MidWestBottom extends ImagePanel{
 	private InfoPanel info;
-	public MidWestBottom() {
-		super();
+	public MidWestBottom(String img) {
+		super(img);
 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 		setSize(500, 675/2);
 		setOpaque(false);
-		add(Box.createRigidArea(new Dimension(10,0)));
+		add(Box.createRigidArea(new Dimension(7,10)));
 		
 		//Contents
 		JTextArea textArea = new JTextArea();
 		textArea.setFont(new java.awt.Font("Helvitica",1,14));
 		textArea.setEditable(false);
 		textArea.setMargin(new java.awt.Insets(12, 12, 12, 12));
-		textArea.setSize(310,230);
+		textArea.setSize(320,250);
 		textArea.setEditable(false);
+		textArea.setBackground(Color.LIGHT_GRAY);
+		textArea.setForeground(Color.blue);
 		info = new InfoPanel(textArea);
+		//add(Box.createRigidArea(new Dimension(10,10)));
 		add(info);
+		add(Box.createRigidArea(new Dimension(7,10)));
 	}
 	public InfoPanel getInfo() {
 		return info;
