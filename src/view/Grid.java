@@ -11,17 +11,17 @@ import javax.swing.JPanel;
 public class Grid extends JPanel{
 	private Cell[][] Cells;
 	private MouseListener listener; 
-	
+	private MouseListener cont;
 	public Cell[][] getCells() {
 		return Cells;
 	}
 	
 	private GridBagConstraints constraints;
-	public Grid(MouseListener e) {
+	public Grid(MouseListener e,MouseListener cont) {
 		super();
 		
 		listener = e;
-		
+		this.cont=cont;
 		Cells = new Cell[10][10];
 		
 		setOpaque(false);
@@ -35,7 +35,7 @@ public class Grid extends JPanel{
 			
 			for (int j = 0; j < 10; j++) {
 				Cell cell = new Cell("icons/Game panel/green.png",i,j);
-				cell.addMouseListener(listener);
+				cell.addMouseListener(cont);
 				//TODO add properties to each cell later
 				constraints.gridx = i;
 				constraints.gridy = j;

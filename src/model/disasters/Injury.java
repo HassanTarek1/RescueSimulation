@@ -28,6 +28,6 @@ public class Injury extends Disaster{
 
 	}
 	public String toString() {
-		return "Injury on Citizen in location "+ this.getTarget().getLocation();
+		return "Injury on Citizen ";
 	}
 }

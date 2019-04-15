@@ -29,6 +29,6 @@ public class Infection extends Disaster{
 		target.setToxicity(oldToxicity+15);
 	}
 	public String toString() {
-		return "Infection on Citizen in location "+ this.getTarget().getLocation();
+		return "Infection on Citizen ";
 	}
 }

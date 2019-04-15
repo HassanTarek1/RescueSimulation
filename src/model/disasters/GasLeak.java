@@ -28,6 +28,6 @@ public class GasLeak extends Disaster{
 		target.setGasLevel(oldGasLevel+15);
 	}
 	public String toString() {
-		return "Gas leak on Building in location "+ this.getTarget().getLocation();
+		return "Gas leak on Building ";
 	}
 }

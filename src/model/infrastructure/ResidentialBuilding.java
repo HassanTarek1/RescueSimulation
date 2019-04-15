@@ -142,6 +142,24 @@ public class ResidentialBuilding implements Simulatable,Rescuable{
 		for(Citizen currCitizen : this.occupants)
 			currCitizen.setHp(0);
 	}
+	public String toString() {
+		String s ="This Building is located in "+location.toString()+"\n"+
+	"Structural Integrity : "+this.structuralIntegrity+"\n"+
+				"Fire Damage : "+fireDamage+"\n"+
+	"Gas Level : "+gasLevel+"\n"+
+				"Foundation Damage : "+foundationDamage+"\n"+
+	"Number of occupants : "+occupants.size()+"\n"+
+				"Occupants : "+"\n"+"^^^^^^^^^^^^^^^^^^^"+"\n";
+		String occ="";
+		for (Citizen citizen : occupants) {
+			s+=citizen.occupant();
+		}
+		s=s+occ;
+		s+="^^^^^^^^^^^^^^^^^"+"\n";
+		if (this.getDisaster()!=null) 
+			s+="Building's's disaster : "+this.getDisaster().toString()+"\n";
+		return s;
+	}
 	
 
 //constructor(s):
