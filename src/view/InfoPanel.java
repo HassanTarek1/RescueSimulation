@@ -12,8 +12,6 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.ScrollPaneLayout;
 
-import javafx.geometry.Insets;
-import javafx.scene.text.Font;
 
 
 public class InfoPanel extends JScrollPane{

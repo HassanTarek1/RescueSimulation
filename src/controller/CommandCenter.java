@@ -13,8 +13,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
-import com.sun.prism.Image;
-
 import exceptions.BuildingAlreadyCollapsedException;
 import exceptions.DisasterException;
 import model.events.SOSListener;
