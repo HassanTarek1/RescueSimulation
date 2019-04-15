@@ -83,7 +83,7 @@ public class GameGUI extends JFrame implements MouseListener{
 //---------------------------------------------------------------------------	
 	//Music
 	try {
-		GameMusic =PlaySound("sounds/Reach the summit.wav");
+		GameMusic =PlaySound("sounds/First steps.wav");
 		FloatControl volume= (FloatControl) GameMusic.getControl(FloatControl.Type.MASTER_GAIN); 
 		volume.setValue(-25.0f);
 		GameMusic.start();
