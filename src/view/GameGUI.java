@@ -26,12 +26,24 @@ public class GameGUI extends JFrame implements MouseListener{
 	private int CurrentCycle = 0;
 	private Clip GameMusic;
 	private CommandCenter controller;
-	
+	private FloatControl volume;
 
 
 
 	public CommandCenter getController() {
 		return controller;
+	}
+
+
+
+	public FloatControl getVolume() {
+		return volume;
+	}
+
+
+
+	public void setVolume(FloatControl volume) {
+		this.volume = volume;
 	}
 
 
@@ -84,9 +96,9 @@ public class GameGUI extends JFrame implements MouseListener{
 	//Music
 	try {
 		GameMusic =PlaySound("sounds/First steps.wav");
-		FloatControl volume= (FloatControl) GameMusic.getControl(FloatControl.Type.MASTER_GAIN); 
-		volume.setValue(-25.0f);
+		volume= (FloatControl) GameMusic.getControl(FloatControl.Type.MASTER_GAIN); 
 		GameMusic.start();
+		volume.setValue(-1000.0f);
 		GameMusic.loop(Clip.LOOP_CONTINUOUSLY);
 	} catch (UnsupportedAudioFileException e) {
 		e.printStackTrace();
@@ -221,8 +233,6 @@ public class GameGUI extends JFrame implements MouseListener{
 		controller.updatetopBar();
 		
 	}
-	
-		
 
 }
 

@@ -84,6 +84,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		this.controller = Controller;	
 		try {
 			game=new GameGUI(controller);
+			game.getGameMusic().stop();
 			game.setVisible(false);
 		} catch (Exception e2) {
 			// TODO Auto-generated catch block
@@ -191,7 +192,6 @@ public class MainMenu extends JFrame implements MouseListener{
 		this.setLocationRelativeTo(null);
 		
 		//music
-		game.getGameMusic().stop();;
 		try {
 			intro =PlaySound("sounds/intro.wav");
 			FloatControl volume= (FloatControl) intro.getControl(FloatControl.Type.MASTER_GAIN); 
@@ -238,6 +238,7 @@ public class MainMenu extends JFrame implements MouseListener{
 			try {
 				game.setVisible(true);
 				game.getGameMusic().start();
+				game.getVolume().setValue(-25.0f);
 				game.getGameMusic().loop(Clip.LOOP_CONTINUOUSLY);
 			} catch (Exception e1) {
 				e1.printStackTrace();
