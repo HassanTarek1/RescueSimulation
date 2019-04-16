@@ -1,6 +1,7 @@
 package controller;
 
 
+import java.awt.Font;
 import java.awt.event.MouseEvent; 
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
 import exceptions.BuildingAlreadyCollapsedException;
@@ -254,6 +256,20 @@ public class CommandCenter implements SOSListener, MouseListener {
 		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getGasControlUnit().
 		setText("X "+countUnits(model.units.GasControlUnit.class, UnitState.IDLE));
 					
+	}
+	public void updatetopBar() {
+		JLabel cas=new JLabel();
+		cas.setLocation(500, 5);
+		cas.setSize(100, 50);
+		cas.setVisible(true);
+		cas.setFont(new Font("Serif",Font.BOLD, 16));
+		String n="Casualties : ";
+		int x=0;
+		x=this.getEngine().calculateCasualties();
+		n+=x;
+		cas.setText(n);
+		GUI.getGame().getPanel().getTopBar().add(cas);
+		
 	}
 
 }
