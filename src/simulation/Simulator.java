@@ -243,8 +243,10 @@ public class Simulator implements WorldListener{
 			Disaster currDisaster = plannedDisasters.get(i);
 			
 			if(currDisaster.getStartCycle() == currentCycle) {
-				plannedDisasters.remove(currDisaster);
+				plannedDisasters.remove(i);
 				i--;
+				executedDisasters.add(currDisaster);
+				currDisaster.strike();
 				Rescuable target = currDisaster.getTarget();
 				if(target instanceof ResidentialBuilding) {
 					
@@ -279,9 +281,10 @@ public class Simulator implements WorldListener{
 						}
 					}
 					
-					else {
-						currDisaster.strike();
-						executedDisasters.add(currDisaster);
+					else if (currDisaster instanceof Collapse) {
+						target.getDisaster().setActive(false);
+						//RemoveDisaters((ResidentialBuilding) target);
+						((ResidentialBuilding) target).setFireDamage(0);
 					}
 				}
 				
