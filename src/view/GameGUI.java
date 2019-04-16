@@ -230,6 +230,8 @@ public class GameGUI extends JFrame implements MouseListener{
 		controller.updateCitizens(this);
 		controller.updateBuildings(this);
 		controller.updateUnitCount();
+		controller.updateRespondingUnitCount();
+		controller.updateTraetingUnitCount();
 		controller.updatetopBar();
 		
 	}

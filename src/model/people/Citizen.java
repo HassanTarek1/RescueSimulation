@@ -166,7 +166,15 @@ public class Citizen implements Simulatable,Rescuable{
 			this.state = CitizenState.IN_TROUBLE;
 		
 	}
+	
+
+	
+	@Override
 	public String toString() {
+		return this.name;
+	}
+
+	public String toString2() {
 		String s="This Citizen is located in : "+location.toString()+"\n"+
 	"Name : "+name+"\n"+"Age : "+age+"\n"+"National ID : "+nationalID+"\n"+
 				"Citizen's hp : "+hp+"\n"+"Citizen's blood loss : "+bloodLoss+"\n"+

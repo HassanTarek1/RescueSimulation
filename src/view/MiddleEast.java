@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 
 import javax.swing.Box;
@@ -15,6 +16,7 @@ public class MiddleEast extends JPanel{
 	private WrappedLabel respondingUnits;
 	private WrappedLabel treatingUnits;
 	private MiddleEastTop top;
+	private Selector citizenSelector;
 	private MiddleEastCenter center;
 	private MiddleEastBottom bottom;
 	public MiddleEast(MouseListener listener,MouseListener cont) {
@@ -28,11 +30,9 @@ public class MiddleEast extends JPanel{
 		this.cont = cont;
 		
 		//Contents
-		
-		String[] petStrings = { "Bird", "Cat", "Dog", "Rabbit", "Pig" };
-		Selector selector = new Selector(petStrings);
-		selector.addMouseListener(cont);
-		add(selector);
+		citizenSelector = new Selector(cont);
+		citizenSelector.addActionListener((ActionListener) cont);
+		add(citizenSelector);
 		
 		availableUnits = new WrappedLabel("","icons/Game panel/Available Units.png");
 		add(availableUnits);
@@ -56,6 +56,9 @@ public class MiddleEast extends JPanel{
 		
 		bottom = new MiddleEastBottom();
 		add(bottom);
+	}
+	public Selector getCitizenSelector() {
+		return citizenSelector;
 	}
 	public MiddleEastTop getTop() {
 		return top;
