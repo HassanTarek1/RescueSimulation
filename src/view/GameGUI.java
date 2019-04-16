@@ -17,6 +17,9 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 import controller.CommandCenter;
 import model.infrastructure.ResidentialBuilding;
 
@@ -233,7 +236,11 @@ public class GameGUI extends JFrame implements MouseListener{
 		controller.updateRespondingUnitCount();
 		controller.updateTraetingUnitCount();
 		controller.updatetopBar();
-		
+		if(controller.getEngine().checkGameOver()) {
+			MiniFrame gameOver=new MiniFrame("Game Over");
+			this.dispose();
+			MainMenu m=new MainMenu(controller);
+		}
 	}
 
 }
