@@ -25,8 +25,8 @@ public class TopBar extends ImagePanel{
 		setLayout(null);
 		this.cont=cont;
 		topInfo=new JLabel();
-		topInfo.setLocation(500, 5);
-		topInfo.setSize(500, 50);
+		topInfo.setLocation(200, 5);
+		topInfo.setSize(300, 50);
 		topInfo.setVisible(true);
 		topInfo.setFont(new Font("Courier ",Font.BOLD, 16));
 		topInfo.setText("");

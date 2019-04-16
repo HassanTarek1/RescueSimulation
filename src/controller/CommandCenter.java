@@ -18,6 +18,7 @@ import exceptions.DisasterException;
 import model.events.SOSListener;
 import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
+import model.people.CitizenState;
 import model.units.Unit;
 import model.units.UnitState;
 import simulation.Rescuable;
@@ -91,7 +92,22 @@ public class CommandCenter implements SOSListener, MouseListener {
 			int xC=citizen.getLocation().getX();
 			int yC=citizen.getLocation().getY();
 			view.Cell cell=cells[xC][yC];
-			cell.add(cell.getCitizen());
+			if(citizen.getState()==CitizenState.DECEASED) {
+				cell.removeAll();
+				cell.add(cell.getDeadCitizen());
+			}
+			else if(citizen.getToxicity()>0) {
+				cell.removeAll();
+				cell.add(cell.getInfectedCitizen());
+			}
+			else if(citizen.getBloodLoss()>0) {
+				cell.removeAll();
+				cell.add(cell.getInjuredCitizen());
+			}
+			else {
+				cell.removeAll();
+				cell.add(cell.getCitizen());
+			}
 		}
 	}
 	public void updateBuildings(GameGUI game) {
@@ -100,7 +116,27 @@ public class CommandCenter implements SOSListener, MouseListener {
 			int xC=building.getLocation().getX();
 			int yC=building.getLocation().getY();
 			view.Cell cell=cells[xC][yC];
-			cell.add(cell.getBuilding());
+			if(building.getStructuralIntegrity()<=0) {
+				cell.removeAll();
+				cell.add(cell.getFallenBuilding());
+			}
+			else if(building.getFoundationDamage()>0) {
+				cell.removeAll();
+				cell.add(cell.getCollapse());
+			}
+			
+			else if(building.getFireDamage()>0) {
+				cell.removeAll();
+				cell.add(cell.getBuildingOnFire());
+			}
+			else if(building.getGasLevel()>0) {
+				cell.removeAll();
+				cell.add(cell.getGasedBuilding());
+			}
+			else {
+				cell.removeAll();
+				cell.add(cell.getBuilding());
+			}
 		}
 	}
 
@@ -276,7 +312,6 @@ public class CommandCenter implements SOSListener, MouseListener {
 		n+="   //   current cycle : "+GUI.getGame().getCurrentCycle();
 		topInfo.setText(n);
 		GUI.getGame().getPanel().getTopBar().add(topInfo);
-		
 	}
 
 
