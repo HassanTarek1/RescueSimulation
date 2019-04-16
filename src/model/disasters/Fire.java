@@ -22,7 +22,8 @@ public class Fire extends Disaster {
 		target.setFireDamage(oldFireDamage+10);
 	}
 	public void cycleStep() throws BuildingAlreadyCollapsedException {
-		strike();
+		ResidentialBuilding target= (ResidentialBuilding)getTarget();
+		target.setFireDamage(target.getFireDamage()+10);
 	}
 	public String toString() {
 		return "Fire on Building ";

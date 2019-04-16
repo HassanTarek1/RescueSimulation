@@ -243,10 +243,8 @@ public class Simulator implements WorldListener{
 			Disaster currDisaster = plannedDisasters.get(i);
 			
 			if(currDisaster.getStartCycle() == currentCycle) {
-				plannedDisasters.remove(i);
+				plannedDisasters.remove(currDisaster);
 				i--;
-				executedDisasters.add(currDisaster);
-				currDisaster.strike();
 				Rescuable target = currDisaster.getTarget();
 				if(target instanceof ResidentialBuilding) {
 					
@@ -254,11 +252,12 @@ public class Simulator implements WorldListener{
 						int Gaslvl =  ((ResidentialBuilding) target).getGasLevel();
 
 						 if(Gaslvl > 0 && Gaslvl < 70) {
+							((ResidentialBuilding) target).setFireDamage(0);
+							target.getDisaster().setActive(false);
 							Collapse currDisaster1 = new Collapse(currentCycle, (ResidentialBuilding) target);
 							currDisaster1.strike();
-							RemoveDisaters((ResidentialBuilding)target);
+							//RemoveDisaters((ResidentialBuilding)target);
 							executedDisasters.add(currDisaster1);
-							((ResidentialBuilding) target).setFireDamage(0);
 						}
 						
 						else if(Gaslvl >= 70) {
@@ -271,17 +270,18 @@ public class Simulator implements WorldListener{
 					
 					else if (currDisaster instanceof GasLeak) {
 						if(((ResidentialBuilding) target).getFireDamage() > 0) {
+							((ResidentialBuilding) target).setFireDamage(0);
+							target.getDisaster().setActive(false);
 							Collapse currDisaster1 = new Collapse(currentCycle, (ResidentialBuilding) target);
 							currDisaster1.strike();
-							RemoveDisaters((ResidentialBuilding)target);
+							//RemoveDisaters((ResidentialBuilding)target);
 							executedDisasters.add(currDisaster1);
-							((ResidentialBuilding) target).setFireDamage(0);
 						}
 					}
 					
-					else if (currDisaster instanceof Collapse) {
-						RemoveDisaters((ResidentialBuilding) target);
-						((ResidentialBuilding) target).setFireDamage(0);
+					else {
+						currDisaster.strike();
+						executedDisasters.add(currDisaster);
 					}
 				}
 				
@@ -302,7 +302,7 @@ public class Simulator implements WorldListener{
 			currUnit.cycleStep();
 		}
 		for(Disaster currDisaster : executedDisasters) {
-			if(currDisaster.getStartCycle() != currentCycle && currDisaster.isActive())
+			if(currDisaster.getStartCycle() < currentCycle && currDisaster.isActive())
 				currDisaster.cycleStep();
 		}
 		
