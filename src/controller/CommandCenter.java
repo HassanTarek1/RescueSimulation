@@ -1,6 +1,8 @@
 package controller;
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import java.awt.event.MouseEvent;   
 import java.awt.Font;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
@@ -23,14 +26,16 @@ import model.people.Citizen;
 import model.people.CitizenState;
 import model.units.Unit;
 import model.units.UnitState;
+import simulation.Address;
 import simulation.Rescuable;
 import simulation.Simulator;
 import view.Button;
 import view.Cell;
 import view.GameGUI;
 import view.MainMenu;
+import view.Selector;
 
-public class CommandCenter implements SOSListener, MouseListener {
+public class CommandCenter implements SOSListener, MouseListener,ActionListener {
 	private Simulator engine;
 	private MainMenu GUI;
 	
@@ -162,6 +167,8 @@ public class CommandCenter implements SOSListener, MouseListener {
 		else if(e.getSource() instanceof view.Cell) {
 			
 			updateInfo((view.Cell)e.getSource());
+			getCitizens(((view.Cell)e.getSource()).getIndxX(),((view.Cell)e.getSource()).getIndxY(),
+					GUI.getGame().getPanel().getMidArea().getMiddleEast().getCitizenSelector());
 			
 			
 		}
@@ -253,12 +260,28 @@ public class CommandCenter implements SOSListener, MouseListener {
 		JTextArea text=GUI.getGame().getPanel().getMidArea().getMidWest().getBottom().getInfo().getTextArea();
 		if(c==null && b!=null) 
 			s=b.toString();
-		else if (c!=null && b==null)
-			s=c.toString();
 		else if(c!=null && b!=null)
 			s=b.toString();
 		int length=s.length();
 		text.setSize((int) text.getSize().width, text.getSize().height+length*10);
+		text.setText(s);
+	}
+	
+	public void updateInfoSelector(Citizen currCitizen) {
+		String s="";
+		JTextArea text=GUI.getGame().getPanel().getMidArea().getMidWest().getBottom().getInfo().getTextArea();
+		if (currCitizen != null) {
+			int x=currCitizen.getLocation().getX();
+			int y=currCitizen.getLocation().getY();
+			ResidentialBuilding b=buildingInCell(x, y);
+			
+
+			if(currCitizen!=null)
+				s= currCitizen.toString2();
+			int length=s.length();
+			text.setSize((int) text.getSize().width, text.getSize().height+length*10);
+		}
+		
 		text.setText(s);
 	}
 	public Citizen citizenInCell(int x,int y) {
@@ -352,6 +375,28 @@ public class CommandCenter implements SOSListener, MouseListener {
 		n+="   //   current cycle : "+GUI.getGame().getCurrentCycle();
 		topInfo.setText(n);
 		GUI.getGame().getPanel().getTopBar().add(topInfo);
+	}
+	
+	public void getCitizens(int x,int y,Selector s){
+		s.removeAllItems();
+		for (int i = 0; i < visibleCitizens.size(); i++) {
+			if (x == visibleCitizens.get(i).getLocation().getX() && y == visibleCitizens.get(i).getLocation().getY()) {
+				s.addItem(visibleCitizens.get(i));
+			}
+			
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() instanceof JComboBox) {
+			JComboBox<Citizen> source = (JComboBox<Citizen>) e.getSource();
+			if (source.getSelectedIndex() != -1) {
+				updateInfoSelector((Citizen) source.getSelectedItem());
+			}
+			
+		}
+		
 	}
 
 
