@@ -45,7 +45,7 @@ public class TopBar extends ImagePanel{
 			//endCycle
 			endCycle=new Button("icons/Game panel/endCycle.png");
 			//endCycle.addMouseListener(listener);
-			endCycle.setAlignmentX(Component.LEFT_ALIGNMENT);
+			endCycle.setAlignmentX(Component.RIGHT_ALIGNMENT);
 			add(Box.createRigidArea(new Dimension(15,0)));
 			this.add(endCycle);
 			endCycle.setLocation(1150,17);

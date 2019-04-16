@@ -20,10 +20,10 @@ public class Collapse extends Disaster{
 			String message ="The Builging is Already Collapsed";
 			throw new BuildingAlreadyCollapsedException(this,message);
 		}
-		target.struckBy(this);
-		this.setActive(true);
 		int oldFoundDamage=target.getFoundationDamage();
 		target.setFoundationDamage(oldFoundDamage+10);
+		target.struckBy(this);
+		this.setActive(true);
 	}
 	public void cycleStep() throws BuildingAlreadyCollapsedException {
 		ResidentialBuilding target= (ResidentialBuilding)getTarget();

@@ -73,7 +73,7 @@ public class GameGUI extends JFrame implements MouseListener{
 
 
 	public GameGUI(CommandCenter Controller) throws Exception {
-	this.setSize(1366,802);
+	this.setSize(1425,802);
 	this.controller=Controller;
 	ImageIcon icon = new ImageIcon("icons/MainIcon.jpg");
 	setIconImage(icon.getImage());
@@ -213,10 +213,11 @@ public class GameGUI extends JFrame implements MouseListener{
 		
 	}
 	public void nextCycleGUI() {
-		this.CurrentCycle+=1;
+		this.CurrentCycle++;
 		UpdateCycleImg(panel);
 		controller.updateCitizens(this);
 		controller.updateBuildings(this);
+		controller.updateUnitCount();
 		
 	}
 	

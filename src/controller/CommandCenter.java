@@ -5,14 +5,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JTextArea;
-
 
 import exceptions.BuildingAlreadyCollapsedException;
 import exceptions.DisasterException;
@@ -20,12 +17,12 @@ import model.events.SOSListener;
 import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
 import model.units.Unit;
+import model.units.UnitState;
 import simulation.Rescuable;
 import simulation.Simulator;
 import view.Button;
 import view.GameGUI;
 import view.MainMenu;
-import view.WrappedLabel;
 
 public class CommandCenter implements SOSListener, MouseListener {
 	private Simulator engine;
@@ -42,13 +39,12 @@ public class CommandCenter implements SOSListener, MouseListener {
 		engine = new Simulator(this);
 		visibleBuildings = new ArrayList<ResidentialBuilding>();
 		visibleCitizens = new ArrayList<Citizen>();
-		emergencyUnits = new ArrayList<Unit>();
+		emergencyUnits = engine.getEmergencyUnits();
 		GUI = new MainMenu(this);
 		
 		
 	}
 
-	
 	public Simulator getEngine() {
 		return engine;
 	}
@@ -77,10 +73,7 @@ public class CommandCenter implements SOSListener, MouseListener {
 	public void receiveSOSCall(Rescuable r) {
 		
 		if(r instanceof Citizen) {
-//			Citizen tmp=(Citizen)(findRescuable(visibleCitizens, r));
-//			if(!visibleCitizens.contains(r))
-//				visibleCitizens.add((Citizen)r);
-//			else if()
+			visibleCitizens.add((Citizen)r);
 			return;
 		}
 		if(r instanceof ResidentialBuilding) {
@@ -233,25 +226,34 @@ public class CommandCenter implements SOSListener, MouseListener {
 		}
 		return null;
 	}
-//	public Citizen findCitizen(Citizen r) {
-//			for (Citizen citizen : visibleCitizens) {
-//				if(citizen==r)
-//					return citizen;
-//			}
-//		
-//			for (ResidentialBuilding building : visibleBuildings) {
-//				if(building==r)
-//					return building;
-//			}
-//		
-//		return null;
-//	}
-//	public ResidentialBuilding findBuilding(ResidentialBuilding r) {
-//		for (ResidentialBuilding residentialBuilding : visibleBuildings) {
-//			
-//		}
-//	}
+
 	
+	public int countUnits(Class<?> cls,UnitState S) {
+		int ret = 0;
+		for (Unit unit : emergencyUnits) {
+			if(unit.getClass() == cls && unit.getState() == S) {
+				ret++;
+			}
+		}
+		return ret;
+	}
 	
-	
+	public void updateUnitCount() {
+		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getAmbulance()
+		.setText("X "+countUnits(model.units.Ambulance.class, UnitState.IDLE));
+		
+		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getDiseaseControlUnit().
+		setText("X "+countUnits(model.units.DiseaseControlUnit.class, UnitState.IDLE));
+		
+		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getEvacuator().
+		setText("X "+countUnits(model.units.Evacuator.class, UnitState.IDLE));
+		
+		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getFireTruck().
+		setText("X "+countUnits(model.units.FireTruck.class, UnitState.IDLE));
+		
+		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getGasControlUnit().
+		setText("X "+countUnits(model.units.GasControlUnit.class, UnitState.IDLE));
+					
+	}
+
 }

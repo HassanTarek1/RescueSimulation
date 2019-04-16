@@ -50,7 +50,7 @@ public class MidArea extends JPanel{
 		add(midGrid);
 		
 		//Middle east
-		middleEast = new MiddleEast();
+		middleEast = new MiddleEast(listener,this.cont);
 		add(middleEast);
 	}
 
