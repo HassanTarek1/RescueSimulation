@@ -268,17 +268,14 @@ public class CommandCenter implements SOSListener, MouseListener {
 	}
 
 	public void updatetopBar() {
-		JLabel cas=new JLabel();
-		cas.setLocation(500, 5);
-		cas.setSize(100, 50);
-		cas.setVisible(true);
-		cas.setFont(new Font("Serif",Font.BOLD, 16));
+		JLabel topInfo=GUI.getGame().getPanel().getTopBar().getTopInfo();
 		String n="Casualties : ";
 		int x=0;
 		x=this.getEngine().calculateCasualties();
 		n+=x;
-		cas.setText(n);
-		GUI.getGame().getPanel().getTopBar().add(cas);
+		n+="   //   current cycle : "+GUI.getGame().getCurrentCycle();
+		topInfo.setText(n);
+		GUI.getGame().getPanel().getTopBar().add(topInfo);
 		
 	}
 

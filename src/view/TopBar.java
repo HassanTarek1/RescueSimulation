@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.MouseListener;
 
 import javax.swing.Box;
@@ -16,12 +17,20 @@ public class TopBar extends ImagePanel{
 	private Button backButton;
 	private Button endCycle;
 	private MouseListener cont;
+	private JLabel topInfo;
 	public TopBar(String img,MouseListener e,MouseListener cont) {
 		super(img);
 		listener = e;
 		setSize(1425,60);
 		setLayout(null);
 		this.cont=cont;
+		topInfo=new JLabel();
+		topInfo.setLocation(500, 5);
+		topInfo.setSize(500, 50);
+		topInfo.setVisible(true);
+		topInfo.setFont(new Font("Courier ",Font.BOLD, 16));
+		topInfo.setText("");
+		this.add(topInfo);
 		
 		//Buttons
 			//Back
@@ -63,5 +72,11 @@ public class TopBar extends ImagePanel{
 	}
 	public Button getEndCycle() {
 		return endCycle;
+	}
+	public MouseListener getCont() {
+		return cont;
+	}
+	public JLabel getTopInfo() {
+		return topInfo;
 	}
 }
