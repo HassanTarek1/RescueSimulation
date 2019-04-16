@@ -28,6 +28,12 @@ public class MiddleEast extends JPanel{
 		this.cont = cont;
 		
 		//Contents
+		
+		String[] petStrings = { "Bird", "Cat", "Dog", "Rabbit", "Pig" };
+		Selector selector = new Selector(petStrings);
+		selector.addMouseListener(cont);
+		add(selector);
+		
 		availableUnits = new WrappedLabel("","icons/Game panel/Available Units.png");
 		add(availableUnits);
 		add(Box.createRigidArea(new Dimension(0,0)));

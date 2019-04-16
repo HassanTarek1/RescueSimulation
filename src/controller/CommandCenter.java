@@ -21,6 +21,7 @@ import model.units.UnitState;
 import simulation.Rescuable;
 import simulation.Simulator;
 import view.Button;
+import view.Cell;
 import view.GameGUI;
 import view.MainMenu;
 
@@ -121,20 +122,28 @@ public class CommandCenter implements SOSListener, MouseListener {
 		else if(e.getSource() instanceof view.Cell) {
 			
 			updateInfo((view.Cell)e.getSource());
+			
+			
 		}
 	}
 
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() instanceof Cell) {
+			Cell currCell = (Cell) e.getSource();
+			currCell.setImage(new ImageIcon("icons/Game panel/green_pressed.png"));
+		}
 		
 	}
 
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() instanceof Cell) {
+			Cell currCell = (Cell) e.getSource();
+			currCell.setImage(new ImageIcon("icons/Game panel/green.png"));
+		}
 		
 	}
 
@@ -255,5 +264,7 @@ public class CommandCenter implements SOSListener, MouseListener {
 		setText("X "+countUnits(model.units.GasControlUnit.class, UnitState.IDLE));
 					
 	}
+	
+	//public 
 
 }
