@@ -71,11 +71,11 @@ public class CommandCenter implements SOSListener, MouseListener {
 
 
 	public void receiveSOSCall(Rescuable r) {
-		if(r instanceof Citizen) {
+		if((r instanceof Citizen) && !(visibleCitizens.contains((Citizen)r))) {
 			visibleCitizens.add((Citizen)r);
 			return;
 		}
-		if(r instanceof ResidentialBuilding) {
+		if((r instanceof ResidentialBuilding) && !(visibleBuildings.contains((ResidentialBuilding)r))) {
 			visibleBuildings.add((ResidentialBuilding)r);
 			return;
 		}
