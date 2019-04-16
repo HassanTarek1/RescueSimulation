@@ -1,7 +1,7 @@
 package controller;
 
 
-import java.awt.event.MouseEvent; 
+import java.awt.event.MouseEvent;  
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,12 +72,8 @@ public class CommandCenter implements SOSListener, MouseListener {
 
 
 	public void receiveSOSCall(Rescuable r) {
-<<<<<<< HEAD
+
 		if((r instanceof Citizen) && !(visibleCitizens.contains((Citizen)r))) {
-=======
-		
-		if(r instanceof Citizen) {
->>>>>>> f1eb01713eb7251d2ada1cf989f381dc57ddde1e
 			visibleCitizens.add((Citizen)r);
 			return;
 		}
