@@ -21,6 +21,7 @@ import model.units.UnitState;
 import simulation.Rescuable;
 import simulation.Simulator;
 import view.Button;
+import view.Cell;
 import view.GameGUI;
 import view.MainMenu;
 
@@ -71,7 +72,12 @@ public class CommandCenter implements SOSListener, MouseListener {
 
 
 	public void receiveSOSCall(Rescuable r) {
+<<<<<<< HEAD
 		if((r instanceof Citizen) && !(visibleCitizens.contains((Citizen)r))) {
+=======
+		
+		if(r instanceof Citizen) {
+>>>>>>> f1eb01713eb7251d2ada1cf989f381dc57ddde1e
 			visibleCitizens.add((Citizen)r);
 			return;
 		}
@@ -87,8 +93,7 @@ public class CommandCenter implements SOSListener, MouseListener {
 			int xC=citizen.getLocation().getX();
 			int yC=citizen.getLocation().getY();
 			view.Cell cell=cells[xC][yC];
-			//Button label = new Button("icons/Game panel/citizen.png");
-			cell.getCitizen().setVisible(true);
+			cell.add(cell.getCitizen());
 		}
 	}
 	public void updateBuildings(GameGUI game) {
@@ -97,8 +102,7 @@ public class CommandCenter implements SOSListener, MouseListener {
 			int xC=building.getLocation().getX();
 			int yC=building.getLocation().getY();
 			view.Cell cell=cells[xC][yC];
-//			cell.setImage(new ImageIcon("icons/Game panel/building.png"));
-			cell.getBuilding().setVisible(true);
+			cell.add(cell.getBuilding());
 		}
 	}
 
@@ -122,20 +126,28 @@ public class CommandCenter implements SOSListener, MouseListener {
 		else if(e.getSource() instanceof view.Cell) {
 			
 			updateInfo((view.Cell)e.getSource());
+			
+			
 		}
 	}
 
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() instanceof Cell) {
+			Cell currCell = (Cell) e.getSource();
+			currCell.setImage(new ImageIcon("icons/Game panel/green_pressed.png"));
+		}
 		
 	}
 
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() instanceof Cell) {
+			Cell currCell = (Cell) e.getSource();
+			currCell.setImage(new ImageIcon("icons/Game panel/green.png"));
+		}
 		
 	}
 
@@ -227,6 +239,7 @@ public class CommandCenter implements SOSListener, MouseListener {
 		}
 		return null;
 	}
+
 	
 	public int countUnits(Class<?> cls,UnitState S) {
 		int ret = 0;
@@ -255,5 +268,7 @@ public class CommandCenter implements SOSListener, MouseListener {
 		setText("X "+countUnits(model.units.GasControlUnit.class, UnitState.IDLE));
 					
 	}
+	
+	//public 
 
 }
