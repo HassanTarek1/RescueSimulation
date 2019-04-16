@@ -1,12 +1,10 @@
 package controller;
 
 
-<<<<<<< HEAD
-import java.awt.event.MouseEvent;  
-=======
+
+import java.awt.event.MouseEvent;   
 import java.awt.Font;
 import java.awt.event.MouseEvent; 
->>>>>>> 8c1688fc9d8b09e532ed38f19fcc27e5b5fcf180
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
