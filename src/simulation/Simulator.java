@@ -316,10 +316,13 @@ public class Simulator implements WorldListener{
 	}
 	
 	private void RemoveDisaters(ResidentialBuilding currBuilding) {
-		for (int i = 0; i < executedDisasters.size(); i++) {
-			if(executedDisasters.get(i).getTarget() == currBuilding)
-				executedDisasters.remove(i);
+		ArrayList<Disaster> toRemove=new ArrayList<Disaster>();
+		for (Disaster disaster:executedDisasters) {
+			if(disaster.getTarget() == currBuilding) {
+				toRemove.add(disaster);
+			}
 		}
+		executedDisasters.removeAll(toRemove);
 	}
 
 }

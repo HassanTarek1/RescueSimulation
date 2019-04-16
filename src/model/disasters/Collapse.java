@@ -26,7 +26,8 @@ public class Collapse extends Disaster{
 		target.setFoundationDamage(oldFoundDamage+10);
 	}
 	public void cycleStep() throws BuildingAlreadyCollapsedException {
-		strike();
+		ResidentialBuilding target= (ResidentialBuilding)getTarget();
+		target.setFoundationDamage(target.getFoundationDamage()+10);
 	}
 	
 	public String toString() {

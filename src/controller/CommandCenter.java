@@ -75,8 +75,12 @@ public class CommandCenter implements SOSListener, MouseListener {
 
 
 	public void receiveSOSCall(Rescuable r) {
+		
 		if(r instanceof Citizen) {
-			visibleCitizens.add((Citizen)r);
+//			Citizen tmp=(Citizen)(findRescuable(visibleCitizens, r));
+//			if(!visibleCitizens.contains(r))
+//				visibleCitizens.add((Citizen)r);
+//			else if()
 			return;
 		}
 		if(r instanceof ResidentialBuilding) {
@@ -91,8 +95,7 @@ public class CommandCenter implements SOSListener, MouseListener {
 			int xC=citizen.getLocation().getX();
 			int yC=citizen.getLocation().getY();
 			view.Cell cell=cells[xC][yC];
-			//Button label = new Button("icons/Game panel/citizen.png");
-			cell.getCitizen().setVisible(true);
+			cell.add(cell.getCitizen());
 		}
 	}
 	public void updateBuildings(GameGUI game) {
@@ -101,8 +104,7 @@ public class CommandCenter implements SOSListener, MouseListener {
 			int xC=building.getLocation().getX();
 			int yC=building.getLocation().getY();
 			view.Cell cell=cells[xC][yC];
-//			cell.setImage(new ImageIcon("icons/Game panel/building.png"));
-			cell.getBuilding().setVisible(true);
+			cell.add(cell.getBuilding());
 		}
 	}
 
@@ -231,6 +233,25 @@ public class CommandCenter implements SOSListener, MouseListener {
 		}
 		return null;
 	}
-
+//	public Citizen findCitizen(Citizen r) {
+//			for (Citizen citizen : visibleCitizens) {
+//				if(citizen==r)
+//					return citizen;
+//			}
+//		
+//			for (ResidentialBuilding building : visibleBuildings) {
+//				if(building==r)
+//					return building;
+//			}
+//		
+//		return null;
+//	}
+//	public ResidentialBuilding findBuilding(ResidentialBuilding r) {
+//		for (ResidentialBuilding residentialBuilding : visibleBuildings) {
+//			
+//		}
+//	}
+	
+	
 	
 }

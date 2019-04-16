@@ -36,13 +36,13 @@ public class Cell extends ImagePanel{
 		Fire.setIcon(new ImageIcon("icons/Game panel/Fire.png"));
 		GasLeak.setIcon(new ImageIcon("icons/Game panel/Gas leak.png"));
 		Collapse.setIcon(new ImageIcon("icons/Game panel/collapse.png"));
-		add(Citizen,BorderLayout.CENTER);
-		add(Building,BorderLayout.CENTER);
-		Citizen.setOpaque(false);
-		Citizen.setVisible(false);
-
-		Building.setOpaque(false);
-		Building.setVisible(false);
+//		add(Citizen,BorderLayout.CENTER);
+//		add(Building,BorderLayout.CENTER);
+//		Citizen.setOpaque(false);
+//		Citizen.setVisible(false);
+//
+//		Building.setOpaque(false);
+//		Building.setVisible(false);
 	}
 
 	public JLabel getCitizen() {
