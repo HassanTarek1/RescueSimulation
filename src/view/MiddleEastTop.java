@@ -51,20 +51,25 @@ public class MiddleEastTop extends JPanel {
 		Ambulance.setIcon(new ImageIcon("icons/Game panel/ambulance.png"));
 		Ambulance.setPreferredSize(new Dimension(90, 50));
 		Ambulance.setToolTipText("Ambulance");
+		Ambulance.addMouseListener(cont);
 		availableUnits.add(Ambulance,constraints);
 		
 		constraints.gridx = 1;
 		constraints.gridy = 0;
 		DiseaseControlUnit = new JButton("X "+cont2.countUnits(model.units.DiseaseControlUnit.class, UnitState.IDLE));
 		DiseaseControlUnit.setPreferredSize(new Dimension(90, 50));
-		Ambulance.setToolTipText("Ambulance");
+		DiseaseControlUnit.setIcon(new ImageIcon("icons/Game panel/DiseaseControlUnit.png"));
+		DiseaseControlUnit.setToolTipText("Disease Control Unit");
 		DiseaseControlUnit.setToolTipText("DiseaseControlUnit");
+		DiseaseControlUnit.addMouseListener(cont);
 		availableUnits.add(DiseaseControlUnit,constraints);
 		
 		constraints.gridx = 2;
 		constraints.gridy = 0;
 		Evacuator = new JButton("X "+cont2.countUnits(model.units.Evacuator.class, UnitState.IDLE));
 		Evacuator.setToolTipText("Evacuator");
+		Evacuator.setIcon(new ImageIcon("icons/Game panel/Evacuator.png"));
+		Evacuator.addMouseListener(cont);
 		Evacuator.setPreferredSize(new Dimension(90, 50));
 		availableUnits.add(Evacuator,constraints);
 		
@@ -74,13 +79,16 @@ public class MiddleEastTop extends JPanel {
 		FireTruck.setIcon(new ImageIcon("icons/Game panel/fire truck.png"));
 		FireTruck.setToolTipText("Fire truck");
 		FireTruck.setPreferredSize(new Dimension(90, 50));
+		FireTruck.addMouseListener(cont);
 		availableUnits.add(FireTruck,constraints);
 		
 		constraints.gridx = 1;
 		constraints.gridy = 1;
 		GasControlUnit = new JButton("X "+cont2.countUnits(model.units.GasControlUnit.class, UnitState.IDLE));
 		GasControlUnit.setToolTipText("Gas control unit");
+		GasControlUnit.setIcon(new ImageIcon("icons/Game panel/GasControlUnit.png"));
 		GasControlUnit.setPreferredSize(new Dimension(90, 50));
+		GasControlUnit.addMouseListener(cont);
 		availableUnits.add(GasControlUnit,constraints);
 		
 		add(availableUnits);
