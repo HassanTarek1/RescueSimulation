@@ -189,7 +189,10 @@ public class Simulator implements WorldListener{
 	
 	private boolean NoActiveDisasters() {
 		for (Disaster disaster : executedDisasters) {
-			
+			if(disaster instanceof GasLeak) {
+				if(((ResidentialBuilding)disaster.getTarget()).getGasLevel()>=100 && ((ResidentialBuilding)disaster.getTarget()).getStructuralIntegrity()==100)
+					disaster.setActive(false);
+			}
 			if(disaster.getTarget() instanceof Citizen) {
 				Citizen currCitizen = (Citizen) disaster.getTarget();
 				if(currCitizen.getState() != CitizenState.DECEASED && disaster.isActive())
@@ -197,8 +200,8 @@ public class Simulator implements WorldListener{
 			}
 			
 			if(disaster.getTarget() instanceof ResidentialBuilding) {
-				ResidentialBuilding currCitizen = (ResidentialBuilding) disaster.getTarget();
-				if(currCitizen.getStructuralIntegrity() > 0 && disaster.isActive())
+				ResidentialBuilding currBuilding = (ResidentialBuilding) disaster.getTarget();
+				if(currBuilding.getStructuralIntegrity() > 0 && disaster.isActive())
 					return false;
 			}	
 		}
