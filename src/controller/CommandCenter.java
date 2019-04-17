@@ -37,6 +37,7 @@ import view.Button;
 import view.Cell;
 import view.GameGUI;
 import view.MainMenu;
+import view.MiniFrame;
 import view.Selector;
 
 public class CommandCenter implements SOSListener, MouseListener,ActionListener {
@@ -162,11 +163,11 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				updateLog(GUI.getGame());
 				
 			} catch (BuildingAlreadyCollapsedException e1) {
-				// TODO Auto-generated catch block
+				new MiniFrame(e1.getMessage());
 				
 			} catch (DisasterException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				new MiniFrame(e1.getMessage());
 			}
 		}
 		else if(e.getSource() instanceof view.Cell) {
@@ -184,6 +185,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			//----------------------------------------------------
 			if (currButton == GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getAmbulance()) {
 				AddUnitsToSelector(Ambulance.class, UnitState.IDLE, GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
+				
 			}
 			
 			else if (currButton == GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getDiseaseControlUnit()) {
@@ -301,19 +303,33 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	}
 	public void updateLog(GameGUI game) {
 		logText+="  Cycle: "+ GUI.getGame().getCurrentCycle()+"\n\n";
-
-		for (Citizen citizen : visibleCitizens) {
+		ArrayList<Citizen> toRemoveC=new ArrayList<>();
+		ArrayList<ResidentialBuilding> toRemoveB=new ArrayList<>();
+		for (int i = 0; i < visibleCitizens.size(); i++) {
+			
+			Citizen citizen=visibleCitizens.get(i);
 			if(citizen.getDisaster().isActive() && 
 					citizen.getDisaster().getStartCycle()==GUI.getGame().getCurrentCycle()) {
 			 logText=logText+"  "+citizen.getDisaster().toString()+"in location "+citizen.getLocation().toString()+"\n";
 			}
+			else if(citizen.getState()==CitizenState.DECEASED) {
+				logText+="  Citizen "+citizen.toString()+" in location "+citizen.getLocation().toString()+" DECEASED"+"\n";
+				toRemoveC.add(citizen);
+			}
 		}
-		for (ResidentialBuilding building: visibleBuildings) {
+		visibleCitizens.removeAll(toRemoveC);
+		for (int i=0;i<visibleBuildings.size();i++) {
+			ResidentialBuilding building=visibleBuildings.get(i);
 			if(building.getDisaster().isActive() && 
 					building.getDisaster().getStartCycle()==GUI.getGame().getCurrentCycle()) {
 				logText=logText+"  "+building.getDisaster().toString()+"in location "+building.getLocation().toString()+"\n";
 			}
+			else if(building.getStructuralIntegrity()<=0) {
+				logText+="  Building in location "+building.getLocation().toString()+" was destroyed"+"\n";
+				toRemoveB.add(building);
+			}
 		}
+		visibleBuildings.removeAll(toRemoveB);
 		logText+="------------------------------------------"+"\n";
 		JTextArea logTextArea=game.getPanel().getMidArea().getMidWest().getTop().getLog().getTextArea();
 		logTextArea.setText(logText);
