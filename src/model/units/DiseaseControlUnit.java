@@ -67,5 +67,30 @@ public class DiseaseControlUnit extends MedicalUnit{
 		}
 		super.respond(r);
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getUnitID()+" (Disease control)";
+	}
+	
+	public String toString2() {
+		String s = "";
+		s+= "Unit ID: "+this.getUnitID()+"\n";
+		s+= "Unit type: Disease control unit\n";
+		s+= "Unit location: "+this.getLocation().getX()+","+this.getLocation().getY()+"\n";
+		s+= "Steps per cycle: "+getStepsPerCycle()+"\n";
+		s+= "Target:\n";
+		
+		if (this.getTarget() != null) {
+			s+= ((Citizen) this.getTarget()).toString2();
+		}
+		else {
+			s+= "NO TARGET\n";
+		}
+		
+		s+= "Unit state: "+this.getState()+"\n";
+		return s;
+	}
 
 }

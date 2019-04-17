@@ -58,5 +58,30 @@ public class FireTruck extends FireUnit{
 		ResidentialBuilding x = (ResidentialBuilding)this.getTarget();
 		if((x.getFireDamage()<=0) || x.getStructuralIntegrity()<=0) 
 			super.jobsDone();
-	}		
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getUnitID()+" (Fire truck)";
+	}
+	
+	public String toString2() {
+		String s = "";
+		s+= "Unit ID: "+this.getUnitID()+"\n";
+		s+= "Unit type: Fire truck\n";
+		s+= "Unit location: "+this.getLocation().getX()+","+this.getLocation().getY()+"\n";
+		s+= "Steps per cycle: "+getStepsPerCycle()+"\n";
+		s+= "Target:\n";
+
+		if (this.getTarget() != null) {
+			s+= ((ResidentialBuilding) this.getTarget()).toString();
+		}
+		else {
+			s+= "NO TARGET\n";
+		}
+		
+		s+= "Unit state: "+this.getState()+"\n";
+		return s;
+	}
 }

@@ -4,8 +4,6 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import java.awt.event.MouseEvent;   
-import java.awt.Font;
 import java.awt.event.MouseEvent; 
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -14,6 +12,7 @@ import java.util.ArrayList;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -24,10 +23,15 @@ import model.events.SOSListener;
 import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
 import model.people.CitizenState;
+import model.units.Ambulance;
+import model.units.DiseaseControlUnit;
+import model.units.Evacuator;
+import model.units.FireTruck;
+import model.units.GasControlUnit;
 import model.units.Unit;
 import model.units.UnitState;
-import simulation.Address;
 import simulation.Rescuable;
+import simulation.Simulatable;
 import simulation.Simulator;
 import view.Button;
 import view.Cell;
@@ -52,6 +56,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		visibleCitizens = new ArrayList<Citizen>();
 		emergencyUnits = engine.getEmergencyUnits();
 		GUI = new MainMenu(this);
+		updatetopBar();
 		
 		
 	}
@@ -167,10 +172,75 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		else if(e.getSource() instanceof view.Cell) {
 			
 			updateInfo((view.Cell)e.getSource());
-			getCitizens(((view.Cell)e.getSource()).getIndxX(),((view.Cell)e.getSource()).getIndxY(),
-					GUI.getGame().getPanel().getMidArea().getMiddleEast().getCitizenSelector());
+			getItems(((view.Cell)e.getSource()).getIndxX(),((view.Cell)e.getSource()).getIndxY(),
+					GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
 			
 			
+		}
+		
+		else if (e.getSource() instanceof JButton) {
+			JButton currButton = (JButton) e.getSource();
+			
+			//----------------------------------------------------
+			if (currButton == GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getAmbulance()) {
+				AddUnitsToSelector(Ambulance.class, UnitState.IDLE, GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
+			}
+			
+			else if (currButton == GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getDiseaseControlUnit()) {
+				AddUnitsToSelector(DiseaseControlUnit.class, UnitState.IDLE, GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
+			}
+			
+			else if (currButton == GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getFireTruck()) {
+				AddUnitsToSelector(FireTruck.class, UnitState.IDLE, GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
+			}
+			
+			else if (currButton == GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getGasControlUnit()) {
+				AddUnitsToSelector(GasControlUnit.class, UnitState.IDLE, GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
+			}
+			
+			else if (currButton == GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getEvacuator()) {
+				AddUnitsToSelector(Evacuator.class, UnitState.IDLE, GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
+			}
+			//----------------------------------------------------
+			if (currButton == GUI.getGame().getPanel().getMidArea().getMiddleEast().getCenter().getAmbulance()) {
+				AddUnitsToSelector(Ambulance.class, UnitState.RESPONDING, GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
+			}
+			
+			else if (currButton == GUI.getGame().getPanel().getMidArea().getMiddleEast().getCenter().getDiseaseControlUnit()) {
+				AddUnitsToSelector(DiseaseControlUnit.class, UnitState.RESPONDING, GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
+			}
+			
+			else if (currButton == GUI.getGame().getPanel().getMidArea().getMiddleEast().getCenter().getFireTruck()) {
+				AddUnitsToSelector(FireTruck.class, UnitState.RESPONDING, GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
+			}
+			
+			else if (currButton == GUI.getGame().getPanel().getMidArea().getMiddleEast().getCenter().getGasControlUnit()) {
+				AddUnitsToSelector(GasControlUnit.class, UnitState.RESPONDING, GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
+			}
+			
+			else if (currButton == GUI.getGame().getPanel().getMidArea().getMiddleEast().getCenter().getEvacuator()) {
+				AddUnitsToSelector(Evacuator.class, UnitState.RESPONDING, GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
+			}
+			//----------------------------------------------------
+			if (currButton == GUI.getGame().getPanel().getMidArea().getMiddleEast().getBottom().getAmbulance()) {
+				AddUnitsToSelector(Ambulance.class, UnitState.TREATING, GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
+			}
+			
+			else if (currButton == GUI.getGame().getPanel().getMidArea().getMiddleEast().getBottom().getDiseaseControlUnit()) {
+				AddUnitsToSelector(DiseaseControlUnit.class, UnitState.TREATING, GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
+			}
+			
+			else if (currButton == GUI.getGame().getPanel().getMidArea().getMiddleEast().getBottom().getFireTruck()) {
+				AddUnitsToSelector(FireTruck.class, UnitState.TREATING, GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
+			}
+			
+			else if (currButton == GUI.getGame().getPanel().getMidArea().getMiddleEast().getBottom().getGasControlUnit()) {
+				AddUnitsToSelector(GasControlUnit.class, UnitState.TREATING, GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
+			}
+			
+			else if (currButton == GUI.getGame().getPanel().getMidArea().getMiddleEast().getBottom().getEvacuator()) {
+				AddUnitsToSelector(Evacuator.class, UnitState.TREATING, GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
+			}
 		}
 	}
 
@@ -197,7 +267,6 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 		if(e.getSource() == GUI.getGame().getPanel().getTopBar().getEndCycle()) {
 			Button endButton=GUI.getGame().getPanel().getTopBar().getEndCycle();
 			endButton.setIcon(new ImageIcon("icons/Game panel/endCycle1.png"));
@@ -222,7 +291,6 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 		if(e.getSource() == GUI.getGame().getPanel().getTopBar().getEndCycle()) {
 			Button endButton=GUI.getGame().getPanel().getTopBar().getEndCycle();
@@ -267,17 +335,18 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		text.setText(s);
 	}
 	
-	public void updateInfoSelector(Citizen currCitizen) {
+	public void updateInfoSelector(Simulatable selected) {
 		String s="";
 		JTextArea text=GUI.getGame().getPanel().getMidArea().getMidWest().getBottom().getInfo().getTextArea();
-		if (currCitizen != null) {
-			int x=currCitizen.getLocation().getX();
-			int y=currCitizen.getLocation().getY();
-			ResidentialBuilding b=buildingInCell(x, y);
-			
-
-			if(currCitizen!=null)
-				s= currCitizen.toString2();
+	
+		if (selected != null && selected instanceof Citizen)  {		
+				s = ((Citizen) selected).toString2();
+			int length=s.length();
+			text.setSize((int) text.getSize().width, text.getSize().height+length*10);
+		}
+		
+		if (selected != null && selected instanceof Unit)  {			
+				s = ((Unit) selected).toString2();
 			int length=s.length();
 			text.setSize((int) text.getSize().width, text.getSize().height+length*10);
 		}
@@ -310,7 +379,20 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		return ret;
 	}
 	
+	public void AddUnitsToSelector(Class<?> cls,UnitState st,Selector s) {
+		s.removeAllItems();
+		s.addItem(null);
+		for (Unit unit : emergencyUnits) {
+			if(unit.getClass() == cls && unit.getState() == st) {
+				s.addItem(unit);
+			}
+		}
+	}
+	
 	public void updateUnitCount(UnitState state) {
+		
+		if (state == UnitState.IDLE) {
+			
 		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getAmbulance()
 		.setText("X "+countUnits(model.units.Ambulance.class, state));
 		
@@ -325,6 +407,44 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		
 		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getGasControlUnit().
 		setText("X "+countUnits(model.units.GasControlUnit.class, state));
+		}
+		
+		else if (state == UnitState.RESPONDING) {
+			
+			GUI.getGame().getPanel().getMidArea().getMiddleEast().getCenter().getAmbulance()
+			.setText("X "+countUnits(model.units.Ambulance.class, state));
+			
+			GUI.getGame().getPanel().getMidArea().getMiddleEast().getCenter().getDiseaseControlUnit().
+			setText("X "+countUnits(model.units.DiseaseControlUnit.class, state));
+			
+			GUI.getGame().getPanel().getMidArea().getMiddleEast().getCenter().getEvacuator().
+			setText("X "+countUnits(model.units.Evacuator.class, state));
+			
+			GUI.getGame().getPanel().getMidArea().getMiddleEast().getCenter().getFireTruck().
+			setText("X "+countUnits(model.units.FireTruck.class, state));
+			
+			GUI.getGame().getPanel().getMidArea().getMiddleEast().getCenter().getGasControlUnit().
+			setText("X "+countUnits(model.units.GasControlUnit.class, state));
+			}
+		
+		else if (state == UnitState.TREATING) {
+			
+			GUI.getGame().getPanel().getMidArea().getMiddleEast().getBottom().getAmbulance()
+			.setText("X "+countUnits(model.units.Ambulance.class, state));
+			
+			GUI.getGame().getPanel().getMidArea().getMiddleEast().getBottom().getDiseaseControlUnit().
+			setText("X "+countUnits(model.units.DiseaseControlUnit.class, state));
+			
+			GUI.getGame().getPanel().getMidArea().getMiddleEast().getBottom().getEvacuator().
+			setText("X "+countUnits(model.units.Evacuator.class, state));
+			
+			GUI.getGame().getPanel().getMidArea().getMiddleEast().getBottom().getFireTruck().
+			setText("X "+countUnits(model.units.FireTruck.class, state));
+			
+			GUI.getGame().getPanel().getMidArea().getMiddleEast().getBottom().getGasControlUnit().
+			setText("X "+countUnits(model.units.GasControlUnit.class, state));
+		}
+		
 					
 	}
 
@@ -339,22 +459,29 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		GUI.getGame().getPanel().getTopBar().add(topInfo);
 	}
 	
-	public void getCitizens(int x,int y,Selector s){
+	public void getItems(int x,int y,Selector s){
 		s.removeAllItems();
+		s.addItem(null);
 		for (int i = 0; i < visibleCitizens.size(); i++) {
 			if (x == visibleCitizens.get(i).getLocation().getX() && y == visibleCitizens.get(i).getLocation().getY()) {
 				s.addItem(visibleCitizens.get(i));
 			}
 			
 		}
+		for (Unit unit : emergencyUnits) {
+			if (unit.getLocation().getX() == x && unit.getLocation().getY() == y) {
+				s.addItem(unit);
+			}
+		}
 	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() instanceof JComboBox) {
-			JComboBox<Citizen> source = (JComboBox<Citizen>) e.getSource();
-			if (source.getSelectedIndex() != -1) {
-				updateInfoSelector((Citizen) source.getSelectedItem());
+			JComboBox<Simulatable> source = (JComboBox<Simulatable>) e.getSource();
+			if (source.getSelectedIndex() >0) {
+				updateInfoSelector((Simulatable) source.getSelectedItem());
 			}
 			
 		}

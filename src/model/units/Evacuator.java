@@ -63,5 +63,35 @@ public Evacuator(String id, Address location, int stepsPerCycle,int maxCapacity)
 		}
 		super.respond(r);
 	}
+	
+	@Override
+	public String toString() {
+		return getUnitID()+" (Evacuator)";
+	}
+	
+	public String toString2() {
+		String s = "";
+		s+= "Unit ID: "+this.getUnitID()+"\n";
+		s+= "Unit type: Evacuator\n";
+		s+= "Unit location: "+this.getLocation().getX()+","+this.getLocation().getY()+"\n";
+		s+= "Steps per cycle: "+getStepsPerCycle()+"\n";
+		s+= "Target:\n";
+		
+		if (this.getTarget() != null) {
+			s+= ((ResidentialBuilding) this.getTarget()).toString();
+		}
+		else {
+			s+= "NO TARGET\n";
+		}
+
+		s+= "Unit state: "+this.getState()+"\n";
+		s+= "Number of passengers: "+this.getPassengers().size()+"\n";
+		s+= "Passenger info: \n";
+		
+		for (Citizen currCitizen : this.getPassengers()) 
+			s+= currCitizen.toString2();
+		
+		return s;
+	}
 		
 }

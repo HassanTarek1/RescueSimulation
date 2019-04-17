@@ -16,7 +16,7 @@ public class MiddleEast extends JPanel{
 	private WrappedLabel respondingUnits;
 	private WrappedLabel treatingUnits;
 	private MiddleEastTop top;
-	private Selector citizenSelector;
+	private Selector Selector;
 	private MiddleEastCenter center;
 	private MiddleEastBottom bottom;
 	public MiddleEast(MouseListener listener,MouseListener cont) {
@@ -30,9 +30,9 @@ public class MiddleEast extends JPanel{
 		this.cont = cont;
 		
 		//Contents
-		citizenSelector = new Selector(cont);
-		citizenSelector.addActionListener((ActionListener) cont);
-		add(citizenSelector);
+		Selector = new Selector(cont);
+		Selector.addActionListener((ActionListener) cont);
+		add(Selector);
 		
 		availableUnits = new WrappedLabel("","icons/Game panel/Available Units.png");
 		add(availableUnits);
@@ -46,7 +46,7 @@ public class MiddleEast extends JPanel{
 		add(respondingUnits);
 		add(Box.createRigidArea(new Dimension(0,0)));
 		
-		center = new MiddleEastCenter();
+		center = new MiddleEastCenter(this.listener,this.cont);
 		add(center);
 		add(Box.createRigidArea(new Dimension(0,0)));
 		
@@ -54,11 +54,11 @@ public class MiddleEast extends JPanel{
 		add(treatingUnits);
 		add(Box.createRigidArea(new Dimension(0,0)));
 		
-		bottom = new MiddleEastBottom();
+		bottom = new MiddleEastBottom(this.listener,this.cont);
 		add(bottom);
 	}
-	public Selector getCitizenSelector() {
-		return citizenSelector;
+	public Selector getSelector() {
+		return Selector;
 	}
 	public MiddleEastTop getTop() {
 		return top;

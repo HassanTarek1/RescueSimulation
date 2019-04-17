@@ -233,8 +233,8 @@ public class GameGUI extends JFrame implements MouseListener{
 		controller.updateCitizens(this);
 		controller.updateBuildings(this);
 		controller.updateUnitCount(UnitState.IDLE);
-//		controller.updateUnitCount(UnitState.RESPONDING);
-//		controller.updateUnitCount(UnitState.TREATING);
+		controller.updateUnitCount(UnitState.RESPONDING);
+		controller.updateUnitCount(UnitState.TREATING);
 		controller.updatetopBar();
 		if(controller.getEngine().checkGameOver()) {
 			MiniFrame gameOver=new MiniFrame("Game Over");

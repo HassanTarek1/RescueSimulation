@@ -60,4 +60,28 @@ public class GasControlUnit extends FireUnit{
 			super.jobsDone();
 	}
 	
+	@Override
+	public String toString() {
+		return getUnitID()+" (Gas control)";
+	}
+	
+	public String toString2() {
+		String s = "";
+		s+= "Unit ID: "+this.getUnitID()+"\n";
+		s+= "Unit type: Gas control unit\n";
+		s+= "Unit location: "+this.getLocation().getX()+","+this.getLocation().getY()+"\n";
+		s+= "Steps per cycle: "+getStepsPerCycle()+"\n";
+		s+= "Target:\n";
+		
+		if (this.getTarget() != null) {
+			s+= ((ResidentialBuilding) this.getTarget()).toString();
+		}
+		else {
+			s+= "NO TARGET\n";
+		}
+		
+		s+= "Unit state: "+this.getState()+"\n";
+		return s;
+	}
+	
 }

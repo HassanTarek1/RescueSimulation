@@ -171,7 +171,7 @@ public class Citizen implements Simulatable,Rescuable{
 	
 	@Override
 	public String toString() {
-		return this.name;
+		return this.name+" (C)";
 	}
 
 	public String toString2() {

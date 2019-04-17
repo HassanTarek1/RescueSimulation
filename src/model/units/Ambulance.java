@@ -19,6 +19,8 @@ public class Ambulance extends MedicalUnit{
 				
 //constructor(s):	
 
+	
+
 	public Ambulance(String id, Address location, int stepsPerCycle,WorldListener listener){
 		super(id, location, stepsPerCycle,listener);
 	}
@@ -65,9 +67,29 @@ public class Ambulance extends MedicalUnit{
 		super.respond(r);
 	}
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getUnitID()+" (Ambulance)";
+	}
 	
-	
-	
-	
+	public String toString2() {
+		String s = "";
+		s+= "Unit ID: "+this.getUnitID()+"\n";
+		s+= "Unit type: Ambulance\n";
+		s+= "Unit location: "+this.getLocation().getX()+","+this.getLocation().getY()+"\n";
+		s+= "Steps per cycle: "+getStepsPerCycle()+"\n";
+		s+= "Target:\n";
+		
+		if (this.getTarget() != null) {
+			s+= ((Citizen) this.getTarget()).toString2();
+		}
+		else {
+			s+= "NO TARGET\n";
+		}
+		
+		s+= "Unit state: "+this.getState()+"\n";
+		return s;
+	}
 	
 }
