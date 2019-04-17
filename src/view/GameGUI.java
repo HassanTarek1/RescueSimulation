@@ -18,10 +18,10 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import controller.CommandCenter;
 import model.infrastructure.ResidentialBuilding;
+import model.units.UnitState;
 
 public class GameGUI extends JFrame implements MouseListener{
 	private MainPanel panel;
@@ -232,9 +232,9 @@ public class GameGUI extends JFrame implements MouseListener{
 		UpdateCycleImg(panel);
 		controller.updateCitizens(this);
 		controller.updateBuildings(this);
-		controller.updateUnitCount();
-		controller.updateRespondingUnitCount();
-		controller.updateTraetingUnitCount();
+		controller.updateUnitCount(UnitState.IDLE);
+//		controller.updateUnitCount(UnitState.RESPONDING);
+//		controller.updateUnitCount(UnitState.TREATING);
 		controller.updatetopBar();
 		if(controller.getEngine().checkGameOver()) {
 			MiniFrame gameOver=new MiniFrame("Game Over");

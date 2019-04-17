@@ -310,61 +310,23 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		return ret;
 	}
 	
-	public void updateUnitCount() {
+	public void updateUnitCount(UnitState state) {
 		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getAmbulance()
-		.setText("X "+countUnits(model.units.Ambulance.class, UnitState.IDLE));
+		.setText("X "+countUnits(model.units.Ambulance.class, state));
 		
 		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getDiseaseControlUnit().
-		setText("X "+countUnits(model.units.DiseaseControlUnit.class, UnitState.IDLE));
+		setText("X "+countUnits(model.units.DiseaseControlUnit.class, state));
 		
 		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getEvacuator().
-		setText("X "+countUnits(model.units.Evacuator.class, UnitState.IDLE));
+		setText("X "+countUnits(model.units.Evacuator.class, state));
 		
 		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getFireTruck().
-		setText("X "+countUnits(model.units.FireTruck.class, UnitState.IDLE));
+		setText("X "+countUnits(model.units.FireTruck.class, state));
 		
 		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getGasControlUnit().
-		setText("X "+countUnits(model.units.GasControlUnit.class, UnitState.IDLE));
+		setText("X "+countUnits(model.units.GasControlUnit.class, state));
 					
 	}
-	
-	public void updateRespondingUnitCount() {
-		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getAmbulance()
-		.setText("X "+countUnits(model.units.Ambulance.class, UnitState.RESPONDING));
-		
-		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getDiseaseControlUnit().
-		setText("X "+countUnits(model.units.DiseaseControlUnit.class, UnitState.RESPONDING));
-		
-		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getEvacuator().
-		setText("X "+countUnits(model.units.Evacuator.class, UnitState.RESPONDING));
-		
-		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getFireTruck().
-		setText("X "+countUnits(model.units.FireTruck.class, UnitState.RESPONDING));
-		
-		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getGasControlUnit().
-		setText("X "+countUnits(model.units.GasControlUnit.class, UnitState.RESPONDING));
-					
-	}
-	
-	public void updateTraetingUnitCount() {
-		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getAmbulance()
-		.setText("X "+countUnits(model.units.Ambulance.class, UnitState.TREATING));
-		
-		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getDiseaseControlUnit().
-		setText("X "+countUnits(model.units.DiseaseControlUnit.class, UnitState.TREATING));
-		
-		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getEvacuator().
-		setText("X "+countUnits(model.units.Evacuator.class, UnitState.TREATING));
-		
-		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getFireTruck().
-		setText("X "+countUnits(model.units.FireTruck.class, UnitState.TREATING));
-		
-		GUI.getGame().getPanel().getMidArea().getMiddleEast().getTop().getGasControlUnit().
-		setText("X "+countUnits(model.units.GasControlUnit.class, UnitState.TREATING));
-					
-	}
-
-
 
 	public void updatetopBar() {
 		JLabel topInfo=GUI.getGame().getPanel().getTopBar().getTopInfo();
