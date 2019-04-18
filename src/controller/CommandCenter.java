@@ -1,16 +1,13 @@
 package controller;
 
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.awt.event.MouseEvent; 
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
@@ -18,10 +15,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
-
-import org.hamcrest.core.Is;
-
-import exceptions.BuildingAlreadyCollapsedException;
 import exceptions.DisasterException;
 import model.events.SOSListener;
 import model.infrastructure.ResidentialBuilding;
@@ -213,8 +206,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				
 				new MiniFrame(e1.getMessage());
 			}
-			//System.out.println(selected.toString());
-			//TODO something here
+			
 		}
 		else if(e.getSource() instanceof view.Cell) {
 			
@@ -589,11 +581,6 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				s.addItem(unit);
 			}
 		}
-//		for(int j = 0; j < visibleBuildings.size(); j++) {
-//			if (x == visibleBuildings.get(j).getLocation().getX() && y == visibleBuildings.get(j).getLocation().getY()) {
-//				s.addItem(visibleBuildings.get(j));
-//			}
-//		}
 	}
 	
 
