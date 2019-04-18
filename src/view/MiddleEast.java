@@ -32,7 +32,11 @@ public class MiddleEast extends JPanel{
 		//Contents
 		Selector = new Selector(cont);
 		Selector.addActionListener((ActionListener) cont);
+		Selector.setPreferredSize(new Dimension(300,25));
+		Selector.setMaximumSize(Selector.getPreferredSize());
+		Selector.setLocation(1115,50);
 		add(Selector);
+		add(Box.createRigidArea(new Dimension(5,5)));
 		
 		availableUnits = new WrappedLabel("","icons/Game panel/Available Units.png");
 		add(availableUnits);

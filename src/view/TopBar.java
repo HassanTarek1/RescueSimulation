@@ -16,6 +16,7 @@ public class TopBar extends ImagePanel{
 	private Button muteButton;
 	private Button backButton;
 	private Button endCycle;
+	private Button treat;
 	private MouseListener cont;
 	private JLabel topInfo;
 	public TopBar(String img,MouseListener e,MouseListener cont) {
@@ -55,11 +56,20 @@ public class TopBar extends ImagePanel{
 			endCycle=new Button("icons/Game panel/endCycle.png");
 			//endCycle.addMouseListener(listener);
 			endCycle.setAlignmentX(Component.RIGHT_ALIGNMENT);
-			add(Box.createRigidArea(new Dimension(15,0)));
+			//add(Box.createRigidArea(new Dimension(15,0)));
 			this.add(endCycle);
-			endCycle.setLocation(1150,17);
+			endCycle.setLocation(1200,17);
 			endCycle.setSize(135,25);;
 			endCycle.addMouseListener(cont);
+			
+			//treat
+			treat=new Button("icons/Game panel/treat.png");
+			treat.setAlignmentX(Component.RIGHT_ALIGNMENT);
+			add(Box.createRigidArea(new Dimension(15,0)));
+			this.add(treat);
+			treat.setLocation(1100,19);
+			treat.setSize(64,18);;
+			treat.addMouseListener(cont);
 	}
 	public Button getMuteButton() {
 		return muteButton;
@@ -78,5 +88,8 @@ public class TopBar extends ImagePanel{
 	}
 	public JLabel getTopInfo() {
 		return topInfo;
+	}
+	public Button getTreat() {
+		return treat;
 	}
 }

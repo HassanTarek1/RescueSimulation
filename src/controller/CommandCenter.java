@@ -170,6 +170,13 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				new MiniFrame(e1.getMessage());
 			}
 		}
+		//to treat a target
+		else if (e.getSource()==GUI.getGame().getPanel().getTopBar().getTreat()) {
+			ArrayList<Simulatable> selected = new ArrayList<Simulatable>(2);
+			selected = GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().getSelected();
+			//System.out.println(selected.toString());
+			//TODO something here
+		}
 		else if(e.getSource() instanceof view.Cell) {
 			
 			updateInfo((view.Cell)e.getSource());
@@ -272,7 +279,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		if(e.getSource() == GUI.getGame().getPanel().getTopBar().getEndCycle()) {
 			Button endButton=GUI.getGame().getPanel().getTopBar().getEndCycle();
 			endButton.setIcon(new ImageIcon("icons/Game panel/endCycle1.png"));
-			endButton.setLocation(1150,13);
+			endButton.setLocation(1200,17);
 			endButton.setSize(168,35);
 			try {
 				GUI.getGame().PlaySound("sounds/Morse.wav").start();
@@ -287,6 +294,12 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				e1.printStackTrace();
 			}
 		}
+		else if(e.getSource() == GUI.getGame().getPanel().getTopBar().getTreat()) {
+			Button treatButton=GUI.getGame().getPanel().getTopBar().getTreat();
+			treatButton.setIcon(new ImageIcon("icons/Game panel/treat1.png"));
+			treatButton.setLocation(1100,19);
+			treatButton.setSize(80,20);
+		}
 		
 	}
 
@@ -297,8 +310,14 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		if(e.getSource() == GUI.getGame().getPanel().getTopBar().getEndCycle()) {
 			Button endButton=GUI.getGame().getPanel().getTopBar().getEndCycle();
 			endButton.setIcon(new ImageIcon("icons/Game panel/endCycle.png"));
-			endButton.setLocation(1150,17);
+			endButton.setLocation(1200,17);
 			endButton.setSize(135,25);
+		}
+		else if(e.getSource() == GUI.getGame().getPanel().getTopBar().getTreat()) {
+			Button treatButton=GUI.getGame().getPanel().getTopBar().getTreat();
+			treatButton.setIcon(new ImageIcon("icons/Game panel/treat.png"));
+			treatButton.setLocation(1100,19);
+			treatButton.setSize(64,18);
 		}
 	}
 	public void updateLog(GameGUI game) {
