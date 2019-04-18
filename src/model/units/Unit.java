@@ -110,7 +110,7 @@ import simulation.Simulatable;
 					}
 				}
 					
-				if(state == UnitState.TREATING) {
+				else if(state == UnitState.TREATING) {
 						Evacuator Evac = (Evacuator) this;
 						
 						
@@ -123,11 +123,12 @@ import simulation.Simulatable;
 						//reached the target with no passengers
 						else if(Evac.getPassengers().size()<Evac.getMaxCapacity() && distanceToTarget <= 0){
 					
-							Evac.jobsDone();
+							
 							distanceToTarget = 0;
-							Evac.setDistanceToBase(target.getLocation().getX() + target.getLocation().getY());
+							Evac.setDistanceToBase(Evac.getTarget().getLocation().getX() + Evac.getTarget().getLocation().getY());
 							worldListener.assignAddress(Evac, target.getLocation().getX(), target.getLocation().getY());
 							treat();
+							Evac.jobsDone();
 						}
 						
 						//not empty and on the way to the base	
@@ -144,7 +145,7 @@ import simulation.Simulatable;
 							
 						
 						//not empty and in base
-						else if(!Evac.getPassengers().isEmpty() && Evac.getDistanceToBase() <= 0) {
+						if((!Evac.getPassengers().isEmpty()) && Evac.getDistanceToBase() <= 0) {
 							distanceToTarget = (target.getLocation().getX() + target.getLocation().getY());
 							Evac.setDistanceToBase(0);
 							worldListener.assignAddress(Evac, 0, 0);
