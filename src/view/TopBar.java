@@ -41,7 +41,7 @@ public class TopBar extends ImagePanel{
 		topInfo=new JLabel("",SwingConstants.LEFT);
 		topInfo.setBackground(Color.black);
 		topInfo.setLocation(125, 5);
-		topInfo.setSize(380, 50);
+		topInfo.setSize(420, 50);
 		topInfo.setVisible(true);
 		topInfo.setFont(correct8BitFont);
 		this.add(topInfo);

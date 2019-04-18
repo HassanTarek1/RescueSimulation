@@ -150,8 +150,14 @@ public class GameGUI extends JFrame implements MouseListener{
 		// TODO Auto-generated method stub
 		if(e.getSource() == panel.getTopBar().getBackButton()) {
 			GameMusic.stop();
-			MainMenu menu=new MainMenu(this.getController());
 			this.dispose();
+			try {
+				new CommandCenter();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 		}
 		else if(e.getSource() == panel.getTopBar().getMuteButton()) {
 			Button mute=panel.getTopBar().getMuteButton();
@@ -245,7 +251,12 @@ public class GameGUI extends JFrame implements MouseListener{
 			MiniFrame gameOver=new MiniFrame("<html>Game Over<br/>Casualties : "+controller.getEngine().calculateCasualties()+"</html>");
 			this.GameMusic.stop();
 			this.dispose();
-			MainMenu m=new MainMenu(controller);
+			try {
+				new CommandCenter();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

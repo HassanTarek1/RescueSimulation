@@ -188,7 +188,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				GUI.getGame().getPanel().getTopBar().getUnit().setText("Unit: Empty");
 				GUI.getGame().getPanel().getTopBar().getTarget().setText("Target: Empty");
 				GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().setSelectedIndex(0);
-				GUI.getGame().PlaySound("sounds/Fruit collect 1.wav").start();
+				//GUI.getGame().PlaySound("sounds/Fruit collect 1.wav").start();
 				updateUnitCount(UnitState.IDLE);
 				updateUnitCount(UnitState.RESPONDING);
 				updateUnitCount(UnitState.TREATING);
@@ -197,12 +197,12 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			catch (Exception e1) {
 				// TODO: handle exception
 				
-				try {
-					GUI.getGame().PlaySound("sounds/Basso.wav").start();
-				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
+//				try {
+//					GUI.getGame().PlaySound("sounds/Basso.wav").start();
+//				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e2) {
+//					// TODO Auto-generated catch block
+//					e2.printStackTrace();
+//				}
 				
 				new MiniFrame(e1.getMessage());
 			}
@@ -210,12 +210,12 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		}
 		else if(e.getSource() instanceof view.Cell) {
 			
-			try {
-				GUI.getGame().PlaySound("sounds/Text 1.wav").start();
-			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+//			try {
+//				GUI.getGame().PlaySound("sounds/Text 1.wav").start();
+//			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 			
 			updateInfo((view.Cell)e.getSource());
 			getItems(((view.Cell)e.getSource()).getIndxX(),((view.Cell)e.getSource()).getIndxY(),
@@ -237,13 +237,13 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		
 		else if (e.getSource() instanceof JButton) {
 			
-			try {
-				GUI.getGame().PlaySound("sounds/Jump 1.wav").start();
-			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
+//			try {
+//				GUI.getGame().PlaySound("sounds/Jump 1.wav").start();
+//			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//			
 			JButton currButton = (JButton) e.getSource();
 			
 			//----------------------------------------------------
@@ -590,12 +590,12 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			JComboBox<Simulatable> source = (JComboBox<Simulatable>) e.getSource();
 			if (source.getSelectedIndex() >0) {
 				
-				try {
-					GUI.getGame().PlaySound("sounds/Confirm 1.wav").start();
-				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+//				try {
+//					GUI.getGame().PlaySound("sounds/Confirm 1.wav").start();
+//				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 				
 				updateInfoSelector((Simulatable) source.getSelectedItem());
 				Simulatable r= (Simulatable) source.getSelectedItem();
