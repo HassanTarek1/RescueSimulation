@@ -281,60 +281,67 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		if(e.getSource() == GUI.getGame().getPanel().getTopBar().getEndCycle()) {
-			Button endButton=GUI.getGame().getPanel().getTopBar().getEndCycle();
-			endButton.setIcon(new ImageIcon("icons/Game panel/endCycle1.png"));
-			endButton.setLocation(1200,17);
-			endButton.setSize(168,35);
-			try {
-				GUI.getGame().PlaySound("sounds/Morse.wav").start();
-			} catch (UnsupportedAudioFileException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (LineUnavailableException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+		try {
+			if(e.getSource() == GUI.getGame().getPanel().getTopBar().getEndCycle()) {
+				Button endButton=GUI.getGame().getPanel().getTopBar().getEndCycle();
+				endButton.setIcon(new ImageIcon("icons/Game panel/endCycle1.png"));
+				endButton.setLocation(1200,17);
+				endButton.setSize(168,35);
+				try {
+					GUI.getGame().PlaySound("sounds/Morse.wav").start();
+				} catch (UnsupportedAudioFileException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (LineUnavailableException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
-		}
-		else if(e.getSource() == GUI.getGame().getPanel().getTopBar().getTreat()) {
-			Button treatButton=GUI.getGame().getPanel().getTopBar().getTreat();
-			treatButton.setIcon(new ImageIcon("icons/Game panel/treat1.png"));
-			treatButton.setLocation(1100,19);
-			treatButton.setSize(80,20);
-			try {
-				GUI.getGame().PlaySound("sounds/Morse.wav").start();
-			} catch (UnsupportedAudioFileException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (LineUnavailableException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			else if(e.getSource() == GUI.getGame().getPanel().getTopBar().getTreat()) {
+				Button treatButton=GUI.getGame().getPanel().getTopBar().getTreat();
+				treatButton.setIcon(new ImageIcon("icons/Game panel/treat1.png"));
+				treatButton.setLocation(1100,19);
+				treatButton.setSize(80,20);
+				try {
+					GUI.getGame().PlaySound("sounds/Morse.wav").start();
+				} catch (UnsupportedAudioFileException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (LineUnavailableException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
-		}
+					}
+		catch(Exception e1) {}
 		
 	}
 
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		
-		if(e.getSource() == GUI.getGame().getPanel().getTopBar().getEndCycle()) {
-			Button endButton=GUI.getGame().getPanel().getTopBar().getEndCycle();
-			endButton.setIcon(new ImageIcon("icons/Game panel/endCycle.png"));
-			endButton.setLocation(1200,17);
-			endButton.setSize(135,25);
+		try {
+			if(e.getSource() == GUI.getGame().getPanel().getTopBar().getEndCycle()) {
+				Button endButton=GUI.getGame().getPanel().getTopBar().getEndCycle();
+				endButton.setIcon(new ImageIcon("icons/Game panel/endCycle.png"));
+				endButton.setLocation(1200,17);
+				endButton.setSize(135,25);
+			}
+			else if(e.getSource() == GUI.getGame().getPanel().getTopBar().getTreat()) {
+				Button treatButton=GUI.getGame().getPanel().getTopBar().getTreat();
+				treatButton.setIcon(new ImageIcon("icons/Game panel/treat.png"));
+				treatButton.setLocation(1100,19);
+				treatButton.setSize(64,18);
+			}
 		}
-		else if(e.getSource() == GUI.getGame().getPanel().getTopBar().getTreat()) {
-			Button treatButton=GUI.getGame().getPanel().getTopBar().getTreat();
-			treatButton.setIcon(new ImageIcon("icons/Game panel/treat.png"));
-			treatButton.setLocation(1100,19);
-			treatButton.setSize(64,18);
+		catch (Exception e1) {
+			// TODO: handle exception
 		}
 	}
 	public void updateLog(GameGUI game) {
