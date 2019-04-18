@@ -7,6 +7,8 @@ import static org.junit.Assert.fail;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
+import javax.swing.JFrame;
+
 import model.disasters.Collapse;
 import model.disasters.Disaster;
 import model.disasters.Fire;
@@ -30,8 +32,8 @@ import simulation.Address;
 import simulation.Rescuable;
 import simulation.Simulator;
 import controller.CommandCenter;
-import exceptions.CannotTreatException;
 import exceptions.BuildingAlreadyCollapsedException;
+import exceptions.CannotTreatException;
 import exceptions.CitizenAlreadyDeadException;
 import exceptions.IncompatibleTargetException;
 
@@ -45,6 +47,7 @@ public class M3Tests {
 	String unitExceptionPath = "exceptions.UnitException";
 	String cannotTreatExceptionPath = "exceptions.CannotTreatException";
 	String incompatibleTargetExceptionPath = "exceptions.IncompatibleTargetException";
+	JFrame frame;
 	SOSListener sos = new SOSListener() {
 
 		@Override
@@ -53,33 +56,33 @@ public class M3Tests {
 		}
 	};
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testConstructorSimulationException1() throws Exception {
 
 		Class[] inputs = { String.class };
 		testConstructorExists(Class.forName(simulationExceptionPath), inputs);
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testConstructorSimulationException2() throws Exception {
 
 		Class[] inputs = {};
 		testConstructorExists(Class.forName(simulationExceptionPath), inputs);
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testConstructorDisasterException1() throws Exception {
 		Class[] inputs = { Disaster.class };
 		testConstructorExists(Class.forName(disasterExceptionPath), inputs);
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testConstructorDisasterException2() throws Exception {
 		Class[] inputs = { Disaster.class, String.class };
 		testConstructorExists(Class.forName(disasterExceptionPath), inputs);
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testConstructorBuildingAlreadyCollapsedException1()
 			throws Exception {
 		Class[] inputs = { Disaster.class };
@@ -87,7 +90,7 @@ public class M3Tests {
 				Class.forName(buildingAlreadyCollapsedExceptionPath), inputs);
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testConstructorBuildingAlreadyCollapsedException2()
 			throws Exception {
 		Class[] inputs = { Disaster.class, String.class };
@@ -95,86 +98,86 @@ public class M3Tests {
 				Class.forName(buildingAlreadyCollapsedExceptionPath), inputs);
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testConstructorCitizenAlreadyDeadException1() throws Exception {
 		Class[] inputs = { Disaster.class, String.class };
 		testConstructorExists(Class.forName(citizenAlreadyDeadExceptionPath),
 				inputs);
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testConstructorCitizenAlreadyDeadException2() throws Exception {
 		Class[] inputs = { Disaster.class };
 		testConstructorExists(Class.forName(citizenAlreadyDeadExceptionPath),
 				inputs);
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testConstructorUnitException1() throws Exception {
 		Class[] inputs = { Unit.class, Rescuable.class, String.class };
 		testConstructorExists(Class.forName(unitExceptionPath), inputs);
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testConstructorUnitException2() throws Exception {
 		Class[] inputs = { Unit.class, Rescuable.class };
 		testConstructorExists(Class.forName(unitExceptionPath), inputs);
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testConstructorAlreadySafeException1() throws Exception {
 		Class[] inputs = { Unit.class, Rescuable.class };
 		testConstructorExists(Class.forName(cannotTreatExceptionPath), inputs);
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testConstructorAlreadySafeException2() throws Exception {
 		Class[] inputs = { Unit.class, Rescuable.class, String.class };
 		testConstructorExists(Class.forName(cannotTreatExceptionPath), inputs);
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testConstructorIncompatibleTargetException1() throws Exception {
 		Class[] inputs = { Unit.class, Rescuable.class };
 		testConstructorExists(Class.forName(incompatibleTargetExceptionPath),
 				inputs);
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testConstructorIncompatibleTargetException2() throws Exception {
 		Class[] inputs = { Unit.class, Rescuable.class, String.class };
 		testConstructorExists(Class.forName(incompatibleTargetExceptionPath),
 				inputs);
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testClassIsAbstractSimulationException() throws Exception {
 		testClassIsAbstract(Class.forName(simulationExceptionPath));
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testClassIsAbstractDisasterException() throws Exception {
 		testClassIsAbstract(Class.forName(disasterExceptionPath));
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testClassIsAbstractUnitException() throws Exception {
 		testClassIsAbstract(Class.forName(unitExceptionPath));
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testClassIsSubclassSimulationException() throws Exception {
 		testClassIsSubclass(Class.forName(simulationExceptionPath),
 				Exception.class);
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testClassIsSubclassDisasterException() throws Exception {
 		testClassIsSubclass(Class.forName(disasterExceptionPath),
 				Class.forName(simulationExceptionPath));
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testClassIsSubclassBuildingAlreadyCollapsedException()
 			throws Exception {
 		testClassIsSubclass(
@@ -182,33 +185,33 @@ public class M3Tests {
 				Class.forName(disasterExceptionPath));
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testClassIsSubclassCitizenAlreadyDeadException()
 			throws Exception {
 		testClassIsSubclass(Class.forName(citizenAlreadyDeadExceptionPath),
 				Class.forName(disasterExceptionPath));
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testClassIsSubclassUnitException() throws Exception {
 		testClassIsSubclass(Class.forName(unitExceptionPath),
 				Class.forName(simulationExceptionPath));
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testClassIsSubclassAlreadySafeException() throws Exception {
 		testClassIsSubclass(Class.forName(cannotTreatExceptionPath),
 				Class.forName(unitExceptionPath));
 	}
 
-	@Test(timeout = 1000)
+	@Test()
 	public void testClassIsSubclassIncompatibleTargetException()
 			throws Exception {
 		testClassIsSubclass(Class.forName(incompatibleTargetExceptionPath),
 				Class.forName(unitExceptionPath));
 	}
 
-	@Test(timeout = 3000, expected = CannotTreatException.class)
+	@Test(expected = CannotTreatException.class)
 	public void testAmbulanceRespondtoSafeCitizenException() throws Exception {
 		Simulator s = new Simulator(sos);
 		Address ambulanceAddress = getAddressFromWorld(s, 3, 9);
@@ -219,10 +222,12 @@ public class M3Tests {
 		a.respond(c);
 	}
 
-	@Test(timeout = 3000, expected = CannotTreatException.class)
+	@Test(expected = CannotTreatException.class)
 	public void testAmbulanceRespondtoSafeCitizenWithInfectionException()
 			throws Exception {
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
+
 		Simulator s = new Simulator(cc);
 		Address ambulanceAddress = getAddressFromWorld(s, 3, 9);
 		Address citizenAddress = getAddressFromWorld(s, 3, 4);
@@ -231,15 +236,46 @@ public class M3Tests {
 		c.setEmergencyService(cc);
 		Infection inf = new Infection(0, c);
 		inf.strike();
+
 		Ambulance a = new Ambulance("ambulance1", ambulanceAddress, 4, s);
+
 		a.respond(c);
+
 	}
 
-	@Test(timeout = 3000)
+	private void frameGetter(CommandCenter cc) throws IllegalArgumentException,
+			IllegalAccessException, InstantiationException {
+		Field[] f = null;
+		Class curr = cc.getClass();
+		while (f == null) {
+			if (curr == Object.class)
+				return;
+			f = curr.getDeclaredFields();
+			for (int i = 0; i < f.length; i++) {
+				Class currField = f[i].getType();
+				while (Object.class != currField && currField != null) {
+
+					if (currField == JFrame.class) {
+						f[i].setAccessible(true);
+						JFrame x = (JFrame) f[i].get(cc);
+						if (x != null)
+							x.dispose();
+						// return x;
+					}
+					currField = currField.getSuperclass();
+
+				}
+			}
+		}
+		// return null;
+	}
+
+	@Test()
 	public void testAmbulanceRespondtoCorrectCitizenExceptionNotThrown()
 			throws Exception {
 		Simulator s = new Simulator(sos);
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Address ambulanceAddress = getAddressFromWorld(s, 3, 9);
 		Address citizenAddress = getAddressFromWorld(s, 3, 4);
 
@@ -257,11 +293,12 @@ public class M3Tests {
 		}
 	}
 
-	@Test(timeout = 3000, expected = IncompatibleTargetException.class)
+	@Test(expected = IncompatibleTargetException.class)
 	public void testAmbulanceRespondtoResidentialBuildingException()
 			throws Exception {
 		Simulator s = new Simulator(sos);
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Address ambulanceAddress = getAddressFromWorld(s, 3, 9);
 		Address buildingAddress = getAddressFromWorld(s, 3, 4);
 		ResidentialBuilding b = new ResidentialBuilding(buildingAddress);
@@ -272,7 +309,7 @@ public class M3Tests {
 		a.respond(b);
 	}
 
-	@Test(timeout = 3000, expected = CannotTreatException.class)
+	@Test(expected = CannotTreatException.class)
 	public void testDiseaseControlUnitRespondtoSafeCitizenException()
 			throws Exception {
 		Simulator s = new Simulator(sos);
@@ -285,10 +322,11 @@ public class M3Tests {
 		a.respond(c);
 	}
 
-	@Test(timeout = 3000, expected = CannotTreatException.class)
+	@Test(expected = CannotTreatException.class)
 	public void testDiseaseControlUnitRespondtoSafeCitizenWithInjuryException()
 			throws Exception {
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Simulator s = new Simulator(cc);
 		Address diseaseControlUnitAddress = getAddressFromWorld(s, 3, 9);
 		Address citizenAddress = getAddressFromWorld(s, 3, 4);
@@ -302,11 +340,12 @@ public class M3Tests {
 		a.respond(c);
 	}
 
-	@Test(timeout = 3000)
+	@Test()
 	public void testDiseaseControlUnitRespondtoCorrectCitizenExceptionNotThrown()
 			throws Exception {
 		Simulator s = new Simulator(sos);
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Address diseaseControlUnitAddress = getAddressFromWorld(s, 3, 9);
 		Address citizenAddress = getAddressFromWorld(s, 3, 4);
 
@@ -325,11 +364,12 @@ public class M3Tests {
 		}
 	}
 
-	@Test(timeout = 3000, expected = IncompatibleTargetException.class)
+	@Test(expected = IncompatibleTargetException.class)
 	public void testDiseaseControlUnitRespondtoResidentialBuildingException()
 			throws Exception {
 		Simulator s = new Simulator(sos);
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Address diseaseControlUnitAddress = getAddressFromWorld(s, 3, 9);
 		Address buildingAddress = getAddressFromWorld(s, 3, 4);
 		ResidentialBuilding b = new ResidentialBuilding(buildingAddress);
@@ -341,11 +381,12 @@ public class M3Tests {
 		a.respond(b);
 	}
 
-	@Test(timeout = 3000, expected = CannotTreatException.class)
+	@Test(expected = CannotTreatException.class)
 	public void testFireTruckRespondtoSafeResidentialBuildingException()
 			throws Exception {
 		Simulator s = new Simulator(sos);
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Address fireTruckAddress = getAddressFromWorld(s, 3, 9);
 		Address buildingAddress = getAddressFromWorld(s, 3, 4);
 		ResidentialBuilding b = new ResidentialBuilding(buildingAddress);
@@ -354,10 +395,11 @@ public class M3Tests {
 		a.respond(b);
 	}
 
-	@Test(timeout = 3000)
+	@Test()
 	public void testFireTruckRespondtoSafeResidentialBuildingWithOtherThanFireDisasterException()
 			throws Exception {
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Simulator s = new Simulator(cc);
 
 		Address fireTruckAddress = getAddressFromWorld(s, 3, 9);
@@ -368,11 +410,15 @@ public class M3Tests {
 		FireTruck a = new FireTruck("fireTruck1", fireTruckAddress, 4, s);
 		try {
 			a.respond(b);
-			fail("While there is no disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown");
+			fail("While there is no disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown");
 		} catch (CannotTreatException e) {
 
 		} catch (Exception e) {
-			fail("While there is no disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown instead of "
+			fail("While there is no disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown instead of "
 					+ e.getClass().getSimpleName());
 		}
 
@@ -381,11 +427,15 @@ public class M3Tests {
 
 		try {
 			a.respond(b);
-			fail("When FireTruck tries to treat a building while there is a Collapse Disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown");
+			fail("When FireTruck tries to treat a building while there is a Collapse Disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown");
 		} catch (CannotTreatException e) {
 
 		} catch (Exception e) {
-			fail("When FireTruck tries to treat a building while there is a Collapse Disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown instead of \""
+			fail("When FireTruck tries to treat a building while there is a Collapse Disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown instead of \""
 					+ e.getClass().getSimpleName() + "\"");
 		}
 
@@ -396,20 +446,25 @@ public class M3Tests {
 
 		try {
 			a.respond(b);
-			fail("When FireTruck tries to treat a building while there is a GasLeak Disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown");
+			fail("When FireTruck tries to treat a building while there is a GasLeak Disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown");
 		} catch (CannotTreatException e) {
 
 		} catch (Exception e) {
-			fail("When FireTruck tries to treat a building while there is a GasLeak Disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown instead of \""
+			fail("When FireTruck tries to treat a building while there is a GasLeak Disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown instead of \""
 					+ e.getClass().getSimpleName() + "\"");
 		}
 	}
 
-	@Test(timeout = 3000, expected = CannotTreatException.class)
+	@Test(expected = CannotTreatException.class)
 	public void testFireTruckRespondtoSafeResidentialBuildingWithException()
 			throws Exception {
 		Simulator s = new Simulator(sos);
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Address fireTruckAddress = getAddressFromWorld(s, 3, 9);
 		Address buildingAddress = getAddressFromWorld(s, 3, 4);
 		ResidentialBuilding b = new ResidentialBuilding(buildingAddress);
@@ -418,11 +473,12 @@ public class M3Tests {
 		a.respond(b);
 	}
 
-	@Test(timeout = 3000)
+	@Test()
 	public void testFireTruckRespondtoCorrectResidentialBuildingExceptionNotThrown()
 			throws Exception {
 		Simulator s = new Simulator(sos);
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Address fireTruckAddress = getAddressFromWorld(s, 3, 9);
 		Address buildingAddress = getAddressFromWorld(s, 3, 4);
 		ResidentialBuilding b = new ResidentialBuilding(buildingAddress);
@@ -439,10 +495,11 @@ public class M3Tests {
 		}
 	}
 
-	@Test(timeout = 3000, expected = IncompatibleTargetException.class)
+	@Test(expected = IncompatibleTargetException.class)
 	public void testFireTruckRespondtoCitizenException() throws Exception {
 		Simulator s = new Simulator(sos);
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Address fireTruckAddress = getAddressFromWorld(s, 3, 9);
 		Address citizenAddress = getAddressFromWorld(s, 3, 4);
 		Citizen c = new Citizen(citizenAddress, "1", "citizen1", 20, s);
@@ -453,11 +510,12 @@ public class M3Tests {
 		a.respond(c);
 	}
 
-	@Test(timeout = 3000, expected = CannotTreatException.class)
+	@Test(expected = CannotTreatException.class)
 	public void testGasControlUnitRespondtoSafeResidentialBuildingException()
 			throws Exception {
 		Simulator s = new Simulator(sos);
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Address gasControlUnitAddress = getAddressFromWorld(s, 3, 9);
 		Address buildingAddress = getAddressFromWorld(s, 3, 4);
 		ResidentialBuilding b = new ResidentialBuilding(buildingAddress);
@@ -467,10 +525,11 @@ public class M3Tests {
 		a.respond(b);
 	}
 
-	@Test(timeout = 3000)
+	@Test()
 	public void testGasControlUnitRespondtoSafeResidentialBuildingWithOtherThanGasLeakDisasterException()
 			throws Exception {
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Simulator s = new Simulator(cc);
 
 		Address gasControlUnitAddress = getAddressFromWorld(s, 3, 9);
@@ -482,11 +541,15 @@ public class M3Tests {
 				gasControlUnitAddress, 4, s);
 		try {
 			a.respond(b);
-			fail("While there is no disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown");
+			fail("While there is no disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown");
 		} catch (CannotTreatException e) {
 
 		} catch (Exception e) {
-			fail("While there is no disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown instead of "
+			fail("While there is no disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown instead of "
 					+ e.getClass().getSimpleName());
 		}
 
@@ -495,11 +558,15 @@ public class M3Tests {
 
 		try {
 			a.respond(b);
-			fail("When GasControlUnit tries to treat a building while there is a Collapse Disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown");
+			fail("When GasControlUnit tries to treat a building while there is a Collapse Disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown");
 		} catch (CannotTreatException e) {
 
 		} catch (Exception e) {
-			fail("When GasControlUnit tries to treat a building while there is a Collapse Disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown instead of \""
+			fail("When GasControlUnit tries to treat a building while there is a Collapse Disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown instead of \""
 					+ e.getClass().getSimpleName() + "\"");
 		}
 
@@ -510,20 +577,25 @@ public class M3Tests {
 
 		try {
 			a.respond(b);
-			fail("When GasControlUnit tries to treat a building while there is a Fire Disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown");
+			fail("When GasControlUnit tries to treat a building while there is a Fire Disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown");
 		} catch (CannotTreatException e) {
 
 		} catch (Exception e) {
-			fail("When GasControlUnit tries to treat a building while there is a Fire Disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown instead of \""
+			fail("When GasControlUnit tries to treat a building while there is a Fire Disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown instead of \""
 					+ e.getClass().getSimpleName() + "\"");
 		}
 	}
 
-	@Test(timeout = 3000)
+	@Test()
 	public void testGasControlUnitRespondtoCorrectResidentialBuildingExceptionNotThrown()
 			throws Exception {
 		Simulator s = new Simulator(sos);
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Address gasControlUnitAddress = getAddressFromWorld(s, 3, 9);
 		Address buildingAddress = getAddressFromWorld(s, 3, 4);
 		ResidentialBuilding b = new ResidentialBuilding(buildingAddress);
@@ -541,10 +613,11 @@ public class M3Tests {
 		}
 	}
 
-	@Test(timeout = 3000, expected = IncompatibleTargetException.class)
+	@Test(expected = IncompatibleTargetException.class)
 	public void testGasControlUnitRespondtoCitizenException() throws Exception {
 		Simulator s = new Simulator(sos);
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Address gasControlUnitAddress = getAddressFromWorld(s, 3, 9);
 		Address citizenAddress = getAddressFromWorld(s, 3, 4);
 		Citizen c = new Citizen(citizenAddress, "1", "citizen1", 20, s);
@@ -556,11 +629,12 @@ public class M3Tests {
 		a.respond(c);
 	}
 
-	@Test(timeout = 3000, expected = CannotTreatException.class)
+	@Test(expected = CannotTreatException.class)
 	public void testEvacuatorRespondtoSafeResidentialBuildingException()
 			throws Exception {
 		Simulator s = new Simulator(sos);
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Address evacuatorAddress = getAddressFromWorld(s, 3, 9);
 		Address buildingAddress = getAddressFromWorld(s, 3, 4);
 		ResidentialBuilding b = new ResidentialBuilding(buildingAddress);
@@ -569,12 +643,12 @@ public class M3Tests {
 		a.respond(b);
 	}
 
-	@Test(timeout = 3000)
+	@Test()
 	public void testEvacuatorRespondtoSafeResidentialBuildingWithOtherThanCollapseDisasterExceptions()
 			throws Exception {
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Simulator s = new Simulator(cc);
-
 		Address evacuatorAddress = getAddressFromWorld(s, 3, 9);
 		Address buildingAddress = getAddressFromWorld(s, 3, 4);
 		ResidentialBuilding b = new ResidentialBuilding(buildingAddress);
@@ -583,11 +657,15 @@ public class M3Tests {
 		Evacuator a = new Evacuator("evacuator1", evacuatorAddress, 5, s, 4);
 		try {
 			a.respond(b);
-			fail("While there is no disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown");
+			fail("While there is no disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown");
 		} catch (CannotTreatException e) {
 
 		} catch (Exception e) {
-			fail("While there is no disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown instead of "
+			fail("While there is no disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown instead of "
 					+ e.getClass().getSimpleName());
 		}
 
@@ -596,11 +674,15 @@ public class M3Tests {
 
 		try {
 			a.respond(b);
-			fail("When Evacuator tries to treat a building while there is a GasLeak Disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown");
+			fail("When Evacuator tries to treat a building while there is a GasLeak Disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown");
 		} catch (CannotTreatException e) {
 
 		} catch (Exception e) {
-			fail("When Evacuator tries to treat a building while there is a GasLeak Disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown instead of \""
+			fail("When Evacuator tries to treat a building while there is a GasLeak Disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown instead of \""
 					+ e.getClass().getSimpleName() + "\"");
 		}
 
@@ -611,20 +693,26 @@ public class M3Tests {
 
 		try {
 			a.respond(b);
-			fail("When Evacuator tries to treat a building while there is a Fire Disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown");
+			fail("When Evacuator tries to treat a building while there is a Fire Disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown");
 		} catch (CannotTreatException e) {
 
 		} catch (Exception e) {
-			fail("When Evacuator tries to treat a building while there is a Fire Disaster on the building, "+ CannotTreatException.class.getSimpleName() +" should be thrown instead of \""
+			fail("When Evacuator tries to treat a building while there is a Fire Disaster on the building, "
+					+ CannotTreatException.class.getSimpleName()
+					+ " should be thrown instead of \""
 					+ e.getClass().getSimpleName() + "\"");
 		}
+
 	}
 
-	@Test(timeout = 3000)
+	@Test()
 	public void testEvacuatorRespondtoCorrectResidentialBuildingExceptionNotThrown()
 			throws Exception {
 		Simulator s = new Simulator(sos);
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Address evacuatorAddress = getAddressFromWorld(s, 3, 9);
 		Address buildingAddress = getAddressFromWorld(s, 3, 4);
 		ResidentialBuilding b = new ResidentialBuilding(buildingAddress);
@@ -641,10 +729,11 @@ public class M3Tests {
 		}
 	}
 
-	@Test(timeout = 3000, expected = IncompatibleTargetException.class)
+	@Test(expected = IncompatibleTargetException.class)
 	public void testEvacuatorRespondtoCitizenException() throws Exception {
 		Simulator s = new Simulator(sos);
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Address evacuatorAddress = getAddressFromWorld(s, 3, 9);
 		Address citizenAddress = getAddressFromWorld(s, 3, 4);
 		Citizen c = new Citizen(citizenAddress, "1", "citizen1", 20, s);
@@ -657,9 +746,10 @@ public class M3Tests {
 
 	// Disasters exceptions
 
-	@Test(expected = CitizenAlreadyDeadException.class, timeout = 5000)
+	@Test(expected = CitizenAlreadyDeadException.class)
 	public void testStrikeInjuryThrown() throws Exception {
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Simulator s = new Simulator(sos);
 		int int0 = 0;
 		int int9 = 9;
@@ -672,9 +762,10 @@ public class M3Tests {
 		injury2.strike();
 	}
 
-	@Test(timeout = 5000)
+	@Test()
 	public void testStrikeInjuryNotThrown() throws Exception {
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Simulator s = new Simulator(sos);
 		int int0 = 0;
 		int int9 = 9;
@@ -692,9 +783,10 @@ public class M3Tests {
 		}
 	}
 
-	@Test(expected = CitizenAlreadyDeadException.class, timeout = 5000)
+	@Test(expected = CitizenAlreadyDeadException.class)
 	public void testStrikeInfectionThrown() throws Exception {
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Simulator s = new Simulator(sos);
 		int int0 = 0;
 		int int9 = 9;
@@ -707,9 +799,10 @@ public class M3Tests {
 		infection2.strike();
 	}
 
-	@Test(timeout = 5000)
+	@Test()
 	public void testStrikeInfectionNotThrown() throws Exception {
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		Simulator s = new Simulator(sos);
 		int int0 = 0;
 		int int9 = 9;
@@ -727,9 +820,10 @@ public class M3Tests {
 		}
 	}
 
-	@Test(expected = BuildingAlreadyCollapsedException.class, timeout = 5000)
+	@Test(expected = BuildingAlreadyCollapsedException.class)
 	public void testStrikeCollapseThrown() throws Exception {
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		int int0 = 0;
 		int int9 = 9;
 		Address address1 = new Address(int0, int9);
@@ -740,9 +834,10 @@ public class M3Tests {
 		collapse2.strike();
 	}
 
-	@Test(timeout = 5000)
+	@Test()
 	public void testStrikeCollapseNotThrown() throws Exception {
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		int int0 = 0;
 		int int9 = 9;
 		Address address1 = new Address(int0, int9);
@@ -758,9 +853,10 @@ public class M3Tests {
 		}
 	}
 
-	@Test(expected = BuildingAlreadyCollapsedException.class, timeout = 5000)
+	@Test(expected = BuildingAlreadyCollapsedException.class)
 	public void testStrikeFireThrown() throws Exception {
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		int int0 = 0;
 		int int9 = 9;
 		Address address1 = new Address(int0, int9);
@@ -771,9 +867,10 @@ public class M3Tests {
 		fire2.strike();
 	}
 
-	@Test(timeout = 5000)
+	@Test()
 	public void testStrikeFireNotThrown() throws Exception {
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		int int0 = 0;
 		int int9 = 9;
 		Address address1 = new Address(int0, int9);
@@ -789,9 +886,10 @@ public class M3Tests {
 		}
 	}
 
-	@Test(expected = BuildingAlreadyCollapsedException.class, timeout = 5000)
+	@Test(expected = BuildingAlreadyCollapsedException.class)
 	public void testStrikeGasLeakThrown() throws Exception {
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		int int0 = 0;
 		int int9 = 9;
 		Address address1 = new Address(int0, int9);
@@ -802,9 +900,10 @@ public class M3Tests {
 		gasLeak2.strike();
 	}
 
-	@Test(timeout = 5000)
+	@Test()
 	public void testStrikeGasLeakNotThrown() throws Exception {
 		CommandCenter cc = new CommandCenter();
+		frameGetter(cc);
 		int int0 = 0;
 		int int9 = 9;
 		Address address1 = new Address(int0, int9);
