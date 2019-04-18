@@ -162,9 +162,6 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				GUI.getGame().nextCycleGUI();
 				updateLog(GUI.getGame());
 				
-			} catch (BuildingAlreadyCollapsedException e1) {
-				new MiniFrame(e1.getMessage());
-				
 			} catch (DisasterException e1) {
 				// TODO Auto-generated catch block
 				new MiniFrame(e1.getMessage());
@@ -172,8 +169,15 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		}
 		//to treat a target
 		else if (e.getSource()==GUI.getGame().getPanel().getTopBar().getTreat()) {
-			ArrayList<Simulatable> selected = new ArrayList<Simulatable>(2);
-			selected = GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().getSelected();
+			Rescuable selectedTarget = GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().getSelectedTarget();
+			Unit selectedUnit = GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().getSelectedUnit();
+			try{
+				selectedUnit.respond(selectedTarget);
+			}
+			catch (Exception e1) {
+				// TODO: handle exception
+				new MiniFrame(e1.getMessage());
+			}
 			//System.out.println(selected.toString());
 			//TODO something here
 		}
@@ -183,7 +187,8 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			getItems(((view.Cell)e.getSource()).getIndxX(),((view.Cell)e.getSource()).getIndxY(),
 					GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
 			
-			
+		//	GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().setSelectedTarget((Rescuable)((view.Cell)e.getSource()));
+
 		}
 		
 		else if (e.getSource() instanceof JButton) {
@@ -299,6 +304,18 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			treatButton.setIcon(new ImageIcon("icons/Game panel/treat1.png"));
 			treatButton.setLocation(1100,19);
 			treatButton.setSize(80,20);
+			try {
+				GUI.getGame().PlaySound("sounds/Morse.wav").start();
+			} catch (UnsupportedAudioFileException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (LineUnavailableException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		
 	}
@@ -508,6 +525,11 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				s.addItem(unit);
 			}
 		}
+		for(int j = 0; j < visibleBuildings.size(); j++) {
+			if (x == visibleBuildings.get(j).getLocation().getX() && y == visibleBuildings.get(j).getLocation().getY()) {
+				s.addItem(visibleBuildings.get(j));
+			}
+		}
 	}
 	
 
@@ -517,6 +539,13 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			JComboBox<Simulatable> source = (JComboBox<Simulatable>) e.getSource();
 			if (source.getSelectedIndex() >0) {
 				updateInfoSelector((Simulatable) source.getSelectedItem());
+				Simulatable r= (Simulatable) source.getSelectedItem();
+				if(r instanceof Rescuable) {
+					GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().setSelectedTarget((Rescuable)r);
+				}
+				else if(r instanceof Unit) {
+					GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().setSelectedUnit((Unit)r);
+				}
 			}
 			
 		}

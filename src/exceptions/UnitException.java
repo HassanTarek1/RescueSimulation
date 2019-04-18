@@ -20,8 +20,12 @@ public abstract class UnitException extends SimulationException {
 	//constructors
 	public UnitException(Unit unit, Rescuable target) {
 		super();
+		this.unit = unit;
+		this.target = target;
 	}
 	public UnitException(Unit unit, Rescuable target, String message) {
 		super(message);
+		this.unit = unit;
+		this.target = target;
 	}
 }

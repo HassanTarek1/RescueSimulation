@@ -7,11 +7,14 @@ import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 
 import model.people.Citizen;
+import model.units.Unit;
 import simulation.Address;
+import simulation.Rescuable;
 import simulation.Simulatable;
 
 public class Selector extends JComboBox<Simulatable> {
-	private ArrayList<Simulatable> selected = new ArrayList<Simulatable>(2);
+	private Rescuable selectedTarget;
+	private Unit selectedUnit;
 	private MouseListener cont;
 	public Selector(MouseListener cont) {
 		
@@ -21,18 +24,39 @@ public class Selector extends JComboBox<Simulatable> {
 	}
 	
 	public void addSelected (Simulatable r) {
-		if(selected.size()<=2) {
-			selected.add(r);
+		if(r instanceof Rescuable) {
+			selectedTarget = (Rescuable)r;
 		}
-	}
-
-	public ArrayList<Simulatable> getSelected() {
-		return selected;
+		else if(r instanceof Unit) {
+			selectedUnit = (Unit)r;
+		}
 	}
 
 	public MouseListener getCont() {
 		return cont;
 	}
+
+	public Rescuable getSelectedTarget() {
+		return selectedTarget;
+	}
+
+	public Unit getSelectedUnit() {
+		return selectedUnit;
+	}
+
+	public void setSelectedTarget(Rescuable selectedTarget) {
+		this.selectedTarget = selectedTarget;
+	}
+
+	public void setSelectedUnit(Unit selectedUnit) {
+		this.selectedUnit = selectedUnit;
+	}
+
+	public void setCont(MouseListener cont) {
+		this.cont = cont;
+	}
+	
+	
 	
 	
 }
