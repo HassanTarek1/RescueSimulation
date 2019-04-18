@@ -32,13 +32,14 @@ public abstract class MedicalUnit extends Unit{
 	
 //Methods
 	
-	public void heal() {
-		Citizen X=(Citizen)(this.getTarget());
-		if(X != null) {
-			X.setHp(X.getHp()+healingAmount);
-		}
-		if(X.getHp()>=100) {
-			X.setHp(100);
+	public void heal() throws NullPointerException {
+		Citizen target = (Citizen)getTarget();
+		if(target != null) {
+		if(target.getHp()<100)
+			target.setHp(target.getHp()+healingAmount);
+		
+		
+		if(target.getHp() == 100)	
 			jobsDone();
 		}
 	}
