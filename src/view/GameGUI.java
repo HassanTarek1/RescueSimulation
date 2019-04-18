@@ -29,6 +29,11 @@ public class GameGUI extends JFrame implements MouseListener{
 	private int CurrentCycle = 0;
 	private Clip GameMusic;
 	private CommandCenter controller;
+	private String[] endCycleSound = {"sounds/confirm_style_2_echo_001.wav","sounds/confirm_style_2_echo_002.wav"
+			,"sounds/confirm_style_2_echo_003.wav","sounds/confirm_style_2_echo_004.wav","sounds/confirm_style_2_echo_005.wav"};
+	public String[] getEndCycleSound() {
+		return endCycleSound;
+	}
 	private FloatControl volume;
 
 

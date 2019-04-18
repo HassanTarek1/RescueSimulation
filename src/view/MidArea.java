@@ -1,7 +1,9 @@
 package view;
 
 import java.awt.Color;
+import java.awt.FontFormatException;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -33,7 +35,7 @@ public class MidArea extends JPanel{
 		return middleEast;
 	}
 
-	public MidArea(MouseListener e,MouseListener cont) {
+	public MidArea(MouseListener e,MouseListener cont) throws FontFormatException, IOException {
 		super();
 		listener = e;
 		this.cont=cont;;

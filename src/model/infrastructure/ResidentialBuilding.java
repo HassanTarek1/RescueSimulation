@@ -157,7 +157,7 @@ public class ResidentialBuilding implements Simulatable,Rescuable{
 		s=s+occ;
 		s+="^^^^^^^^^^^^^^^^^"+"\n";
 		if (this.getDisaster()!=null) 
-			s+="Building's's disaster : "+this.getDisaster().toString()+"\n";
+			s+="Building's disaster : "+this.getDisaster().toString()+"\n";
 		return s;
 	}
 	

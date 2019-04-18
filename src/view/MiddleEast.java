@@ -2,8 +2,10 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FontFormatException;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -19,7 +21,7 @@ public class MiddleEast extends JPanel{
 	private Selector Selector;
 	private MiddleEastCenter center;
 	private MiddleEastBottom bottom;
-	public MiddleEast(MouseListener listener,MouseListener cont) {
+	public MiddleEast(MouseListener listener,MouseListener cont) throws FontFormatException, IOException {
 		super();
 		
 		setSize(500, 675);

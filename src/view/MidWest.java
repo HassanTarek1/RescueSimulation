@@ -2,6 +2,8 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FontFormatException;
+import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -12,7 +14,7 @@ public class MidWest extends JPanel{
 	private MidWestBottom bottom;
 	private WrappedLabel Log;
 	private WrappedLabel info;
-	public MidWest() {
+	public MidWest() throws FontFormatException, IOException {
 		super();
 		setSize(500, 675);
 		setOpaque(false);

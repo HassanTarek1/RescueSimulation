@@ -1,6 +1,7 @@
 package controller;
 
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -16,6 +18,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+
+import org.hamcrest.core.Is;
 
 import exceptions.BuildingAlreadyCollapsedException;
 import exceptions.DisasterException;
@@ -47,7 +51,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	private ArrayList<ResidentialBuilding> visibleBuildings;
 	
 	private ArrayList<Citizen> visibleCitizens;
-	
+
 	private ArrayList<Unit> emergencyUnits;
 	private String logText="";
 	
@@ -162,9 +166,22 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				GUI.getGame().nextCycleGUI();
 				updateLog(GUI.getGame());
 				
+				Random ran = new Random();
+				int x = ran.nextInt(5);
+				GUI.getGame().PlaySound(GUI.getGame().getEndCycleSound()[x]).start();
+				
 			} catch (DisasterException e1) {
 				// TODO Auto-generated catch block
 				new MiniFrame(e1.getMessage());
+			} catch (UnsupportedAudioFileException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (LineUnavailableException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
 		//to treat a target
@@ -173,9 +190,27 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			Unit selectedUnit = GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().getSelectedUnit();
 			try{
 				selectedUnit.respond(selectedTarget);
+				selectedTarget = null;
+				selectedUnit = null;
+				GUI.getGame().getPanel().getTopBar().getUnit().setText("Unit: Empty");
+				GUI.getGame().getPanel().getTopBar().getTarget().setText("Target: Empty");
+				GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().setSelectedIndex(0);
+				GUI.getGame().PlaySound("sounds/Fruit collect 1.wav").start();
+				updateUnitCount(UnitState.IDLE);
+				updateUnitCount(UnitState.RESPONDING);
+				updateUnitCount(UnitState.TREATING);
+				
 			}
 			catch (Exception e1) {
 				// TODO: handle exception
+				
+				try {
+					GUI.getGame().PlaySound("sounds/Basso.wav").start();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				
 				new MiniFrame(e1.getMessage());
 			}
 			//System.out.println(selected.toString());
@@ -183,15 +218,40 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		}
 		else if(e.getSource() instanceof view.Cell) {
 			
+			try {
+				GUI.getGame().PlaySound("sounds/Text 1.wav").start();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 			updateInfo((view.Cell)e.getSource());
 			getItems(((view.Cell)e.getSource()).getIndxX(),((view.Cell)e.getSource()).getIndxY(),
 					GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector());
 			
-		//	GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().setSelectedTarget((Rescuable)((view.Cell)e.getSource()));
+			ResidentialBuilding currBuilding = null;
+			currBuilding = buildingInCell(((Cell) e.getSource()).getIndxX(), ((Cell) e.getSource()).getIndxY());
+		
+			if (currBuilding != null) {
+				
+				GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().setSelectedTarget(currBuilding);
+				
+				GUI.getGame().getPanel().getTopBar().getTarget().setText("Target: Building at ("+currBuilding.getLocation().getX()
+						+","+currBuilding.getLocation().getY()+")");
+			}
+			
 
 		}
 		
 		else if (e.getSource() instanceof JButton) {
+			
+			try {
+				GUI.getGame().PlaySound("sounds/Jump 1.wav").start();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 			JButton currButton = (JButton) e.getSource();
 			
 			//----------------------------------------------------
@@ -284,9 +344,9 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		try {
 			if(e.getSource() == GUI.getGame().getPanel().getTopBar().getEndCycle()) {
 				Button endButton=GUI.getGame().getPanel().getTopBar().getEndCycle();
-				endButton.setIcon(new ImageIcon("icons/Game panel/endCycle1.png"));
-				endButton.setLocation(1200,17);
-				endButton.setSize(168,35);
+				endButton.setIcon(new ImageIcon("icons/Game panel/Next Cycle1.png"));
+				//endButton.setLocation(1240,17);
+				//endButton.setSize(160,25);
 				try {
 					GUI.getGame().PlaySound("sounds/Morse.wav").start();
 				} catch (UnsupportedAudioFileException e1) {
@@ -302,9 +362,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			}
 			else if(e.getSource() == GUI.getGame().getPanel().getTopBar().getTreat()) {
 				Button treatButton=GUI.getGame().getPanel().getTopBar().getTreat();
-				treatButton.setIcon(new ImageIcon("icons/Game panel/treat1.png"));
-				treatButton.setLocation(1100,19);
-				treatButton.setSize(80,20);
+				treatButton.setIcon(new ImageIcon("icons/Game panel/Respond1.png"));
 				try {
 					GUI.getGame().PlaySound("sounds/Morse.wav").start();
 				} catch (UnsupportedAudioFileException e1) {
@@ -329,15 +387,13 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		try {
 			if(e.getSource() == GUI.getGame().getPanel().getTopBar().getEndCycle()) {
 				Button endButton=GUI.getGame().getPanel().getTopBar().getEndCycle();
-				endButton.setIcon(new ImageIcon("icons/Game panel/endCycle.png"));
-				endButton.setLocation(1200,17);
-				endButton.setSize(135,25);
+				endButton.setIcon(new ImageIcon("icons/Game panel/Next Cycle.png"));
+				//endButton.setLocation(1200,17);
+				//endButton.setSize(135,25);
 			}
 			else if(e.getSource() == GUI.getGame().getPanel().getTopBar().getTreat()) {
 				Button treatButton=GUI.getGame().getPanel().getTopBar().getTreat();
-				treatButton.setIcon(new ImageIcon("icons/Game panel/treat.png"));
-				treatButton.setLocation(1100,19);
-				treatButton.setSize(64,18);
+				treatButton.setIcon(new ImageIcon("icons/Game panel/Respond.png"));
 			}
 		}
 		catch (Exception e1) {
@@ -356,7 +412,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			 logText=logText+"  "+citizen.getDisaster().toString()+"in location "+citizen.getLocation().toString()+"\n";
 			}
 			else if(citizen.getState()==CitizenState.DECEASED) {
-				logText+="  Citizen "+citizen.toString()+" in location "+citizen.getLocation().toString()+" DECEASED"+"\n";
+				logText+="Citizen "+citizen.getName()+" in location "+citizen.getLocation().toString()+" Died"+"\n";
 				toRemoveC.add(citizen);
 			}
 		}
@@ -368,12 +424,12 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				logText=logText+"  "+building.getDisaster().toString()+"in location "+building.getLocation().toString()+"\n";
 			}
 			else if(building.getStructuralIntegrity()<=0) {
-				logText+="  Building in location "+building.getLocation().toString()+" was destroyed"+"\n";
+				logText+="Building in location "+building.getLocation().toString()+" was destroyed"+"\n";
 				toRemoveB.add(building);
 			}
 		}
 		visibleBuildings.removeAll(toRemoveB);
-		logText+="------------------------------------------"+"\n";
+		logText+="-----------------------------------\n";
 		JTextArea logTextArea=game.getPanel().getMidArea().getMidWest().getTop().getLog().getTextArea();
 		logTextArea.setText(logText);
 		logTextArea.setSize(logTextArea.getSize().width,logTextArea.getSize().height+10);
@@ -392,6 +448,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		int length=s.length();
 		text.setSize((int) text.getSize().width, text.getSize().height+length*10);
 		text.setText(s);
+				
 	}
 	
 	public void updateInfoSelector(Simulatable selected) {
@@ -532,11 +589,11 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				s.addItem(unit);
 			}
 		}
-		for(int j = 0; j < visibleBuildings.size(); j++) {
-			if (x == visibleBuildings.get(j).getLocation().getX() && y == visibleBuildings.get(j).getLocation().getY()) {
-				s.addItem(visibleBuildings.get(j));
-			}
-		}
+//		for(int j = 0; j < visibleBuildings.size(); j++) {
+//			if (x == visibleBuildings.get(j).getLocation().getX() && y == visibleBuildings.get(j).getLocation().getY()) {
+//				s.addItem(visibleBuildings.get(j));
+//			}
+//		}
 	}
 	
 
@@ -545,13 +602,42 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		if (e.getSource() instanceof JComboBox) {
 			JComboBox<Simulatable> source = (JComboBox<Simulatable>) e.getSource();
 			if (source.getSelectedIndex() >0) {
+				
+				try {
+					GUI.getGame().PlaySound("sounds/Confirm 1.wav").start();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 				updateInfoSelector((Simulatable) source.getSelectedItem());
 				Simulatable r= (Simulatable) source.getSelectedItem();
 				if(r instanceof Rescuable) {
 					GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().setSelectedTarget((Rescuable)r);
+					
+					Rescuable Target = GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().getSelectedTarget();
+					if (Target instanceof Citizen) {
+						GUI.getGame().getPanel().getTopBar().getTarget().setText("Target: Citizen "+((Citizen) Target).getName()+" at "+"("+Target.getLocation().getX()
+								+","+Target.getLocation().getY()+")");
+					}
+					else {
+						GUI.getGame().getPanel().getTopBar().getTarget().setText("Target: Empty");
+					}
+					
 				}
 				else if(r instanceof Unit) {
 					GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().setSelectedUnit((Unit)r);
+					
+					Unit unit = GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().getSelectedUnit();
+					
+					if (unit == null) {
+						GUI.getGame().getPanel().getTopBar().getUnit().setText("Unit: Empty");
+					}
+					else {
+						GUI.getGame().getPanel().getTopBar().getUnit().setText("Unit: "+unit.getClass().getSimpleName()+" "+unit.getUnitID()+ " at "+"("+unit.getLocation().getX()
+								+","+unit.getLocation().getY()+")");
+					}
+					
 				}
 			}
 			

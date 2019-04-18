@@ -1,6 +1,11 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.ComboBoxModel;
@@ -13,14 +18,24 @@ import simulation.Rescuable;
 import simulation.Simulatable;
 
 public class Selector extends JComboBox<Simulatable> {
+	private File font_file = new File("Fonts/8-Bit Madness.ttf");
+	private Font font;
 	private Rescuable selectedTarget;
 	private Unit selectedUnit;
 	private MouseListener cont;
-	public Selector(MouseListener cont) {
+	public Selector(MouseListener cont) throws FontFormatException, IOException {
 		
 		super();
 		addItem(null);
 		this.cont = cont;
+		
+		//font
+		font = Font.createFont(Font.TRUETYPE_FONT, font_file);
+		Font correct8BitFont = font.deriveFont(20f);
+		setFont(correct8BitFont);
+		setForeground(Color.white);
+		setBackground(Color.decode("#EDBA61"));
+		
 	}
 	
 	public void addSelected (Simulatable r) {

@@ -1,7 +1,9 @@
 package view;
 
 import java.awt.Dimension;
+import java.awt.FontFormatException;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -23,7 +25,7 @@ public class MainPanel extends ImagePanel{
 	public MouseListener getListener() {
 		return listener;
 	}
-	public MainPanel(String img,MouseListener e,MouseListener cont) {
+	public MainPanel(String img,MouseListener e,MouseListener cont) throws FontFormatException, IOException {
 		super(img);
 		listener = e;
 		setSize(1425,802);
