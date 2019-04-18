@@ -1,10 +1,12 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FontFormatException;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
@@ -45,6 +47,7 @@ public class MidArea extends JPanel{
 		
 		//Mid West
 		midWest = new MidWest();
+		add(Box.createRigidArea(new Dimension(10,0)));
 		add(midWest);
 		
 		//Grid (Center)
