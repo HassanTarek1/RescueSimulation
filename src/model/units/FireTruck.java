@@ -44,8 +44,11 @@ public class FireTruck extends FireUnit{
 			String message="What are you doing. you can not extinguish a citizen";
 			throw new IncompatibleTargetException(this, r, message);
 		}
-		if(!canTreat(r)) {
+		if(r.getDisaster() == null) {
 			throw new CannotTreatException(this,r, "the Building is Safe");
+		}
+		if(!canTreat(r)) {
+			throw new CannotTreatException(this,r, "The Building Already Collapsed");
 		}
 		if(!(r.getDisaster() instanceof Fire)) {
 			throw new CannotTreatException(this,r,"the Fire Unit treats only the Fire Disater");

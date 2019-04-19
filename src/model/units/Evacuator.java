@@ -55,8 +55,11 @@ public Evacuator(String id, Address location, int stepsPerCycle,int maxCapacity)
 			String message="What are you doing. you can not evacuate a citizen";
 			throw new IncompatibleTargetException(this, r, message);
 		}
-		if(!canTreat(r) || r.getDisaster()==null) {
+		if(r.getDisaster()==null) {
 			throw new CannotTreatException(this,r,"the Building is Safe");
+		}
+		if(!canTreat(r)) {
+			throw new CannotTreatException(this,r, "The Building Already Collapsed");
 		}
 		if(!(r.getDisaster() instanceof Collapse)) {
 			throw new CannotTreatException(this,r,"the Evacuator treats only the collapse Disaster");

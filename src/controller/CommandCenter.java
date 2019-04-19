@@ -456,8 +456,8 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		int bc = countBuildingCitizen(x, y);
 		ResidentialBuilding currBuilding = buildingInCell(x, y);
 		
-//		if (currBuilding != null) 
-//			keys.add(0);
+		if (currBuilding != null) 
+			keys.add(0);
 		
 		if (bc < citizenList.size()) 
 			keys.add(2);
@@ -764,7 +764,6 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	public void getItems(int x,int y,Selector s){
 		s.removeAllItems();
 		s.addItem(null);
-		ResidentialBuilding currBuilding = buildingInCell(x, y);
 		for (int i = 0; i < visibleCitizens.size(); i++) {
 			if (x == visibleCitizens.get(i).getLocation().getX() && y == visibleCitizens.get(i).getLocation().getY()) {
 				s.addItem(visibleCitizens.get(i));

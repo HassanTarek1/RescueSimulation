@@ -226,12 +226,12 @@ import simulation.Simulatable;
 	public boolean canTreat(Rescuable r) {
 		if (r instanceof Citizen) {
 			Citizen target=(Citizen)r;
-			if(target.getBloodLoss()<=0 && target.getToxicity()<=0)
+			if(target.getHp()<=0)
 				return false;
 			return true;
 		}else if(r instanceof ResidentialBuilding) {
 			ResidentialBuilding target=(ResidentialBuilding)r;
-			if(target.getFireDamage()<=0 && target.getFoundationDamage()<=0 && target.getGasLevel()<=0)
+			if(target.getStructuralIntegrity()<=0)
 				return false;
 			return true;
 		}
