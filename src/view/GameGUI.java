@@ -17,7 +17,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-
+import javax.swing.JPanel;
 
 import controller.CommandCenter;
 import model.infrastructure.ResidentialBuilding;
@@ -25,6 +25,7 @@ import model.units.UnitState;
 
 public class GameGUI extends JFrame implements MouseListener{
 	private MainPanel panel;
+	private view.GameOver GameOver;
 	private ImageIcon[] DayNightCycle;
 	private int CurrentCycle = 0;
 	private Clip GameMusic;
@@ -118,6 +119,9 @@ public class GameGUI extends JFrame implements MouseListener{
 //---------------------------------------------------------------------------
 	//Main panel (background)(parent)
 	panel = new MainPanel("icons/Game panel/cycle0.png",this,controller);
+	GameOver = new GameOver(controller);
+	GameOver.addMouseListener(controller);
+	GameOver.addMouseListener(this);
 //---------------------------------------------------------------------------	
 	
 	//fill day/night cycle images
@@ -126,7 +130,11 @@ public class GameGUI extends JFrame implements MouseListener{
 		DayNightCycle[i] = new ImageIcon("icons/Game panel/cycle"+i+".png");
 	
 	//visibility
+	this.setGlassPane(GameOver);
+	GameOver.repaint();
+	//GameOver.setVisible(true);
 	add(panel);
+	
 	setVisible(true);
 	setResizable(false);
 	}	
@@ -149,8 +157,17 @@ public class GameGUI extends JFrame implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == panel.getTopBar().getBackButton()) {
+			
 			GameMusic.stop();
-			MainMenu menu=new MainMenu(this.getController());
+			
+			
+			try {
+				CommandCenter newc = new CommandCenter();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 			this.dispose();
 		}
 		else if(e.getSource() == panel.getTopBar().getMuteButton()) {
@@ -242,11 +259,28 @@ public class GameGUI extends JFrame implements MouseListener{
 		controller.updateUnitCount(UnitState.TREATING);
 		controller.updatetopBar();
 		if(controller.getEngine().checkGameOver()) {
-			MiniFrame gameOver=new MiniFrame("<html>Game Over<br/>Casualties : "+controller.getEngine().calculateCasualties()+"</html>");
+			controller.updatetopBar();
+			GameOver.getCasualties().setText("Casualties: "+controller.getEngine().calculateCasualties());
+			GameOver.setVisible(true);
+			
 			this.GameMusic.stop();
-			this.dispose();
-			MainMenu m=new MainMenu(controller);
+			
+			try {
+				PlaySound("sounds/Devlin Bataric - Game Over - Repeating Dream.wav").start();
+			} catch (UnsupportedAudioFileException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} catch (LineUnavailableException e1) {
+				e1.printStackTrace();
+			}
 		}
+	}
+
+
+
+	public view.GameOver getGameOver() {
+		return GameOver;
 	}
 
 }
