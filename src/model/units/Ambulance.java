@@ -40,8 +40,9 @@ public class Ambulance extends MedicalUnit{
 			X.setBloodLoss(X.getBloodLoss()-getTreatmentAmount());
 		}
 		
-		if(X.getBloodLoss()<=0 && X.getToxicity()<=0) 
-			X.setState(CitizenState.RESCUED);
+		if((X.getBloodLoss()<=0 && X.getToxicity()<=0) || X.getHp()<=0) {
+			X.setState(CitizenState.RESCUED);super.jobsDone();
+		}
 		
 		if(X.getBloodLoss()<=0)
 			this.heal();
