@@ -45,7 +45,7 @@ public class CellContent extends JFrame{
 		icons.put(11, "icons/Game panel/GasControlUnit.png");
 		icons.put(12, "icons/Game panel/Evacuator.png");
 		icons.put(13, "icons/Game panel/fallenBuilding.png");
-		icons.put(13, "icons/Game panel/dead citizen.png");
+		icons.put(14, "icons/Game panel/dead citizen.png");
 		//------------
 		
 		setSize(300, 270);
