@@ -730,7 +730,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	
 	public void AddUnitsToSelector(Class<?> cls,UnitState st,Selector s) {
 		s.removeAllItems();
-		s.addItem(null);
+		//s.addItem(null);
 		for (Unit unit : emergencyUnits) {
 			if(unit.getClass() == cls && unit.getState() == st) {
 				s.addItem(unit);
@@ -853,7 +853,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 					}
 					
 				}
-				else if(r instanceof Unit) {
+				 if(r instanceof Unit) {
 					GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().setSelectedUnit((Unit)r);
 					
 					Unit unit = GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().getSelectedUnit();
