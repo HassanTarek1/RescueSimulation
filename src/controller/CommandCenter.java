@@ -445,6 +445,8 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			s=b.toString();
 		else if(c!=null && b!=null)
 			s=b.toString();
+		else if (b==null && c!=null)
+			s=c.toString();
 		int length=s.length();
 		text.setSize((int) text.getSize().width, text.getSize().height+length*10);
 		text.setText(s);
