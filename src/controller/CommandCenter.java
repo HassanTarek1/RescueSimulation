@@ -111,6 +111,32 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		}
 		
 	}
+	
+	public void UpdateCellDisasterStatus() {
+		for (int i = 0; i < 10; i++) {
+			
+			for (int j = 0; j < 10; j++) {
+				boolean disaster = false;
+				ArrayList<Citizen> lisyC = ListCitizens(i, j);
+				for (Citizen citizen : lisyC) {
+					if (citizen.getDisaster() != null && citizen.getDisaster().isActive()) {
+						disaster = true;
+					}
+				}
+				ResidentialBuilding building = buildingInCell(i, j);
+				if (building != null && building.getDisaster() != null && building.getDisaster().isActive()) {
+					disaster = true;
+				}
+				GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[i][j].setDisaster(disaster);
+				if (disaster) 
+					GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[i][j].setImage(new ImageIcon("icons/Game panel/red.png"));	
+				else
+					GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[i][j].setImage(new ImageIcon("icons/Game panel/grey.png"));
+				
+			}
+		}
+	}
+	
 	public void updateCitizens(GameGUI game) {
 		view.Cell[][] cells=game.getPanel().getMidArea().getMidGrid().getCells();
 		for (Citizen citizen : visibleCitizens) {
@@ -355,7 +381,12 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	public void mousePressed(MouseEvent e) {
 		if (e.getSource() instanceof Cell) {
 			Cell currCell = (Cell) e.getSource();
-			currCell.setImage(new ImageIcon("icons/Game panel/green_pressed.png"));
+			if (currCell.isDisaster()) {
+				currCell.setImage(new ImageIcon("icons/Game panel/red_pressed.png"));
+			} else {
+				currCell.setImage(new ImageIcon("icons/Game panel/grey_pressed.png"));
+			}
+			
 		}
 		
 		if (e.getSource() instanceof Cell) {
@@ -378,7 +409,13 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	public void mouseReleased(MouseEvent e) {
 		if (e.getSource() instanceof Cell) {
 			Cell currCell = (Cell) e.getSource();
-			currCell.setImage(new ImageIcon("icons/Game panel/green.png"));
+			if (currCell.isDisaster()) {
+				currCell.setImage(new ImageIcon("icons/Game panel/red.png"));
+			}
+			else {
+				currCell.setImage(new ImageIcon("icons/Game panel/grey.png"));
+			}
+			
 		}
 		
 		if (e.getSource() instanceof Cell) {
