@@ -161,7 +161,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			else {
 				cell.removeAll();
 				cell.add(cell.getBuilding());
-			}
+				}
 		}
 	}
 
@@ -456,8 +456,8 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		int bc = countBuildingCitizen(x, y);
 		ResidentialBuilding currBuilding = buildingInCell(x, y);
 		
-		if (currBuilding != null) 
-			keys.add(0);
+//		if (currBuilding != null) 
+//			keys.add(0);
 		
 		if (bc < citizenList.size()) 
 			keys.add(2);
@@ -467,13 +467,13 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			if (bc > 0) 
 			keys.add(1);
 		
-		if(currBuilding.getDisaster() != null && currBuilding.getDisaster() instanceof Fire)
+		if(currBuilding.getDisaster() != null && currBuilding.getDisaster() instanceof Fire && currBuilding.getStructuralIntegrity() > 0)
 			keys.add(3);
 		
-		if(currBuilding.getDisaster() != null && currBuilding.getDisaster() instanceof GasLeak)
+		if(currBuilding.getDisaster() != null && currBuilding.getDisaster() instanceof GasLeak && currBuilding.getStructuralIntegrity() > 0)
 			keys.add(4);
 		
-		if(currBuilding.getDisaster() != null && currBuilding.getDisaster() instanceof Collapse)
+		if(currBuilding.getDisaster() != null && currBuilding.getDisaster() instanceof Collapse && currBuilding.getStructuralIntegrity() > 0)
 			keys.add(5);
 		
 		if (currBuilding.getStructuralIntegrity() <= 0) 
@@ -483,13 +483,13 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		
 		for (Citizen citizen : citizenList) {
 			if (citizen.getDisaster() != null) {
-				if (citizen.getDisaster() instanceof Injury) {
+				if (citizen.getDisaster() instanceof Injury && citizen.getState() != CitizenState.DECEASED) {
 					if (!keys.contains(6)) {
 						keys.add(6);
 					}
 				}
 				
-				if (citizen.getDisaster() instanceof Infection) {
+				if (citizen.getDisaster() instanceof Infection && citizen.getState() != CitizenState.DECEASED) {
 					if (!keys.contains(7)) {
 						keys.add(7);
 					}
