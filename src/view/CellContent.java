@@ -30,7 +30,7 @@ public class CellContent extends JFrame{
 	private JPanel iconPanel;
 	public CellContent(ArrayList<Integer> keys) throws FontFormatException, IOException {
 		icons = new HashMap<Integer, String>();
-		//Fill table
+		//Fill table	 
 		icons.put(0, "icons/Game panel/building.png");
 		icons.put(1, "icons/Game panel/BuildingCitizen.png");
 		icons.put(2, "icons/Game panel/citizen.png");
@@ -44,6 +44,8 @@ public class CellContent extends JFrame{
 		icons.put(10, "icons/Game panel/fire truck.png");
 		icons.put(11, "icons/Game panel/GasControlUnit.png");
 		icons.put(12, "icons/Game panel/Evacuator.png");
+		icons.put(13, "icons/Game panel/fallenBuilding.png");
+		icons.put(13, "icons/Game panel/dead citizen.png");
 		//------------
 		
 		setSize(300, 270);

@@ -470,6 +470,10 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		
 		if(currBuilding.getDisaster() != null && currBuilding.getDisaster() instanceof Collapse)
 			keys.add(5);
+		
+		if (currBuilding.getStructuralIntegrity() <= 0) 
+			keys.add(13);
+		
 		}
 		
 		for (Citizen citizen : citizenList) {
@@ -486,6 +490,12 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 					}
 				}
 			}
+			if (citizen.getState() == CitizenState.DECEASED) {
+				if (!keys.contains(14)) {
+					keys.add(14);
+				}
+			}
+			
 		}
 		
 		for (Unit unit : emergencyUnits) {
@@ -753,7 +763,6 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	public void getItems(int x,int y,Selector s){
 		s.removeAllItems();
 		s.addItem(null);
-		ResidentialBuilding currBuilding = buildingInCell(x, y);
 		for (int i = 0; i < visibleCitizens.size(); i++) {
 			if (x == visibleCitizens.get(i).getLocation().getX() && y == visibleCitizens.get(i).getLocation().getY()) {
 				s.addItem(visibleCitizens.get(i));
