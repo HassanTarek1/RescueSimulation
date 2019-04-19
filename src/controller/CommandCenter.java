@@ -208,6 +208,31 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			}
 			
 		}
+		
+		else if(e.getSource() == GUI.getGame().getGameOver().getReturnButton()){
+			
+			try {
+					GUI.PlaySound("sounds/Hero.wav").start();	
+			} catch (UnsupportedAudioFileException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} catch (LineUnavailableException e1) {
+				e1.printStackTrace();
+			}
+			
+			try {
+				CommandCenter newc = new CommandCenter();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
+			
+			GUI.getGame().dispose();
+		}
+		
 		else if(e.getSource() instanceof view.Cell) {
 			
 //			try {
@@ -368,8 +393,25 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 					e1.printStackTrace();
 				}
 			}
+			
+			else if(e.getSource() == GUI.getGame().getGameOver().getReturnButton()){
+				JLabel gameOverMainMenu = GUI.getGame().getGameOver().getReturnButton();
+				gameOverMainMenu.setIcon(new ImageIcon("icons/Game panel/Return 2.png"));
+				
+				try {
+					GUI.PlaySound("sounds/bottle.wav").start();
+				} catch (UnsupportedAudioFileException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} catch (LineUnavailableException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
 					}
 		catch(Exception e1) {}
+		
 		
 	}
 
@@ -386,6 +428,11 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			else if(e.getSource() == GUI.getGame().getPanel().getTopBar().getTreat()) {
 				Button treatButton=GUI.getGame().getPanel().getTopBar().getTreat();
 				treatButton.setIcon(new ImageIcon("icons/Game panel/Respond.png"));
+			}
+			
+			else if(e.getSource() == GUI.getGame().getGameOver().getReturnButton()){
+				JLabel gameOverMainMenu = GUI.getGame().getGameOver().getReturnButton();
+				gameOverMainMenu.setIcon(new ImageIcon("icons/Game panel/Return.png"));
 			}
 		}
 		catch (Exception e1) {
