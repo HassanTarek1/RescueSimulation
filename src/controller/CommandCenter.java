@@ -1,6 +1,9 @@
 package controller;
 
 
+import java.awt.FontFormatException;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent; 
@@ -16,6 +19,11 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import exceptions.DisasterException;
+import model.disasters.Collapse;
+import model.disasters.Fire;
+import model.disasters.GasLeak;
+import model.disasters.Infection;
+import model.disasters.Injury;
 import model.events.SOSListener;
 import model.infrastructure.ResidentialBuilding;
 import model.people.Citizen;
@@ -32,6 +40,7 @@ import simulation.Simulatable;
 import simulation.Simulator;
 import view.Button;
 import view.Cell;
+import view.CellContent;
 import view.GameGUI;
 import view.MainMenu;
 import view.MiniFrame;
@@ -46,6 +55,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	private ArrayList<Citizen> visibleCitizens;
 
 	private ArrayList<Unit> emergencyUnits;
+	private CellContent iconContent = null;
 	private String logText="";
 	
 	public CommandCenter() throws Exception {
@@ -343,6 +353,19 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			currCell.setImage(new ImageIcon("icons/Game panel/green_pressed.png"));
 		}
 		
+		if (e.getSource() instanceof Cell) {
+			Cell currCell = (Cell) e.getSource();
+			try {
+				iconContent = new CellContent(getIconList(currCell));
+				Point location = MouseInfo.getPointerInfo().getLocation(); 
+				iconContent.setLocation(location);
+				iconContent.setVisible(true);
+			} catch (FontFormatException | IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
 	}
 
 
@@ -352,6 +375,11 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			Cell currCell = (Cell) e.getSource();
 			currCell.setImage(new ImageIcon("icons/Game panel/green.png"));
 		}
+		
+		if (e.getSource() instanceof Cell) {
+			iconContent.dispose();
+			iconContent = null;
+	}
 		
 	}
 
@@ -410,9 +438,113 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			}
 			
 					}
-		catch(Exception e1) {}
+		catch(Exception e1) {}	
 		
+	}
+	
+	public ArrayList<Integer> getIconList(Cell currCell) {
+		ArrayList<Integer> keys = new ArrayList<Integer>();
 		
+		int x = currCell.getIndxX();
+		int y = currCell.getIndxY();
+		ArrayList<Citizen> citizenList = ListCitizens(x, y);
+		int bc = countBuildingCitizen(x, y);
+		ResidentialBuilding currBuilding = buildingInCell(x, y);
+		
+		if (currBuilding != null) 
+			keys.add(0);
+		
+		if (bc < citizenList.size()) 
+			keys.add(2);
+		
+		if (currBuilding != null) {
+			
+			if (bc > 0) 
+			keys.add(1);
+		
+		if(currBuilding.getDisaster() != null && currBuilding.getDisaster() instanceof Fire)
+			keys.add(3);
+		
+		if(currBuilding.getDisaster() != null && currBuilding.getDisaster() instanceof GasLeak)
+			keys.add(4);
+		
+		if(currBuilding.getDisaster() != null && currBuilding.getDisaster() instanceof Collapse)
+			keys.add(5);
+		}
+		
+		for (Citizen citizen : citizenList) {
+			if (citizen.getDisaster() != null) {
+				if (citizen.getDisaster() instanceof Injury) {
+					if (!keys.contains(6)) {
+						keys.add(6);
+					}
+				}
+				
+				if (citizen.getDisaster() instanceof Infection) {
+					if (!keys.contains(7)) {
+						keys.add(7);
+					}
+				}
+			}
+		}
+		
+		for (Unit unit : emergencyUnits) {
+			if (unit.getLocation().getX() == x && unit.getLocation().getY() == y) {
+				if (unit instanceof Ambulance) {
+					if (!keys.contains(8)) {
+						keys.add(8);
+					}
+				}
+				
+				if (unit instanceof DiseaseControlUnit) {
+					if (!keys.contains(9)) {
+						keys.add(9);
+					}
+				}
+				
+				if (unit instanceof FireTruck) {
+					if (!keys.contains(10)) {
+						keys.add(10);
+					}
+				}
+				
+				if (unit instanceof GasControlUnit) {
+					if (!keys.contains(11)) {
+						keys.add(11);
+					}
+				}
+				
+				if (unit instanceof Evacuator) {
+					if (!keys.contains(12)) {
+						keys.add(12);
+					}
+				}
+			}
+		}
+		
+		return keys;
+		
+	}
+	
+	public ArrayList<Citizen> ListCitizens(int x,int y) {
+		ArrayList<Citizen> ret = new ArrayList<Citizen>();
+		for (Citizen citizen : visibleCitizens) {
+			if (citizen.getLocation().getX() == x && citizen.getLocation().getY() == y) {
+				ret.add(citizen);
+			}
+		}
+		return ret;
+	}
+	
+	public int countBuildingCitizen(int x,int y) {
+		int c = 0;
+		ResidentialBuilding building = buildingInCell(x, y);
+		
+		for (Citizen citizen : visibleCitizens) {
+			if (citizen.getLocation().getX() == x && citizen.getLocation().getY() == y && building != null &&building.getOccupants().contains(citizen))
+				c++;
+		}
+		return c;
 	}
 
 
@@ -438,6 +570,8 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		catch (Exception e1) {
 			// TODO: handle exception
 		}
+			
+		
 	}
 	public void updateLog(GameGUI game) {
 		logText+="  Cycle: "+ GUI.getGame().getCurrentCycle()+"\n\n";
