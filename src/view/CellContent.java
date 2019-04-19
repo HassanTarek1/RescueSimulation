@@ -59,10 +59,12 @@ public class CellContent extends JFrame{
 		top.setLayout(new BoxLayout(top, BoxLayout.X_AXIS));
 		top.setOpaque(false);
 		top.setSize(300,50);
+		top.add(Box.createRigidArea(new Dimension(5,0)));
 		
 		conetntsLabel = new JLabel("Contents");
 		conetntsLabel.setForeground(Color.WHITE);
 		top.add(conetntsLabel);
+		top.add(Box.createRigidArea(new Dimension(5,0)));
 		
 		//font
 		font = Font.createFont(Font.TRUETYPE_FONT, font_file);

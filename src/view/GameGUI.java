@@ -252,6 +252,7 @@ public class GameGUI extends JFrame implements MouseListener{
 	public void nextCycleGUI() {
 		this.CurrentCycle++;
 		UpdateCycleImg(panel);
+		controller.UpdateCellDisasterStatus();
 		controller.updateCitizens(this);
 		controller.updateBuildings(this);
 		controller.updateUnitCount(UnitState.IDLE);

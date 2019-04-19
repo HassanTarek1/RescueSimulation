@@ -111,6 +111,32 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		}
 		
 	}
+	
+	public void UpdateCellDisasterStatus() {
+		for (int i = 0; i < 10; i++) {
+			
+			for (int j = 0; j < 10; j++) {
+				boolean disaster = false;
+				ArrayList<Citizen> lisyC = ListCitizens(i, j);
+				for (Citizen citizen : lisyC) {
+					if (citizen.getDisaster() != null && citizen.getDisaster().isActive()) {
+						disaster = true;
+					}
+				}
+				ResidentialBuilding building = buildingInCell(i, j);
+				if (building != null && building.getDisaster() != null && building.getDisaster().isActive()) {
+					disaster = true;
+				}
+				GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[i][j].setDisaster(disaster);
+				if (disaster) 
+					GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[i][j].setImage(new ImageIcon("icons/Game panel/red.png"));	
+				else
+					GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[i][j].setImage(new ImageIcon("icons/Game panel/grey.png"));
+				
+			}
+		}
+	}
+	
 	public void updateCitizens(GameGUI game) {
 		view.Cell[][] cells=game.getPanel().getMidArea().getMidGrid().getCells();
 		for (Citizen citizen : visibleCitizens) {
@@ -161,7 +187,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			else {
 				cell.removeAll();
 				cell.add(cell.getBuilding());
-			}
+				}
 		}
 	}
 
@@ -355,7 +381,12 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	public void mousePressed(MouseEvent e) {
 		if (e.getSource() instanceof Cell) {
 			Cell currCell = (Cell) e.getSource();
-			currCell.setImage(new ImageIcon("icons/Game panel/green_pressed.png"));
+			if (currCell.isDisaster()) {
+				currCell.setImage(new ImageIcon("icons/Game panel/red_pressed.png"));
+			} else {
+				currCell.setImage(new ImageIcon("icons/Game panel/grey_pressed.png"));
+			}
+			
 		}
 		
 		if (e.getSource() instanceof Cell) {
@@ -378,7 +409,13 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	public void mouseReleased(MouseEvent e) {
 		if (e.getSource() instanceof Cell) {
 			Cell currCell = (Cell) e.getSource();
-			currCell.setImage(new ImageIcon("icons/Game panel/green.png"));
+			if (currCell.isDisaster()) {
+				currCell.setImage(new ImageIcon("icons/Game panel/red.png"));
+			}
+			else {
+				currCell.setImage(new ImageIcon("icons/Game panel/grey.png"));
+			}
+			
 		}
 		
 		if (e.getSource() instanceof Cell) {
@@ -456,8 +493,8 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		int bc = countBuildingCitizen(x, y);
 		ResidentialBuilding currBuilding = buildingInCell(x, y);
 		
-		if (currBuilding != null) 
-			keys.add(0);
+//		if (currBuilding != null) 
+//			keys.add(0);
 		
 		if (bc < citizenList.size()) 
 			keys.add(2);
@@ -467,13 +504,13 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			if (bc > 0) 
 			keys.add(1);
 		
-		if(currBuilding.getDisaster() != null && currBuilding.getDisaster() instanceof Fire)
+		if(currBuilding.getDisaster() != null && currBuilding.getDisaster() instanceof Fire && currBuilding.getStructuralIntegrity() > 0)
 			keys.add(3);
 		
-		if(currBuilding.getDisaster() != null && currBuilding.getDisaster() instanceof GasLeak)
+		if(currBuilding.getDisaster() != null && currBuilding.getDisaster() instanceof GasLeak && currBuilding.getStructuralIntegrity() > 0)
 			keys.add(4);
 		
-		if(currBuilding.getDisaster() != null && currBuilding.getDisaster() instanceof Collapse)
+		if(currBuilding.getDisaster() != null && currBuilding.getDisaster() instanceof Collapse && currBuilding.getStructuralIntegrity() > 0)
 			keys.add(5);
 		
 		if (currBuilding.getStructuralIntegrity() <= 0) 
@@ -483,13 +520,13 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		
 		for (Citizen citizen : citizenList) {
 			if (citizen.getDisaster() != null) {
-				if (citizen.getDisaster() instanceof Injury) {
+				if (citizen.getDisaster() instanceof Injury && citizen.getState() != CitizenState.DECEASED) {
 					if (!keys.contains(6)) {
 						keys.add(6);
 					}
 				}
 				
-				if (citizen.getDisaster() instanceof Infection) {
+				if (citizen.getDisaster() instanceof Infection && citizen.getState() != CitizenState.DECEASED) {
 					if (!keys.contains(7)) {
 						keys.add(7);
 					}
