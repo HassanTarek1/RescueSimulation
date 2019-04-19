@@ -26,7 +26,7 @@ public class Selector extends JComboBox<Simulatable> {
 	public Selector(MouseListener cont) throws FontFormatException, IOException {
 		
 		super();
-		addItem(null);
+		//addItem(null);
 		this.cont = cont;
 		
 		//font
