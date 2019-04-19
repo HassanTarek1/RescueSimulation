@@ -128,11 +128,12 @@ import simulation.Simulatable;
 							Evac.setDistanceToBase(Evac.getTarget().getLocation().getX() + Evac.getTarget().getLocation().getY());
 							worldListener.assignAddress(Evac, target.getLocation().getX(), target.getLocation().getY());
 							treat();
-							Evac.jobsDone();
+							//Evac.jobsDone();
 						}
 						
 						//not empty and on the way to the base	
-						else if(!Evac.getPassengers().isEmpty() && Evac.getDistanceToBase() > 0) {
+						if(!Evac.getPassengers().isEmpty() && Evac.getDistanceToBase() > 0 && 
+								(Evac.getPassengers().size()==Evac.getMaxCapacity() || ((ResidentialBuilding)Evac.getTarget()).getOccupants().isEmpty())) {
 							distanceToTarget = (distanceToTarget + stepsPerCycle);
 							Evac.setDistanceToBase(Evac.getDistanceToBase() - stepsPerCycle);
 						}
@@ -150,14 +151,13 @@ import simulation.Simulatable;
 							Evac.setDistanceToBase(0);
 							worldListener.assignAddress(Evac, 0, 0);
 							while(!Evac.getPassengers().isEmpty()) {
-						
 								if( Evac.getPassengers().get(0).getState() != CitizenState.DECEASED)
 									Evac.getPassengers().get(0).setState(CitizenState.RESCUED);
 								 	worldListener.assignAddress(Evac.getPassengers().get(0), 0, 0);
 								 	Evac.getPassengers().remove(0);
 
 							}
-							
+							Evac.jobsDone();
 						
 						}	
 				}
