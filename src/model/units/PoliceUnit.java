@@ -13,10 +13,19 @@ public abstract class PoliceUnit extends Unit {
 	private ArrayList<Citizen> passengers;
 	private int maxCapacity;
 	private int distanceToBase;
+	private boolean toBase;
 	
 //setters/getters:
 	
 	
+	public boolean isToBase() {
+		return toBase;
+	}
+
+	public void setToBase(boolean toBase) {
+		this.toBase = toBase;
+	}
+
 	public int getMaxCapacity() {
 		return maxCapacity;
 	}

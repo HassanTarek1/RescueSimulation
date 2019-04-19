@@ -43,7 +43,7 @@ public Evacuator(String id, Address location, int stepsPerCycle,int maxCapacity)
 	
 	public void jobsDone() {
 		ResidentialBuilding x = (ResidentialBuilding)this.getTarget();
-		if(((x.getOccupants().isEmpty()) || x.getFoundationDamage()>=100)) {
+		if(x!= null && ((x.getOccupants().isEmpty()) || x.getFoundationDamage()>=100)) {
 			super.jobsDone();
 			if(this.getWorldListener()!=null)
 				this.getWorldListener().assignAddress(this, 0, 0);
