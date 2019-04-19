@@ -58,10 +58,15 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	private CellContent iconContent = null;
 	private String logText="";
 	
+	private ArrayList<Citizen> deadCitizens;
+	private ArrayList<ResidentialBuilding> collapsedBuildings;
+	
 	public CommandCenter() throws Exception {
 		engine = new Simulator(this);
 		visibleBuildings = new ArrayList<ResidentialBuilding>();
 		visibleCitizens = new ArrayList<Citizen>();
+		deadCitizens = new ArrayList<Citizen>();
+		collapsedBuildings = new ArrayList<ResidentialBuilding>();
 		emergencyUnits = engine.getEmergencyUnits();
 		GUI = new MainMenu(this);
 		updatetopBar();
@@ -575,8 +580,8 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	}
 	public void updateLog(GameGUI game) {
 		logText+="  Cycle: "+ GUI.getGame().getCurrentCycle()+"\n\n";
-		ArrayList<Citizen> toRemoveC=new ArrayList<>();
-		ArrayList<ResidentialBuilding> toRemoveB=new ArrayList<>();
+		//ArrayList<Citizen> toRemoveC=new ArrayList<>();
+		//ArrayList<ResidentialBuilding> toRemoveB=new ArrayList<>();
 		for (int i = 0; i < visibleCitizens.size(); i++) {
 			
 			Citizen citizen=visibleCitizens.get(i);
@@ -585,11 +590,14 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			 logText=logText+"  "+citizen.getDisaster().toString()+"in location "+citizen.getLocation().toString()+"\n";
 			}
 			else if(citizen.getState()==CitizenState.DECEASED) {
-				logText+="Citizen "+citizen.getName()+" in location "+citizen.getLocation().toString()+" Died"+"\n";
-				toRemoveC.add(citizen);
+				if(!deadCitizens.contains(citizen)) {
+					deadCitizens.add(citizen);
+					logText+="Citizen "+citizen.getName()+" in location "+citizen.getLocation().toString()+" Died"+"\n";
+				}
+				//toRemoveC.add(citizen);
 			}
 		}
-		visibleCitizens.removeAll(toRemoveC);
+		//visibleCitizens.removeAll(toRemoveC);
 		for (int i=0;i<visibleBuildings.size();i++) {
 			ResidentialBuilding building=visibleBuildings.get(i);
 			if(building.getDisaster().isActive() && 
@@ -597,11 +605,14 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				logText=logText+"  "+building.getDisaster().toString()+"in location "+building.getLocation().toString()+"\n";
 			}
 			else if(building.getStructuralIntegrity()<=0) {
-				logText+="Building in location "+building.getLocation().toString()+" was destroyed"+"\n";
-				toRemoveB.add(building);
+				if(!collapsedBuildings.contains(building)) {
+					collapsedBuildings.add(building);
+					logText+="Building in location "+building.getLocation().toString()+" was destroyed"+"\n";
+				}
+				//toRemoveB.add(building);
 			}
 		}
-		visibleBuildings.removeAll(toRemoveB);
+	//	visibleBuildings.removeAll(toRemoveB);
 		logText+="-----------------------------------\n";
 		JTextArea logTextArea=game.getPanel().getMidArea().getMidWest().getTop().getLog().getTextArea();
 		logTextArea.setText(logText);
