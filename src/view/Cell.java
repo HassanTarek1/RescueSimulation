@@ -23,6 +23,7 @@ public class Cell extends ImagePanel{
 	private JLabel Fire;
 	private JLabel GasLeak;
 	private JLabel Collapse;
+	private boolean disaster = false;
 	
 	
 	public Cell(String img,int X,int Y) {
@@ -30,7 +31,6 @@ public class Cell extends ImagePanel{
 		indxX = X;
 		indxY = Y;
 		setLayout(new BorderLayout());
-		//setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		Citizen = new JLabel();
@@ -56,6 +56,14 @@ public class Cell extends ImagePanel{
 		GasLeak.setIcon(new ImageIcon("icons/Game panel/Gas leak.png"));
 		Collapse.setIcon(new ImageIcon("icons/Game panel/collapse.png"));
 
+	}
+
+	public void setDisaster(boolean disaster) {
+		this.disaster = disaster;
+	}
+
+	public boolean isDisaster() {
+		return disaster;
 	}
 
 	public JLabel getCitizen() {
