@@ -104,10 +104,10 @@ public class GameGUI extends JFrame implements MouseListener{
 //---------------------------------------------------------------------------	
 	//Music
 	try {
-		GameMusic =PlaySound("sounds/First steps.wav");
+		GameMusic = PlaySound("sounds/First steps.wav");
 		volume= (FloatControl) GameMusic.getControl(FloatControl.Type.MASTER_GAIN); 
 		GameMusic.start();
-		volume.setValue(-1000.0f);
+		volume.setValue(-10.0f);
 		GameMusic.loop(Clip.LOOP_CONTINUOUSLY);
 	} catch (UnsupportedAudioFileException e) {
 		e.printStackTrace();

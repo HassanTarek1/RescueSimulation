@@ -34,6 +34,7 @@ import javax.swing.JPanel;
 import javax.swing.SpringLayout.Constraints;
 
 import controller.CommandCenter;
+import simulation.Simulator;
 
 
 //import javazoom.jl.decoder.JavaLayerException;
@@ -47,6 +48,7 @@ import controller.CommandCenter;
 public class MainMenu extends JFrame implements MouseListener{
 	private CommandCenter controller;
 	private ImagePanel panel;
+	private ChoicePanel choicePanel;
 	private About AboutPanel;
 	private JLabel Title;
 	private JLabel NewGame;
@@ -82,21 +84,15 @@ public class MainMenu extends JFrame implements MouseListener{
 		ImageIcon icon = new ImageIcon("icons/MainIcon.jpg");
 		setIconImage(icon.getImage());
 		this.controller = Controller;	
-		try {
-			game=new GameGUI(controller);
-			game.getGameMusic().stop();
-			game.setVisible(false);
-		} catch (Exception e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
 		
 		//Main Panel
 		panel = new ImagePanel("icons/Main menu/Main Menu Background(empty).png");
 		panel.setSize(1280, 720);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		
-	
+		//choice panel
+		choicePanel = new ChoicePanel("icons/Main menu/Main Menu Background(empty).png", this);
+		add(choicePanel);
 		
 		//Title
 		Title = new JLabel("",JLabel.CENTER);
@@ -232,18 +228,56 @@ public class MainMenu extends JFrame implements MouseListener{
 			}
 		}
 		
-		else if(temp == NewGame) {
-			intro.stop();
-			
+		else if(e.getSource() == choicePanel.getDefaultCSV()) {
 			try {
-				game.setVisible(true);
-				game.getGameMusic().start();
-				game.getVolume().setValue(-25.0f);
-				game.getGameMusic().loop(Clip.LOOP_CONTINUOUSLY);
-			} catch (Exception e1) {
-				e1.printStackTrace();
+				intro.stop();
+				new WriteDefaultCSV();
+				Simulator engine = new Simulator(controller);
+				controller.setEngine(engine);
+				controller.setEmergencyUnits(engine.getEmergencyUnits());
+				game= new GameGUI(controller);
+				controller.updatetopBar();
+				this.dispose();
+				//game.getGameMusic().stop();
+				//game.setVisible(tr);
+			} catch (Exception e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
 			}
-			this.dispose();
+		}
+		
+		else if(e.getSource() == choicePanel.getRandomCSV()) {
+			try {
+				intro.stop();
+				new WriteCSV(15,20,10,15);
+				Simulator engine = new Simulator(controller);
+				controller.setEngine(engine);
+				controller.setEmergencyUnits(engine.getEmergencyUnits());
+				game= new GameGUI(controller);
+				controller.updatetopBar();
+				this.dispose();
+				//game.getGameMusic().stop();
+				//game.setVisible(tr);
+			} catch (Exception e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+		}
+		
+		else if(temp == NewGame) {
+			//intro.stop();
+			choicePanel.setVisible(true);
+			panel.setVisible(false);
+			
+//			try {
+//				game.setVisible(true);
+//				game.getGameMusic().start();
+//				game.getVolume().setValue(-25.0f);
+//				game.getGameMusic().loop(Clip.LOOP_CONTINUOUSLY);
+//			} catch (Exception e1) {
+//				e1.printStackTrace();
+//			}
+//			this.dispose();
 			
 		}
 		else if (temp == About) {
@@ -259,9 +293,15 @@ public class MainMenu extends JFrame implements MouseListener{
 		else if (temp == Quit) {
 			System.exit(0);
 		}
-		else if(e.getSource() == muteButton) {
+		
+		if(e.getSource() == choicePanel.getBackButton()) {
+			choicePanel.setVisible(false);
+			panel.setVisible(true);
+		}
+		
+		else if(e.getSource() == muteButton || e.getSource() == choicePanel.getMuteButton()) {
 			if(intro.isActive()) {
-				if(e.getSource() == muteButton)
+				if(e.getSource() == muteButton || e.getSource() == choicePanel.getMuteButton())
 					
 					try {
 						PlaySound("sounds/confirm 1.wav").start();
@@ -270,6 +310,7 @@ public class MainMenu extends JFrame implements MouseListener{
 					}
 				
 				muteButton.setIcon(new ImageIcon("icons/Game panel/mute1.png"));
+				choicePanel.getMuteButton().setIcon(new ImageIcon("icons/Game panel/mute1.png"));
 				intro.stop();
 			}
 			else {
@@ -281,6 +322,7 @@ public class MainMenu extends JFrame implements MouseListener{
 				}
 				
 				muteButton.setIcon(new ImageIcon("icons/Game panel/mute.png"));
+				choicePanel.getMuteButton().setIcon(new ImageIcon("icons/Game panel/mute.png"));
 				intro.start();
 				intro.loop(Clip.LOOP_CONTINUOUSLY);
 			}
@@ -332,6 +374,30 @@ public class MainMenu extends JFrame implements MouseListener{
 			
 		}
 		
+		else if(e.getSource() == choicePanel.getBackButton()) {
+			choicePanel.getBackButton().setIcon(new ImageIcon("icons/Game panel/BackButton1.png"));
+			try {
+				PlaySound("sounds/Morse.wav").start();
+			} catch (UnsupportedAudioFileException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (LineUnavailableException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+		else if(e.getSource() == choicePanel.getDefaultCSV()) {
+			choicePanel.getDefaultCSV().setIcon(new ImageIcon("icons/Main menu/defaultCSV1.png"));
+		}
+		
+		else if(e.getSource() == choicePanel.getRandomCSV()) {
+			choicePanel.getRandomCSV().setIcon(new ImageIcon("icons/Main menu/RandomCSV1.png"));
+		}
+		
 		else if(temp == NewGame) {
 			ImageIcon nIcon = new ImageIcon("icons/Main menu/new game1.png");
 			NewGame.setIcon(nIcon);
@@ -350,11 +416,15 @@ public class MainMenu extends JFrame implements MouseListener{
 			ImageIcon qIcon = new ImageIcon("icons/Main menu/Quit1.png");
 			Quit.setIcon(qIcon);
 		}
-		else if(e.getSource() == muteButton) {
-			if(intro.isActive())
+		else if(e.getSource() == muteButton || e.getSource() == choicePanel.getMuteButton()) {
+			if(intro.isActive()) {
 				muteButton.setIcon(new ImageIcon("icons/Game panel/muteB.png"));
-			else
+				choicePanel.getMuteButton().setIcon(new ImageIcon("icons/Game panel/muteB.png"));
+			}
+			else {
 				muteButton.setIcon(new ImageIcon("icons/Game panel/mute1B.png"));
+				choicePanel.getMuteButton().setIcon(new ImageIcon("icons/Game panel/mute1B.png"));
+			}
 		}
 		
 		if(temp != Title) {
@@ -379,6 +449,19 @@ public class MainMenu extends JFrame implements MouseListener{
 			ImageIcon nIcon = new ImageIcon("icons/Main menu/new game.png");
 			NewGame.setIcon(nIcon);
 		}
+		
+		else if(e.getSource() == choicePanel.getBackButton()) {
+			choicePanel.getBackButton().setIcon(new ImageIcon("icons/Game panel/BackButton.png"));
+		}
+		
+		else if(e.getSource() == choicePanel.getDefaultCSV()) {
+			choicePanel.getDefaultCSV().setIcon(new ImageIcon("icons/Main menu/defaultCSV.png"));
+		}
+		
+		else if(e.getSource() == choicePanel.getRandomCSV()) {
+			choicePanel.getRandomCSV().setIcon(new ImageIcon("icons/Main menu/RandomCSV.png"));
+		}
+		
 		else if (temp == About) {
 			ImageIcon aIcon = new ImageIcon("icons/Main menu/About.png");
 			About.setIcon(aIcon);
@@ -393,11 +476,16 @@ public class MainMenu extends JFrame implements MouseListener{
 			ImageIcon qIcon = new ImageIcon("icons/Main menu/Quit.png");
 			Quit.setIcon(qIcon);
 		}
-		else if(e.getSource() == muteButton) {
-			if(intro.isActive())
+		else if(e.getSource() == muteButton || e.getSource() == choicePanel.getMuteButton()) {
+			if(intro.isActive()) {
 				muteButton.setIcon(new ImageIcon("icons/Game panel/mute.png"));
-			else
+				choicePanel.getMuteButton().setIcon(new ImageIcon("icons/Game panel/mute.png"));
+			}
+			else {
 				muteButton.setIcon(new ImageIcon("icons/Game panel/mute1.png"));
+				choicePanel.getMuteButton().setIcon(new ImageIcon("icons/Game panel/mute1.png"));
+			}
+			
 		}
 	
 	

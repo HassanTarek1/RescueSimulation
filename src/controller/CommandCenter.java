@@ -62,16 +62,22 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	private ArrayList<ResidentialBuilding> collapsedBuildings;
 	
 	public CommandCenter() throws Exception {
-		engine = new Simulator(this);
+		
+		GUI = new MainMenu(this);
 		visibleBuildings = new ArrayList<ResidentialBuilding>();
 		visibleCitizens = new ArrayList<Citizen>();
 		deadCitizens = new ArrayList<Citizen>();
 		collapsedBuildings = new ArrayList<ResidentialBuilding>();
-		emergencyUnits = engine.getEmergencyUnits();
-		GUI = new MainMenu(this);
-		updatetopBar();
+		emergencyUnits = new ArrayList<Unit>();
 		
-		
+	}
+
+	public void setEmergencyUnits(ArrayList<Unit> emergencyUnits) {
+		this.emergencyUnits = emergencyUnits;
+	}
+
+	public void setEngine(Simulator engine) {
+		this.engine = engine;
 	}
 
 	public Simulator getEngine() {
