@@ -249,7 +249,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		else if(e.getSource() == choicePanel.getRandomCSV()) {
 			try {
 				intro.stop();
-				new WriteCSV(10,15,10,12);
+				new WriteCSV(15,20,10,5);
 				Simulator engine = new Simulator(controller);
 				controller.setEngine(engine);
 				controller.setEmergencyUnits(engine.getEmergencyUnits());
