@@ -239,7 +239,7 @@ public class MainMenu extends JFrame implements MouseListener{
 				controller.updatetopBar();
 				this.dispose();
 				//game.getGameMusic().stop();
-				//game.setVisible(tr);
+				//game.setVisible(true);
 			} catch (Exception e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
@@ -249,7 +249,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		else if(e.getSource() == choicePanel.getRandomCSV()) {
 			try {
 				intro.stop();
-				new WriteCSV(15,20,10,15);
+				new WriteCSV(10,15,10,12);
 				Simulator engine = new Simulator(controller);
 				controller.setEngine(engine);
 				controller.setEmergencyUnits(engine.getEmergencyUnits());

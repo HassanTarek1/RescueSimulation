@@ -507,8 +507,8 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		
 		if (currBuilding != null) {
 			
-			if (bc > 0) 
-			keys.add(1);
+//			if (bc > 0) 
+//			keys.add(1);
 		
 		if(currBuilding.getDisaster() != null && currBuilding.getDisaster() instanceof Fire && currBuilding.getStructuralIntegrity() > 0)
 			keys.add(3);
@@ -816,7 +816,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	
 	public void getItems(int x,int y,Selector s){
 		s.removeAllItems();
-		//s.addItem(null);
+		s.addItem(null);
 		for (int i = 0; i < visibleCitizens.size(); i++) {
 			if (x == visibleCitizens.get(i).getLocation().getX() && y == visibleCitizens.get(i).getLocation().getY()) {
 				s.addItem(visibleCitizens.get(i));
