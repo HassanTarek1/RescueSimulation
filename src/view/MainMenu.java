@@ -250,7 +250,11 @@ public class MainMenu extends JFrame implements MouseListener{
 			try {
 				intro.stop();
 <<<<<<< HEAD
+<<<<<<< HEAD
 				new WriteCSV(15,20,10,5);
+=======
+				new WriteCSV(10,15,10,12);
+>>>>>>> f3be59357ce76d8385e70adffff7d11afe41b667
 =======
 				new WriteCSV(10,15,10,12);
 >>>>>>> f3be59357ce76d8385e70adffff7d11afe41b667
