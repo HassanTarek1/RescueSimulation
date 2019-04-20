@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -21,6 +22,7 @@ public class Cell extends ImagePanel{
 	private JLabel buildingOnFire;
 	private JLabel fallenBuilding;
 	private JLabel Fire;
+	private JLabel base;
 	private JLabel GasLeak;
 	private JLabel Collapse;
 	private boolean disaster = false;
@@ -44,6 +46,8 @@ public class Cell extends ImagePanel{
 		Fire = new JLabel();
 		GasLeak = new JLabel();
 		Collapse = new JLabel();
+		base = new JLabel();
+		base.setIcon(new ImageIcon("icons/Game panel/base.png"));
 		Citizen.setIcon(new ImageIcon("icons/Game panel/citizen.png"));
 		infectedCitizen.setIcon(new ImageIcon("icons/Game panel/infectedCitizen.png"));
 		injuredCitizen.setIcon(new ImageIcon("icons/Game panel/injuredCitizen.png"));
@@ -56,6 +60,10 @@ public class Cell extends ImagePanel{
 		GasLeak.setIcon(new ImageIcon("icons/Game panel/Gas leak.png"));
 		Collapse.setIcon(new ImageIcon("icons/Game panel/collapse.png"));
 
+	}
+
+	public JLabel getBase() {
+		return base;
 	}
 
 	public void setDisaster(boolean disaster) {

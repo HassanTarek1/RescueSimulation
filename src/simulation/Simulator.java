@@ -244,13 +244,8 @@ public class Simulator implements WorldListener{
 		for (int i = 0 ; i < plannedDisasters.size() ; i++) {
 			Disaster currDisaster = plannedDisasters.get(i);
 			
-			if(currDisaster.getStartCycle() < currentCycle) {
-				plannedDisasters.remove(i);
-				i--;
-				continue;
-			}
 			
-			if(currDisaster.getStartCycle() == currentCycle) {
+			if(currDisaster.getStartCycle() <= currentCycle) {
 				plannedDisasters.remove(i);
 				i--;
 				executedDisasters.add(currDisaster);

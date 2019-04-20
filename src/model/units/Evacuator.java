@@ -52,17 +52,17 @@ public Evacuator(String id, Address location, int stepsPerCycle,int maxCapacity)
 	}
 	public void respond(Rescuable r) throws UnitException {
 		if(r instanceof Citizen) {
-			String message="What are you doing. you can not evacuate a citizen";
+			String message="Evacuators can only be sent to buildings";
 			throw new IncompatibleTargetException(this, r, message);
 		}
 		if(r.getDisaster()==null) {
-			throw new CannotTreatException(this,r,"the Building is Safe");
+			throw new CannotTreatException(this,r,"The building does not have an active disaster");
 		}
 		if(!canTreat(r)) {
-			throw new CannotTreatException(this,r, "The Building Already Collapsed");
+			throw new CannotTreatException(this,r, "Destroyed building");
 		}
 		if(!(r.getDisaster() instanceof Collapse)) {
-			throw new CannotTreatException(this,r,"the Evacuator treats only the collapse Disaster");
+			throw new CannotTreatException(this,r,"The building is not collapsing");
 		}
 		super.respond(r);
 	}

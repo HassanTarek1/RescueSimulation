@@ -136,7 +136,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[i][j].setDisaster(disaster);
 				if (disaster) 
 					GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[i][j].setImage(new ImageIcon("icons/Game panel/red.png"));	
-				else
+				else if (i != 0 && j != 0) 
 					GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[i][j].setImage(new ImageIcon("icons/Game panel/grey.png"));
 				
 			}
@@ -212,7 +212,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				
 			} catch (DisasterException e1) {
 				// TODO Auto-generated catch block
-				new MiniFrame(e1.getMessage());
+				//new MiniFrame(e1.getMessage());
 			} catch (UnsupportedAudioFileException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -389,7 +389,10 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			Cell currCell = (Cell) e.getSource();
 			if (currCell.isDisaster()) {
 				currCell.setImage(new ImageIcon("icons/Game panel/red_pressed.png"));
-			} else {
+			} else if(currCell.getIndxX() ==0 && currCell.getIndxY() == 0){
+				currCell.setImage(new ImageIcon("icons/Game panel/blue_pressed.png"));
+			}
+			else {
 				currCell.setImage(new ImageIcon("icons/Game panel/grey_pressed.png"));
 			}
 			
@@ -417,6 +420,9 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			Cell currCell = (Cell) e.getSource();
 			if (currCell.isDisaster()) {
 				currCell.setImage(new ImageIcon("icons/Game panel/red.png"));
+			}
+			else if(currCell.getIndxX() ==0 && currCell.getIndxY() == 0) {
+				currCell.setImage(new ImageIcon("icons/Game panel/blue.png"));
 			}
 			else {
 				currCell.setImage(new ImageIcon("icons/Game panel/grey.png"));
@@ -502,8 +508,8 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 //		if (currBuilding != null) 
 //			keys.add(0);
 		
-		if (bc < citizenList.size()) 
-			keys.add(2);
+//		if (bc < citizenList.size()) 
+//			keys.add(2);
 		
 		if (currBuilding != null) {
 			

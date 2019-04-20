@@ -94,6 +94,7 @@ import simulation.Simulatable;
 					//on the way to the target
 					
 					if(distanceToTarget > 0) {
+						((Evacuator) this).jobsDone();
 					distanceToTarget = (distanceToTarget - stepsPerCycle);
 					((Evacuator) this).setDistanceToBase(((Evacuator) this).getDistanceToBase() + stepsPerCycle);
 						if(distanceToTarget <= 0) {
