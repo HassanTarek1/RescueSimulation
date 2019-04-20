@@ -213,7 +213,6 @@ public class Simulator implements WorldListener{
 				if(currUnit.getState() != UnitState.IDLE) return false;
 			
 		}
-		
 		return true;
 	}
 	
@@ -244,6 +243,12 @@ public class Simulator implements WorldListener{
 		currentCycle++;
 		for (int i = 0 ; i < plannedDisasters.size() ; i++) {
 			Disaster currDisaster = plannedDisasters.get(i);
+			
+			if(currDisaster.getStartCycle() < currentCycle) {
+				plannedDisasters.remove(i);
+				i--;
+				continue;
+			}
 			
 			if(currDisaster.getStartCycle() == currentCycle) {
 				plannedDisasters.remove(i);
