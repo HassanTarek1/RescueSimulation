@@ -55,7 +55,7 @@ public class Chatwindow extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		ImagePanel panel=new ImagePanel("icons/background.png");
-		panel.setLayout(new BorderLayout());
+		panel.setLayout(null);
 		panel.setSize(this.getSize());
 		panel.setOpaque(true);
 		this.add(panel);
@@ -65,16 +65,14 @@ public class Chatwindow extends JFrame{
 		//components
 		Font f=new Font("Helvetica ", Font.BOLD,18);
 		this.chatText=new JTextArea();
-		chatText.setSize(800,500);
+		//chatText.setSize(800,500);
 		chatText.setEditable(false);
 		chatText.setFont(f);
 		chatText.setOpaque(true);
 		chatText.setText("fsgsgsgsd");
-		//chatText.setForeground(Color.LIGHT_GRAY);
 		JScrollPane c=new JScrollPane(chatText);
 		c.setSize(chatText.getSize());
-		c.setPreferredSize(c.getSize());
-		c.setMaximumSize(c.getSize());
+		
 		c.setLayout(new ScrollPaneLayout());
 		c.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		c.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -82,21 +80,15 @@ public class Chatwindow extends JFrame{
 		c.setAlignmentY(CENTER_ALIGNMENT);
 		c.add(chatText);
 		c.setOpaque(true);
-//		JPanel t=new JPanel();
-//		t.setVisible(true);
-//		t.setLayout(new FlowLayout());
-//		t.setSize(800,100);
-//		t.setPreferredSize(t.getSize());
-//		t.setMinimumSize(t.getSize());
-//		t.setAlignmentX(CENTER_ALIGNMENT);
-//		t.setVisible(true);
+		c.setVisible(true);
+		
 		this.inText=new JTextField();
 		inText.setBounds(0, 500, 800, 100);
-//		inText.setPreferredSize(inText.getSize());
-//		inText.setMinimumSize(inText.getSize());
 		inText.setFont(f);
 		inText.setOpaque(false);
 		inText.setAlignmentY(CENTER_ALIGNMENT);
+		inText.setText("");
+		inText.setVisible(true);
 		inText.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -107,9 +99,9 @@ public class Chatwindow extends JFrame{
 				inText.setText(null);
 			}
 		});
-		//t.add(inText);
-		panel.add(c,BorderLayout.NORTH);
-		panel.add(inText,BorderLayout.SOUTH);
+		panel.add(c);
+		panel.add(inText);
+		pack();
 		
 
 	}
