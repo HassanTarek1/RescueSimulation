@@ -1,10 +1,13 @@
 package view;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -12,10 +15,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.ScrollPaneLayout;
 
 public class Chatwindow extends JFrame{
 	private String ip;
-	private int port;
 	private JTextField inText;
 	private JTextArea chatText;
 
@@ -34,16 +38,12 @@ public class Chatwindow extends JFrame{
 	}
 
 
-	public int getPort() {
-		return port;
-	}
 
 
 	public Chatwindow() {
 		// variables initialization
 		IPinput in=new IPinput();
 		this.ip=in.getIp();
-		this.port=in.getPort();
 		
 		//setting the frame
 		setSize(800, 600);
@@ -51,43 +51,63 @@ public class Chatwindow extends JFrame{
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//ImageIcon img=new ImageIcon("icons/error.png");
-		//setIconImage(img.getImage());
 		this.setVisible(true);
+		ImagePanel panel=new ImagePanel("icons/background.png");
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		panel.setSize(this.getSize());
+		panel.setOpaque(true);
+		this.add(panel);
+		this.setLocationRelativeTo(null);
+
 		
 		//components
-		JPanel chat=new JPanel();
-		chat.setSize(800,600);
-		chat.setLayout(new BoxLayout(chat,BoxLayout.PAGE_AXIS));
-		chat.setAlignmentX(CENTER_ALIGNMENT);
+		Font f=new Font("Helvetica ", Font.BOLD,18);
 		this.chatText=new JTextArea();
 		chatText.setSize(800,500);
-		chatText.setPreferredSize(chatText.getSize());
-		chatText.setMaximumSize(chatText.getSize());
 		chatText.setEditable(false);
-		JScrollPane c=new JScrollPane();
+		chatText.setFont(f);
+		chatText.setOpaque(true);
+		chatText.setText("fsgsgsgsd");
+		JScrollPane c=new JScrollPane(chatText);
 		c.setSize(chatText.getSize());
-		c.setAlignmentX(CENTER_ALIGNMENT);
+		c.setPreferredSize(c.getSize());
+		c.setMaximumSize(c.getSize());
+		c.setLayout(new ScrollPaneLayout());
+		c.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		c.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		c.setWheelScrollingEnabled(true);
+		c.setAlignmentY(CENTER_ALIGNMENT);
 		c.add(chatText);
-		chat.add(c);
+		JPanel t=new JPanel();
+		t.setVisible(true);
+		t.setLayout(new FlowLayout());
+		t.setSize(800,100);
+		t.setPreferredSize(t.getSize());
+		t.setMinimumSize(t.getSize());
+		t.setAlignmentX(CENTER_ALIGNMENT);
+		t.setVisible(true);
 		this.inText=new JTextField();
-		inText.setSize(800,100);
+		inText.setSize(t.getSize());
 		inText.setPreferredSize(inText.getSize());
 		inText.setMinimumSize(inText.getSize());
-		inText.setAlignmentX(CENTER_ALIGNMENT);
+		inText.setFont(f);
+		inText.setText(" jh");
+		inText.setOpaque(true);
+		inText.setAlignmentY(CENTER_ALIGNMENT);
 		inText.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				String input=inText.getText();
 				chatText.setText(chatText.getText()+"\n"+input);
+				chatText.setSize(chatText.getWidth(),chatText.getHeight()+input.length()*10);
 				inText.setText(null);
 			}
 		});
-		chat.add(inText);
+		t.add(inText);
+		panel.add(c);
+		panel.add(t);
 		
-		//adding to frame
-		this.add(chat);
 
 	}
 	public static void main(String[] args) {

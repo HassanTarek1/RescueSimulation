@@ -11,7 +11,6 @@ import java.net.UnknownHostException;
 public class Client {
 	
 	private String address;
-	private int port;
 	
 
 	public String getAddress() {
@@ -19,26 +18,19 @@ public class Client {
 	}
 
 
-	public int getPort() {
-		return port;
-	}
-
+	
 
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
 
-	public void setPort(int port) {
-		this.port = port;
-	}
 
 
-	public Client(String address,int port) throws IOException {
+	public Client(String address) throws IOException {
 		this.address=address;
-		this.port=port;
 		@SuppressWarnings("resource")
-		Socket clientSocket = new Socket(address, port);
+		Socket clientSocket = new Socket(address, 5000);
 		String sentence="";
 		String modifiedSentence = null;
 		System.out.println("enter a string");

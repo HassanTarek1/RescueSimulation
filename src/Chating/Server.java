@@ -9,19 +9,11 @@ import java.net.Socket;
 
 public class Server {
 	
-	private int port;
-	
-	public int getPort() {
-		return port;
-	}
 
-	public void setPort(int port) {
-		this.port = port;
-	}
 
-	public Server(int port) throws IOException {
+	public Server() throws IOException {
 		@SuppressWarnings("resource")
-		ServerSocket welcomeSocket=new ServerSocket(port);
+		ServerSocket welcomeSocket=new ServerSocket(5000);
 		Socket connectionSocket=welcomeSocket.accept();
 		BufferedReader inFromClient=new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
 		String clientSentence=inFromClient.readLine();
