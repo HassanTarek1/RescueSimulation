@@ -37,11 +37,11 @@ public class Grid extends JPanel{
 			for (int j = 0; j < 10; j++) {
 				Cell cell;
 				if (i == 0 && j == 0) {
-					cell = new Cell("icons/Game panel/blue.png",i,j);
+					cell = new Cell("icons/Game panel/blue.png",j,i);
 					cell.add(cell.getBase());
 				}
 				else {
-					cell = new Cell("icons/Game panel/grey.png",i,j);
+					cell = new Cell("icons/Game panel/grey.png",j,i);
 				}
 				
 				cell.addMouseListener(cont);
@@ -49,7 +49,7 @@ public class Grid extends JPanel{
 				constraints.gridx = i;
 				constraints.gridy = j;
 				add(cell,constraints);
-				Cells[i][j] = cell;
+				Cells[j][i] = cell;
 			}
 		}
 	}
