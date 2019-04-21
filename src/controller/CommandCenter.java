@@ -178,21 +178,24 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			int xC=citizen.getLocation().getX();
 			int yC=citizen.getLocation().getY();
 			view.Cell cell=cells[xC][yC];
-			if(citizen.getState()==CitizenState.DECEASED) {
-				cell.removeAll();
-				cell.add(cell.getDeadCitizen());
-			}
-			else if(citizen.getToxicity()>0) {
-				cell.removeAll();
-				cell.add(cell.getInfectedCitizen());
-			}
-			else if(citizen.getBloodLoss()>0) {
-				cell.removeAll();
-				cell.add(cell.getInjuredCitizen());
-			}
-			else {
-				cell.removeAll();
-				cell.add(cell.getCitizen());
+			if (xC != 0 || yC != 0) {	
+			
+				if(citizen.getState()==CitizenState.DECEASED) {
+					cell.removeAll();
+					cell.add(cell.getDeadCitizen());
+				}
+				else if(citizen.getToxicity()>0) {
+					cell.removeAll();
+					cell.add(cell.getInfectedCitizen());
+				}
+				else if(citizen.getBloodLoss()>0) {
+					cell.removeAll();
+					cell.add(cell.getInjuredCitizen());
+				}
+				else {
+					cell.removeAll();
+					cell.add(cell.getCitizen());
+				}
 			}
 		}
 	}

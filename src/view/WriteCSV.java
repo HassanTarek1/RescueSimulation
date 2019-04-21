@@ -47,6 +47,12 @@ public class WriteCSV {
 		      for (int i = 0; i < Citizens; i++) {
 					int x = Random0to9();
 					int y = Random0to9();
+					
+					while(x == 0 && y == 0) {
+						x = Random0to9();
+						y = Random0to9();
+					}
+					
 					iDs[i] = RandomNationalId();
 					sb.append(x+","+y+","+iDs[i]+","+RandomName()+","+RandomAge()+"\n");
 				}
