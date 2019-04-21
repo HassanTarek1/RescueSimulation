@@ -885,7 +885,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	
 	public void getItems(int x,int y,Selector s){
 		s.removeAllItems();
-		s.addItem(null);
+		//s.addItem(null);
 		for (int i = 0; i < visibleCitizens.size(); i++) {
 			if (x == visibleCitizens.get(i).getLocation().getX() && y == visibleCitizens.get(i).getLocation().getY()) {
 				s.addItem(visibleCitizens.get(i));
