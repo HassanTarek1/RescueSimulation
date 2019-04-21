@@ -22,6 +22,7 @@ import javax.swing.JTextArea;
 
 import org.hamcrest.core.Is;
 
+import Chating.Server;
 import exceptions.DisasterException;
 import model.disasters.Collapse;
 import model.disasters.Disaster;
@@ -47,6 +48,7 @@ import simulation.Simulator;
 import view.Button;
 import view.Cell;
 import view.CellContent;
+import view.Chatwindow;
 import view.GameGUI;
 import view.MainMenu;
 import view.MiniFrame;
@@ -66,7 +68,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	
 	private ArrayList<Citizen> deadCitizens;
 	private ArrayList<ResidentialBuilding> collapsedBuildings;
-	
+	private Server server;
 	public CommandCenter() throws Exception {
 		
 		GUI = new MainMenu(this);
@@ -75,7 +77,28 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		deadCitizens = new ArrayList<Citizen>();
 		collapsedBuildings = new ArrayList<ResidentialBuilding>();
 		emergencyUnits = new ArrayList<Unit>();
+		server=new Server();
 		
+	}
+
+	public CellContent getIconContent() {
+		return iconContent;
+	}
+
+	public String getLogText() {
+		return logText;
+	}
+
+	public ArrayList<Citizen> getDeadCitizens() {
+		return deadCitizens;
+	}
+
+	public ArrayList<ResidentialBuilding> getCollapsedBuildings() {
+		return collapsedBuildings;
+	}
+
+	public Server getServer() {
+		return server;
 	}
 
 	public void setEmergencyUnits(ArrayList<Unit> emergencyUnits) {
@@ -262,7 +285,17 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			
 		}
 		else if(e.getSource()==GUI.getGame().getPanel().getTopBar().getChat()) {
-			
+			try {
+				Chatwindow window=new Chatwindow();
+				String ip=window.getIp();
+				
+			} catch (FontFormatException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		
 		else if(e.getSource() == GUI.getGame().getGameOver().getReturnButton()){

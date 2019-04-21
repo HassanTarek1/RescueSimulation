@@ -8,12 +8,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-	
+	private ServerSocket welcomeSocket;
 
 
 	public Server() throws IOException {
-		@SuppressWarnings("resource")
-		ServerSocket welcomeSocket=new ServerSocket(5000);
+		welcomeSocket=new ServerSocket(5000);
 		Socket connectionSocket=welcomeSocket.accept();
 		BufferedReader inFromClient=new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
 		String clientSentence=inFromClient.readLine();
@@ -48,6 +47,10 @@ public class Server {
 				}	
 			}
 		}
+	}
+	
+	public void close() throws IOException {
+		welcomeSocket.close();
 	}
 
 }
