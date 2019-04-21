@@ -237,6 +237,7 @@ public class GameGUI extends JFrame implements MouseListener{
 			else
 				panel.getTopBar().getMuteButton().setIcon(new ImageIcon("icons/Game panel/mute1.png"));
 		}
+		
 	}
 
 	@Override

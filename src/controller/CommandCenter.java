@@ -261,6 +261,9 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			}
 			
 		}
+		else if(e.getSource()==GUI.getGame().getPanel().getTopBar().getChat()) {
+			
+		}
 		
 		else if(e.getSource() == GUI.getGame().getGameOver().getReturnButton()){
 			
@@ -496,8 +499,23 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 					e1.printStackTrace();
 				}
 			}
+			else if(e.getSource()==GUI.getGame().getPanel().getTopBar().getChat()) {
+				GUI.getGame().getPanel().getTopBar().getChat().setIcon(new ImageIcon("icons/Game panel/chat1.png"));
+				try {
+					GUI.PlaySound("sounds/Morse.wav").start();
+				} catch (UnsupportedAudioFileException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (LineUnavailableException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			
 					}
+		}
 		catch(Exception e1) {}	
 		
 	}
@@ -635,6 +653,9 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			else if(e.getSource() == GUI.getGame().getGameOver().getReturnButton()){
 				JLabel gameOverMainMenu = GUI.getGame().getGameOver().getReturnButton();
 				gameOverMainMenu.setIcon(new ImageIcon("icons/Game panel/Return.png"));
+			}
+			else if(e.getSource()==GUI.getGame().getPanel().getTopBar().getChat()) {
+				GUI.getGame().getPanel().getTopBar().getChat().setIcon(new ImageIcon("icons/Game panel/chat.png"));
 			}
 		}
 		catch (Exception e1) {

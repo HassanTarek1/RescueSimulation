@@ -25,6 +25,7 @@ public class TopBar extends ImagePanel{
 	private JLabel unit;
 	private Button endCycle;
 	private Button treat;
+	private Button chat;
 	private MouseListener cont;
 	private JLabel topInfo;
 	public TopBar(String img,MouseListener e,MouseListener cont) throws FontFormatException, IOException {
@@ -81,6 +82,14 @@ public class TopBar extends ImagePanel{
 			treat.setSize(135,22);
 			treat.addMouseListener(cont);
 			
+			//chat 
+			chat=new Button("icons/Game panel/chat.png");
+			treat.setAlignmentX(Component.RIGHT_ALIGNMENT);
+			add(Box.createRigidArea(new Dimension(15,0)));
+			this.add(chat);
+			chat.setLocation(600,19);
+			chat.setSize(135,22);
+			chat.addMouseListener(cont);
 			//Target
 			Font correct8BitFontSmall = font.deriveFont(20f);
 			
@@ -128,5 +137,14 @@ public class TopBar extends ImagePanel{
 	}
 	public Button getTreat() {
 		return treat;
+	}
+	public File getFont_file() {
+		return font_file;
+	}
+	public Font getFont() {
+		return font;
+	}
+	public Button getChat() {
+		return chat;
 	}
 }
