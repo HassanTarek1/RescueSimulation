@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -53,7 +55,7 @@ public class Chatwindow extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		ImagePanel panel=new ImagePanel("icons/background.png");
-		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+		panel.setLayout(new BorderLayout());
 		panel.setSize(this.getSize());
 		panel.setOpaque(true);
 		this.add(panel);
@@ -68,6 +70,7 @@ public class Chatwindow extends JFrame{
 		chatText.setFont(f);
 		chatText.setOpaque(true);
 		chatText.setText("fsgsgsgsd");
+		//chatText.setForeground(Color.LIGHT_GRAY);
 		JScrollPane c=new JScrollPane(chatText);
 		c.setSize(chatText.getSize());
 		c.setPreferredSize(c.getSize());
@@ -78,21 +81,21 @@ public class Chatwindow extends JFrame{
 		c.setWheelScrollingEnabled(true);
 		c.setAlignmentY(CENTER_ALIGNMENT);
 		c.add(chatText);
-		JPanel t=new JPanel();
-		t.setVisible(true);
-		t.setLayout(new FlowLayout());
-		t.setSize(800,100);
-		t.setPreferredSize(t.getSize());
-		t.setMinimumSize(t.getSize());
-		t.setAlignmentX(CENTER_ALIGNMENT);
-		t.setVisible(true);
+		c.setOpaque(true);
+//		JPanel t=new JPanel();
+//		t.setVisible(true);
+//		t.setLayout(new FlowLayout());
+//		t.setSize(800,100);
+//		t.setPreferredSize(t.getSize());
+//		t.setMinimumSize(t.getSize());
+//		t.setAlignmentX(CENTER_ALIGNMENT);
+//		t.setVisible(true);
 		this.inText=new JTextField();
-		inText.setSize(t.getSize());
-		inText.setPreferredSize(inText.getSize());
-		inText.setMinimumSize(inText.getSize());
+		inText.setBounds(0, 500, 800, 100);
+//		inText.setPreferredSize(inText.getSize());
+//		inText.setMinimumSize(inText.getSize());
 		inText.setFont(f);
-		inText.setText(" jh");
-		inText.setOpaque(true);
+		inText.setOpaque(false);
 		inText.setAlignmentY(CENTER_ALIGNMENT);
 		inText.addActionListener(new ActionListener() {
 			@Override
@@ -100,13 +103,13 @@ public class Chatwindow extends JFrame{
 				// TODO Auto-generated method stub
 				String input=inText.getText();
 				chatText.setText(chatText.getText()+"\n"+input);
-				chatText.setSize(chatText.getWidth(),chatText.getHeight()+input.length()*10);
+				chatText.setSize(chatText.getWidth(),chatText.getHeight()+10);
 				inText.setText(null);
 			}
 		});
-		t.add(inText);
-		panel.add(c);
-		panel.add(t);
+		//t.add(inText);
+		panel.add(c,BorderLayout.NORTH);
+		panel.add(inText,BorderLayout.SOUTH);
 		
 
 	}

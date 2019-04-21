@@ -25,7 +25,6 @@ public class MidWestTop extends ImagePanel{
 		textArea.setEditable(false);
 		textArea.setMargin(new java.awt.Insets(12, 12, 12, 12));
 		textArea.setSize(320,250);
-		textArea.setEditable(false);
 		textArea.setForeground(Color.white);
 		log = new LogPanel(textArea);
 		add(log);
