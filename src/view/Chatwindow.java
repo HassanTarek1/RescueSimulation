@@ -55,21 +55,20 @@ public class Chatwindow extends JFrame{
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
 		ImagePanel panel=new ImagePanel("icons/background.png");
-		panel.setLayout(null);
+		panel.setLayout(new BorderLayout());
 		panel.setSize(this.getSize());
-		panel.setOpaque(true);
-		this.add(panel);
-		this.setLocationRelativeTo(null);
+//		panel.setOpaque(true);
+		add(panel);
+//		this.setLocationRelativeTo(null);
 
 		
 		//components
-		Font f=new Font("Helvetica ", Font.BOLD,18);
+		//Font f=new Font("Helvetica ", Font.BOLD,18);
 		this.chatText=new JTextArea();
 		chatText.setSize(800,500);
 		chatText.setEditable(false);
-		chatText.setFont(f);
+		//chatText.setFont(f);
 		chatText.setOpaque(true);
 		chatText.setText("fsgsgsgsd");
 		InfoPanel c=new InfoPanel(chatText);
@@ -82,7 +81,10 @@ public class Chatwindow extends JFrame{
 		inText.setAlignmentY(CENTER_ALIGNMENT);
 		inText.setText("");
 		inText.setVisible(true);
+
 		inText.addActionListener(new ActionListener() {
+			
+			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
@@ -91,10 +93,12 @@ public class Chatwindow extends JFrame{
 				chatText.setSize(chatText.getWidth(),chatText.getHeight()+10);
 				inText.setText(null);
 			}
+			
 		});
-		panel.add(c);
+		panel.add(c,BorderLayout.NORTH);
 		panel.add(inText);
 		pack();
+		this.setVisible(true);
 		
 
 	}

@@ -36,6 +36,9 @@ public Evacuator(String id, Address location, int stepsPerCycle,int maxCapacity)
 			while(occ.size() > 0 && getPassengers().size() < getMaxCapacity() && 
 					building.getStructuralIntegrity()>0) {
 				Citizen currCitizen = occ.get(0);
+			 	currCitizen.getDisaster().setActive(false);
+			 	currCitizen.setBloodLoss(0);
+			 	currCitizen.setToxicity(0);
 				occ.remove(0);
 				getPassengers().add(currCitizen);
 			}

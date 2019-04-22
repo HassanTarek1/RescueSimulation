@@ -167,6 +167,7 @@ import simulation.Simulatable;
 								if( Evac.getPassengers().get(0).getState() != CitizenState.DECEASED)
 									Evac.getPassengers().get(0).setState(CitizenState.RESCUED);
 								 	worldListener.assignAddress(Evac.getPassengers().get(0), 0, 0);
+								 	Evac.getPassengers().get(0).getEmergencyService().receiveSOSCall(Evac.getPassengers().get(0));
 								 	Evac.getPassengers().remove(0);
 
 							}

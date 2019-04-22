@@ -198,21 +198,24 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			int xC=citizen.getLocation().getX();
 			int yC=citizen.getLocation().getY();
 			view.Cell cell=cells[xC][yC];
-			if(citizen.getState()==CitizenState.DECEASED) {
-				cell.removeAll();
-				cell.add(cell.getDeadCitizen());
-			}
-			else if(citizen.getToxicity()>0) {
-				cell.removeAll();
-				cell.add(cell.getInfectedCitizen());
-			}
-			else if(citizen.getBloodLoss()>0) {
-				cell.removeAll();
-				cell.add(cell.getInjuredCitizen());
-			}
-			else {
-				cell.removeAll();
-				cell.add(cell.getCitizen());
+			if (xC != 0 || yC != 0) {	
+			
+				if(citizen.getState()==CitizenState.DECEASED) {
+					cell.removeAll();
+					cell.add(cell.getDeadCitizen());
+				}
+				else if(citizen.getToxicity()>0) {
+					cell.removeAll();
+					cell.add(cell.getInfectedCitizen());
+				}
+				else if(citizen.getBloodLoss()>0) {
+					cell.removeAll();
+					cell.add(cell.getInjuredCitizen());
+				}
+				else {
+					cell.removeAll();
+					cell.add(cell.getCitizen());
+				}
 			}
 		}
 	}
@@ -908,7 +911,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	
 	public void getItems(int x,int y,Selector s){
 		s.removeAllItems();
-		s.addItem(null);
+		//s.addItem(null);
 		for (int i = 0; i < visibleCitizens.size(); i++) {
 			if (x == visibleCitizens.get(i).getLocation().getX() && y == visibleCitizens.get(i).getLocation().getY()) {
 				s.addItem(visibleCitizens.get(i));

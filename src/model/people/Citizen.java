@@ -76,6 +76,10 @@ public class Citizen implements Simulatable,Rescuable{
 		this.hp = hp;
 	}
 	
+	public SOSListener getEmergencyService() {
+		return emergencyService;
+	}
+
 	public int getBloodLoss() {
 		return bloodLoss;
 	}
