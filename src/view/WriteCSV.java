@@ -47,6 +47,12 @@ public class WriteCSV {
 		      for (int i = 0; i < Citizens; i++) {
 					int x = Random0to9();
 					int y = Random0to9();
+					
+					while(x == 0 && y == 0) {
+						x = Random0to9();
+						y = Random0to9();
+					}
+					
 					iDs[i] = RandomNationalId();
 					sb.append(x+","+y+","+iDs[i]+","+RandomName()+","+RandomAge()+"\n");
 				}
@@ -84,7 +90,7 @@ public class WriteCSV {
 		    	  		int x = Random0to9();
 		    	  		int y = Random0to9();
 		    	  		
-		    	  		while(!taken[x][y]) {
+		    	  		while(!taken[x][y] || (x == 0 && y == 0)) {
 							x = Random0to9();
 							y = Random0to9();
 						}
@@ -209,7 +215,7 @@ public class WriteCSV {
 	
 	public static int RandomStartCycle() {
 		Random r = new Random();
-		return r.nextInt(21);
+		return r.nextInt(21)+1;
 	}
 	
 	public static String RandomNationalId() {

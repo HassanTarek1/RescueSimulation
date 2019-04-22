@@ -42,17 +42,17 @@ public class GasControlUnit extends FireUnit{
 
 	public void respond(Rescuable r) throws UnitException {
 		if(r instanceof Citizen) {
-			String message="What are you doing. you can not extinguish a citizen";
+			String message="Gas control units can only be sent to buildings";
 			throw new IncompatibleTargetException(this, r, message);
 		}
 		if( r.getDisaster() == null) {
-			throw new CannotTreatException(this,r, "the Building is Safe");
+			throw new CannotTreatException(this,r, "The building does not have an active disaster");
 		}
 		if(!canTreat(r)) {
-			throw new CannotTreatException(this,r, "The Building Already Collapsed");
+			throw new CannotTreatException(this,r, "Destroyed building");
 		}
 		if(!(r.getDisaster() instanceof GasLeak)) {
-			throw new CannotTreatException(this,r,"the Fire Unit treats only GasLeak Disaster");
+			throw new CannotTreatException(this,r,"The building does not have a gas leak");
 		}
 		super.respond(r);
 	}

@@ -41,17 +41,17 @@ public class FireTruck extends FireUnit{
 	
 	public void respond(Rescuable r) throws UnitException {
 		if(r instanceof Citizen) {
-			String message="What are you doing. you can not extinguish a citizen";
+			String message="Fire trucks can only be sent to buildings";
 			throw new IncompatibleTargetException(this, r, message);
 		}
 		if(r.getDisaster() == null) {
-			throw new CannotTreatException(this,r, "the Building is Safe");
+			throw new CannotTreatException(this,r, "The building does not have an active disaster");
 		}
 		if(!canTreat(r)) {
-			throw new CannotTreatException(this,r, "The Building Already Collapsed");
+			throw new CannotTreatException(this,r, "Destroyed building");
 		}
 		if(!(r.getDisaster() instanceof Fire)) {
-			throw new CannotTreatException(this,r,"the Fire Unit treats only the Fire Disater");
+			throw new CannotTreatException(this,r,"The building is not on fire");
 		}
 		super.respond(r);
 	}

@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -18,8 +19,13 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+
+import org.hamcrest.core.Is;
+
+import Chating.Server;
 import exceptions.DisasterException;
 import model.disasters.Collapse;
+import model.disasters.Disaster;
 import model.disasters.Fire;
 import model.disasters.GasLeak;
 import model.disasters.Infection;
@@ -33,6 +39,7 @@ import model.units.DiseaseControlUnit;
 import model.units.Evacuator;
 import model.units.FireTruck;
 import model.units.GasControlUnit;
+import model.units.MedicalUnit;
 import model.units.Unit;
 import model.units.UnitState;
 import simulation.Rescuable;
@@ -41,6 +48,7 @@ import simulation.Simulator;
 import view.Button;
 import view.Cell;
 import view.CellContent;
+import view.Chatwindow;
 import view.GameGUI;
 import view.MainMenu;
 import view.MiniFrame;
@@ -60,7 +68,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	
 	private ArrayList<Citizen> deadCitizens;
 	private ArrayList<ResidentialBuilding> collapsedBuildings;
-	
+	private Server server;
 	public CommandCenter() throws Exception {
 		
 		GUI = new MainMenu(this);
@@ -69,7 +77,28 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		deadCitizens = new ArrayList<Citizen>();
 		collapsedBuildings = new ArrayList<ResidentialBuilding>();
 		emergencyUnits = new ArrayList<Unit>();
+		server=new Server();
 		
+	}
+
+	public CellContent getIconContent() {
+		return iconContent;
+	}
+
+	public String getLogText() {
+		return logText;
+	}
+
+	public ArrayList<Citizen> getDeadCitizens() {
+		return deadCitizens;
+	}
+
+	public ArrayList<ResidentialBuilding> getCollapsedBuildings() {
+		return collapsedBuildings;
+	}
+
+	public Server getServer() {
+		return server;
 	}
 
 	public void setEmergencyUnits(ArrayList<Unit> emergencyUnits) {
@@ -136,7 +165,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[i][j].setDisaster(disaster);
 				if (disaster) 
 					GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[i][j].setImage(new ImageIcon("icons/Game panel/red.png"));	
-				else
+				else if (i != 0 && j != 0) 
 					GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[i][j].setImage(new ImageIcon("icons/Game panel/grey.png"));
 				
 			}
@@ -149,21 +178,24 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			int xC=citizen.getLocation().getX();
 			int yC=citizen.getLocation().getY();
 			view.Cell cell=cells[xC][yC];
-			if(citizen.getState()==CitizenState.DECEASED) {
-				cell.removeAll();
-				cell.add(cell.getDeadCitizen());
-			}
-			else if(citizen.getToxicity()>0) {
-				cell.removeAll();
-				cell.add(cell.getInfectedCitizen());
-			}
-			else if(citizen.getBloodLoss()>0) {
-				cell.removeAll();
-				cell.add(cell.getInjuredCitizen());
-			}
-			else {
-				cell.removeAll();
-				cell.add(cell.getCitizen());
+			if (xC != 0 || yC != 0) {	
+			
+				if(citizen.getState()==CitizenState.DECEASED) {
+					cell.removeAll();
+					cell.add(cell.getDeadCitizen());
+				}
+				else if(citizen.getToxicity()>0) {
+					cell.removeAll();
+					cell.add(cell.getInfectedCitizen());
+				}
+				else if(citizen.getBloodLoss()>0) {
+					cell.removeAll();
+					cell.add(cell.getInjuredCitizen());
+				}
+				else {
+					cell.removeAll();
+					cell.add(cell.getCitizen());
+				}
 			}
 		}
 	}
@@ -212,7 +244,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				
 			} catch (DisasterException e1) {
 				// TODO Auto-generated catch block
-				new MiniFrame(e1.getMessage());
+				//new MiniFrame(e1.getMessage());
 			} catch (UnsupportedAudioFileException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -254,6 +286,19 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				new MiniFrame(e1.getMessage());
 			}
 			
+		}
+		else if(e.getSource()==GUI.getGame().getPanel().getTopBar().getChat()) {
+			try {
+				Chatwindow window=new Chatwindow();
+				String ip=window.getIp();
+				
+			} catch (FontFormatException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		
 		else if(e.getSource() == GUI.getGame().getGameOver().getReturnButton()){
@@ -389,7 +434,10 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			Cell currCell = (Cell) e.getSource();
 			if (currCell.isDisaster()) {
 				currCell.setImage(new ImageIcon("icons/Game panel/red_pressed.png"));
-			} else {
+			} else if(currCell.getIndxX() ==0 && currCell.getIndxY() == 0){
+				currCell.setImage(new ImageIcon("icons/Game panel/blue_pressed.png"));
+			}
+			else {
 				currCell.setImage(new ImageIcon("icons/Game panel/grey_pressed.png"));
 			}
 			
@@ -417,6 +465,9 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			Cell currCell = (Cell) e.getSource();
 			if (currCell.isDisaster()) {
 				currCell.setImage(new ImageIcon("icons/Game panel/red.png"));
+			}
+			else if(currCell.getIndxX() ==0 && currCell.getIndxY() == 0) {
+				currCell.setImage(new ImageIcon("icons/Game panel/blue.png"));
 			}
 			else {
 				currCell.setImage(new ImageIcon("icons/Game panel/grey.png"));
@@ -484,8 +535,23 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 					e1.printStackTrace();
 				}
 			}
+			else if(e.getSource()==GUI.getGame().getPanel().getTopBar().getChat()) {
+				GUI.getGame().getPanel().getTopBar().getChat().setIcon(new ImageIcon("icons/Game panel/chat1.png"));
+				try {
+					GUI.PlaySound("sounds/Morse.wav").start();
+				} catch (UnsupportedAudioFileException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (LineUnavailableException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			
 					}
+		}
 		catch(Exception e1) {}	
 		
 	}
@@ -502,8 +568,8 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 //		if (currBuilding != null) 
 //			keys.add(0);
 		
-		if (bc < citizenList.size()) 
-			keys.add(2);
+//		if (bc < citizenList.size()) 
+//			keys.add(2);
 		
 		if (currBuilding != null) {
 			
@@ -623,6 +689,9 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			else if(e.getSource() == GUI.getGame().getGameOver().getReturnButton()){
 				JLabel gameOverMainMenu = GUI.getGame().getGameOver().getReturnButton();
 				gameOverMainMenu.setIcon(new ImageIcon("icons/Game panel/Return.png"));
+			}
+			else if(e.getSource()==GUI.getGame().getPanel().getTopBar().getChat()) {
+				GUI.getGame().getPanel().getTopBar().getChat().setIcon(new ImageIcon("icons/Game panel/chat.png"));
 			}
 		}
 		catch (Exception e1) {
@@ -816,7 +885,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	
 	public void getItems(int x,int y,Selector s){
 		s.removeAllItems();
-		s.addItem(null);
+		//s.addItem(null);
 		for (int i = 0; i < visibleCitizens.size(); i++) {
 			if (x == visibleCitizens.get(i).getLocation().getX() && y == visibleCitizens.get(i).getLocation().getY()) {
 				s.addItem(visibleCitizens.get(i));
@@ -876,6 +945,211 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			}
 			
 		}
+		
+	}
+	
+	public  String[] NextMove() {
+		ArrayList<Citizen> citizens = this.getVisibleCitizens();
+		ArrayList<ResidentialBuilding> buildings = this.getVisibleBuildings();
+		ArrayList<Unit> units = this.emergencyUnits;
+		int[] score = new int[citizens.size()+buildings.size()];
+		int[] time = new int[citizens.size()+buildings.size()];
+		int[] canBeSaved = new int[citizens.size()+buildings.size()];
+		
+		Arrays.fill(canBeSaved, -1);
+		
+		for (int i = 0; i < citizens.size() && (citizens.get(i).getState() != CitizenState.DECEASED) ; i++) {
+			Disaster currDisaster = citizens.get(i).getDisaster();
+			score[i]+= 1;
+			int time1 = 0;
+			int time2 = 0;
+			
+			int bloodLoss = citizens.get(i).getBloodLoss();
+			int toxicity  = citizens.get(i).getToxicity();
+			
+			int damage = 0;
+			
+			if ((bloodLoss>0 && bloodLoss<30))
+				damage+= 5;
+			
+			if ((bloodLoss>=30 && bloodLoss<70))
+				damage+= 10;
+				
+			if ((bloodLoss>=70 ))
+				damage+= 15;
+			
+			if (( toxicity>0 && toxicity<30))
+				damage+= 5;
+			
+			if ((toxicity>=30 && toxicity<70))
+				damage+= 10;
+				
+			if ((toxicity>=70 ))
+				damage+= 15;
+			
+			if (damage != 0) {
+				time1 = (int) Math.ceil(citizens.get(i).getHp()/damage);
+			}
+			else {
+				time1 = Integer.MAX_VALUE;
+			}
+			
+			if (time1 <= 1) {
+				time1 = 10000;
+			}
+			
+			if (currDisaster instanceof Injury && currDisaster.isActive()) {
+				time2 = (int) Math.ceil((100 - citizens.get(i).getBloodLoss())/10);
+			}
+			
+			if (currDisaster instanceof Infection && currDisaster.isActive()) {
+				time2 = (int) Math.ceil((100 - citizens.get(i).getToxicity())/15);
+			}
+			
+			if (time2 <= 1) {
+				time2 = 10000;
+			}
+			
+			if (citizens.get(i).getDisaster() != null) {
+				time[i] = Math.min(time1, time2);
+			}
+			else {
+				time[i] = time1;
+			}
+			
+		}
+		
+		for (int i = 0; i < buildings.size(); i++) {
+			Disaster currDisaster = buildings.get(i).getDisaster();
+			
+			int time1 = 0;
+			int time2 = 0;
+			
+			int damage = 0;
+			
+			int foundationDamage = buildings.get(i).getFoundationDamage();
+			int fireDamage = buildings.get(i).getFireDamage();
+			
+			if (foundationDamage>0) {
+				damage+=11;
+			}
+			
+			if(fireDamage>0 && fireDamage<30)
+				damage+= 3;
+			
+			if(fireDamage>=30 && fireDamage<70)
+				damage+= 5;
+				
+			if(fireDamage>=70 && fireDamage<100)
+				damage+= 7;
+				
+			if (damage != 0) {
+				time1 = (int) Math.ceil(citizens.get(i).getHp()/damage);
+			}
+			else {
+				time1 = Integer.MAX_VALUE;
+			}
+			
+			if (time1 <= 1) {
+				time1 = 10000;
+			}	
+		
+			
+			score[i+citizens.size()]+=  buildings.get(i).getOccupants().size(); 
+			
+			if (currDisaster instanceof Fire && currDisaster.isActive()) {
+				time2 = (int) Math.ceil((100 - buildings.get(i).getFireDamage())/10);
+			}
+			
+			if (currDisaster instanceof GasLeak && currDisaster.isActive()) {
+				time2 = (int) Math.ceil((100 - buildings.get(i).getGasLevel())/15);
+			}
+			
+			if (currDisaster instanceof Collapse && currDisaster.isActive()) {
+				time2 = (int) Math.ceil((100 - buildings.get(i).getFoundationDamage())/10);
+			}
+			
+			if (time2 <= 1) {
+				time2 = 10000;
+			}
+			
+			if (citizens.get(i).getDisaster() != null) {
+				time[i+citizens.size()] = Math.min(time1, time2);
+			}
+			else {
+				time[i+citizens.size()] = time1;
+			}
+			
+		}
+		
+		for (int i = 0; i < time.length; i++) {
+			for (int j = 0; j < units.size(); j++) {
+				int x = units.get(j).getLocation().getX();
+				int y = units.get(j).getLocation().getY();
+				int xt = 0;
+				int yt = 0;
+				
+				int timeu = 0;
+				
+				if (i >= citizens.size()) {
+					xt = buildings.get(i%citizens.size()).getLocation().getX();
+					yt = buildings.get(i%citizens.size()).getLocation().getY();
+				}
+				else {
+					xt = citizens.get(i).getLocation().getX();
+					yt = citizens.get(i).getLocation().getY();
+				}
+				
+				
+				int distance = (xt-x)+(yt+y);
+				
+				 timeu = (int) Math.ceil(distance/units.get(j).getStepsPerCycle());
+				 
+				 if (timeu < time[i]) {
+					 if (time[i] != 10000) {
+						 if (i >= citizens.size()) {
+							 if (buildings.get(i-citizens.size()).getDisaster() != null) {
+								if (buildings.get(i-citizens.size()).getDisaster() instanceof Collapse && buildings.get(i-citizens.size()).getDisaster().isActive() && units.get(j) instanceof Evacuator) {
+									canBeSaved[i] = j;
+								}
+								
+								if ((buildings.get(i-citizens.size()).getFireDamage() > 0 && units.get(j) instanceof FireTruck) || (buildings.get(i-citizens.size()).getGasLevel() > 0 && units.get(j) instanceof GasControlUnit)) {
+									canBeSaved[i] = j;
+								}
+								
+								if (buildings.get(i-citizens.size()).getDisaster() instanceof Fire && buildings.get(i-citizens.size()).getDisaster().isActive() && units.get(j) instanceof FireTruck) {
+									canBeSaved[i] = j;
+								}
+								
+								if (buildings.get(i-citizens.size()).getDisaster() instanceof GasLeak && buildings.get(i-citizens.size()).getDisaster().isActive() && units.get(j) instanceof GasControlUnit) {
+									canBeSaved[i] = j;
+								}
+							}
+							
+						}
+						 else {
+							 if (citizens.get(i).getDisaster() != null) {
+								if (citizens.get(i).getDisaster() instanceof Injury && citizens.get(i).getDisaster().isActive() && units.get(j) instanceof Ambulance) {
+									canBeSaved[i] = j;
+								}
+								
+								if (citizens.get(i).getDisaster() instanceof Infection && citizens.get(i).getDisaster().isActive() && units.get(j) instanceof DiseaseControlUnit) {
+									canBeSaved[i] = j;
+								}
+								if (!citizens.get(i).getDisaster().isActive() && (citizens.get(i).getToxicity() > 0 || citizens.get(i).getBloodLoss() > 0) && units.get(i) instanceof MedicalUnit) {
+									canBeSaved[i] = j;
+								}
+							}
+							
+						}
+						
+					}	
+				}
+				
+			}
+		}
+		
+		return null;
 		
 	}
 

@@ -94,6 +94,7 @@ import simulation.Simulatable;
 					//on the way to the target
 					
 					if(distanceToTarget > 0) {
+						((Evacuator) this).jobsDone();
 					distanceToTarget = (distanceToTarget - stepsPerCycle);
 					((Evacuator) this).setDistanceToBase(((Evacuator) this).getDistanceToBase() + stepsPerCycle);
 						if(distanceToTarget <= 0) {
@@ -166,6 +167,7 @@ import simulation.Simulatable;
 								if( Evac.getPassengers().get(0).getState() != CitizenState.DECEASED)
 									Evac.getPassengers().get(0).setState(CitizenState.RESCUED);
 								 	worldListener.assignAddress(Evac.getPassengers().get(0), 0, 0);
+								 	Evac.getPassengers().get(0).getEmergencyService().receiveSOSCall(Evac.getPassengers().get(0));
 								 	Evac.getPassengers().remove(0);
 
 							}
