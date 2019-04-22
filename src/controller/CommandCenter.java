@@ -8,7 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent; 
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -19,9 +24,12 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import org.hamcrest.core.Is;
 
+import Chating.Client;
+import Chating.CustomOutputStream;
 import Chating.Server;
 import exceptions.DisasterException;
 import model.disasters.Collapse;
@@ -69,6 +77,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	private ArrayList<Citizen> deadCitizens;
 	private ArrayList<ResidentialBuilding> collapsedBuildings;
 	private Server server;
+	private Chatwindow window;
 	public CommandCenter() throws Exception {
 		
 		GUI = new MainMenu(this);
@@ -77,7 +86,14 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		deadCitizens = new ArrayList<Citizen>();
 		collapsedBuildings = new ArrayList<ResidentialBuilding>();
 		emergencyUnits = new ArrayList<Unit>();
-		server=new Server();
+		this.window=new Chatwindow();
+		this.window.setVisible(false);
+		JTextField inText=window.getInText();
+		JTextArea textArea=window.getChatText();
+		String text=inText.getText();
+		InputStream input=new ByteArrayInputStream(text.getBytes("UTF-8"));
+		OutputStream output=new CustomOutputStream(textArea);
+		server=new Server(input, output);
 		
 	}
 
@@ -87,6 +103,10 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 
 	public String getLogText() {
 		return logText;
+	}
+
+	public Chatwindow getWindow() {
+		return window;
 	}
 
 	public ArrayList<Citizen> getDeadCitizens() {
@@ -238,7 +258,9 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				Random ran = new Random();
 				int x = ran.nextInt(5);
 				GUI.getGame().PlaySound(GUI.getGame().getEndCycleSound()[x]).start();
-				
+				if(checkInput()) {
+					this.window.setVisible(true);
+				}
 			} catch (DisasterException e1) {
 				// TODO Auto-generated catch block
 				//new MiniFrame(e1.getMessage());
@@ -286,12 +308,16 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		}
 		else if(e.getSource()==GUI.getGame().getPanel().getTopBar().getChat()) {
 			try {
-				Chatwindow window=new Chatwindow();
+				server.close();
+				this.window.setVisible(true);
 				String ip=window.getIp();
+				JTextField inText=window.getInText();
+				JTextArea textArea=window.getChatText();
+				String text=inText.getText();
+				InputStream input=new ByteArrayInputStream(text.getBytes("UTF-8"));
+				OutputStream output=new CustomOutputStream(textArea);
+				Client client=new Client(ip, input,output);
 				
-			} catch (FontFormatException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -1148,6 +1174,18 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		
 		return null;
 		
+	}
+	public boolean checkInput() {
+		BufferedReader br=new BufferedReader(new InputStreamReader(server.getInput()));
+		try {
+			if(br.ready()) {
+				return true;
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 

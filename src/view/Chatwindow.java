@@ -5,9 +5,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -42,7 +44,7 @@ public class Chatwindow extends JFrame{
 
 
 
-	public Chatwindow() {
+	public Chatwindow() throws FontFormatException, IOException {
 		// variables initialization
 		IPinput in=new IPinput();
 		this.ip=in.getIp();
@@ -65,23 +67,14 @@ public class Chatwindow extends JFrame{
 		//components
 		Font f=new Font("Helvetica ", Font.BOLD,18);
 		this.chatText=new JTextArea();
-		//chatText.setSize(800,500);
+		chatText.setSize(800,500);
 		chatText.setEditable(false);
 		chatText.setFont(f);
 		chatText.setOpaque(true);
 		chatText.setText("fsgsgsgsd");
-		JScrollPane c=new JScrollPane(chatText);
-		c.setSize(chatText.getSize());
-		
-		c.setLayout(new ScrollPaneLayout());
-		c.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		c.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		c.setWheelScrollingEnabled(true);
-		c.setAlignmentY(CENTER_ALIGNMENT);
+		InfoPanel c=new InfoPanel(chatText);
 		c.add(chatText);
-		c.setOpaque(true);
 		c.setVisible(true);
-		
 		this.inText=new JTextField();
 		inText.setBounds(0, 500, 800, 100);
 		inText.setFont(f);
@@ -105,7 +98,7 @@ public class Chatwindow extends JFrame{
 		
 
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FontFormatException, IOException {
 		new Chatwindow();
 	}
 }

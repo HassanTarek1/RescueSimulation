@@ -1,17 +1,39 @@
 package Chating;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
 	private ServerSocket welcomeSocket;
+	private InputStream input;
+	private OutputStream output;
+	public OutputStream getOutput() {
+		return output;
+	}
 
+	public ServerSocket getWelcomeSocket() {
+		return welcomeSocket;
+	}
 
-	public Server() throws IOException {
+	public void setWelcomeSocket(ServerSocket welcomeSocket) {
+		this.welcomeSocket = welcomeSocket;
+	}
+
+	public InputStream getInput() {
+		return input;
+	}
+
+	public void setInput(InputStream input) {
+		this.input = input;
+	}
+
+	public Server(InputStream input,OutputStream output) throws IOException {
+		this.input=input;
+		this.output=output;
+		PrintStream printStream = new PrintStream(output);
+		System.setOut(printStream);
+		System.setErr(printStream);
 		welcomeSocket=new ServerSocket(5000);
 		Socket connectionSocket=welcomeSocket.accept();
 		BufferedReader inFromClient=new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
@@ -19,7 +41,7 @@ public class Server {
 		DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
 		String returnSentence;
 		boolean available=false;
-		BufferedReader inServer=new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader inServer=new BufferedReader(new InputStreamReader(input));
 		if(clientSentence.equals("CONNECT")) {
 			available=true;
 			outToClient.writeBytes("connected"+"\n");
