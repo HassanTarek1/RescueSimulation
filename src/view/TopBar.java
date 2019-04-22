@@ -86,10 +86,10 @@ public class TopBar extends ImagePanel{
 			chat=new Button("icons/Game panel/chat.png");
 			treat.setAlignmentX(Component.RIGHT_ALIGNMENT);
 			add(Box.createRigidArea(new Dimension(15,0)));
-			this.add(chat);
 			chat.setLocation(600,19);
 			chat.setSize(135,22);
 			chat.addMouseListener(cont);
+			this.add(chat);
 			//Target
 			Font correct8BitFontSmall = font.deriveFont(20f);
 			

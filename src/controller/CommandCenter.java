@@ -88,7 +88,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		collapsedBuildings = new ArrayList<ResidentialBuilding>();
 		emergencyUnits = new ArrayList<Unit>();
 		this.window=new Chatwindow();
-		this.window.setVisible(false);
+		//this.window.setVisible(false);
 		JTextField inText=window.getInText();
 		JTextArea textArea=window.getChatText();
 		String text=inText.getText();
@@ -312,17 +312,18 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		}
 		else if(e.getSource()==GUI.getGame().getPanel().getTopBar().getChat()) {
 			try {
-				server.close();
+				//server.close();
 				IPinput in=new IPinput();
-				this.window.setVisible(true);
 				this.window.setIp(in.getIp());
 				String ip=window.getIp();
+				this.window.setVisible(true);
 				JTextField inText=window.getInText();
 				JTextArea textArea=window.getChatText();
 				String text=inText.getText();
 				InputStream input=new ByteArrayInputStream(text.getBytes("UTF-8"));
 				OutputStream output=new CustomOutputStream(textArea);
 				Client client=new Client(ip, input,output);
+
 				
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block

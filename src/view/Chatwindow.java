@@ -68,7 +68,7 @@ public class Chatwindow extends JFrame{
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		ImagePanel panel=new ImagePanel("icons/background.png");
 		panel.setLayout(new BorderLayout());
 		panel.setSize(this.getSize());
@@ -111,12 +111,16 @@ public class Chatwindow extends JFrame{
 		});
 		panel.add(c,BorderLayout.NORTH);
 		panel.add(inText);
+		add(panel);
+		this.setVisible(false);
 		pack();
-		this.setVisible(true);
 		
 
 	}
-	public static void main(String[] args) throws FontFormatException, IOException {
-		new Chatwindow();
-	}
+	
+	/*
+	 * public static void main(String[] args) throws FontFormatException,
+	 * IOException { new Chatwindow(); }
+	 */
+	 
 }
