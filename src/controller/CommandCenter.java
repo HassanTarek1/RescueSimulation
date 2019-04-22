@@ -58,6 +58,7 @@ import view.Cell;
 import view.CellContent;
 import view.Chatwindow;
 import view.GameGUI;
+import view.IPinput;
 import view.MainMenu;
 import view.MiniFrame;
 import view.Selector;
@@ -312,7 +313,9 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		else if(e.getSource()==GUI.getGame().getPanel().getTopBar().getChat()) {
 			try {
 				server.close();
+				IPinput in=new IPinput();
 				this.window.setVisible(true);
+				this.window.setIp(in.getIp());
 				String ip=window.getIp();
 				JTextField inText=window.getInText();
 				JTextArea textArea=window.getChatText();

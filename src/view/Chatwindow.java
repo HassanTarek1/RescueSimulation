@@ -32,6 +32,21 @@ public class Chatwindow extends JFrame{
 	}
 
 
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+
+	public void setInText(JTextField inText) {
+		this.inText = inText;
+	}
+
+
+	public void setChatText(JTextArea chatText) {
+		this.chatText = chatText;
+	}
+
+
 	public JTextArea getChatText() {
 		return chatText;
 	}
@@ -46,8 +61,7 @@ public class Chatwindow extends JFrame{
 
 	public Chatwindow() throws FontFormatException, IOException {
 		// variables initialization
-		IPinput in=new IPinput();
-		this.ip=in.getIp();
+		
 		
 		//setting the frame
 		setSize(800, 600);
@@ -64,7 +78,7 @@ public class Chatwindow extends JFrame{
 
 		
 		//components
-		//Font f=new Font("Helvetica ", Font.BOLD,18);
+		Font f=new Font("Helvetica ", Font.BOLD,18);
 		this.chatText=new JTextArea();
 		chatText.setSize(800,500);
 		chatText.setEditable(false);
