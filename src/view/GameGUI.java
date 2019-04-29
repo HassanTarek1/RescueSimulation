@@ -267,15 +267,15 @@ public class GameGUI extends JFrame implements MouseListener{
 			
 			this.GameMusic.stop();
 			
-//			try {
-//				PlaySound("sounds/Devlin Bataric - Game Over - Repeating Dream.wav").start();
-//			} catch (UnsupportedAudioFileException e1) {
-//				e1.printStackTrace();
-//			} catch (IOException e1) {
-//				e1.printStackTrace();
-//			} catch (LineUnavailableException e1) {
-//				e1.printStackTrace();
-//			}
+			try {
+				PlaySound("sounds/Devlin Bataric - Game Over - Repeating Dream.wav").start();
+			} catch (UnsupportedAudioFileException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			} catch (LineUnavailableException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 

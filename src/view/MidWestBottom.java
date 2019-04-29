@@ -24,14 +24,14 @@ public class MidWestBottom extends ImagePanel{
 		textArea.setFont(new java.awt.Font("Helvitica",1,14));
 		textArea.setEditable(false);
 		textArea.setMargin(new java.awt.Insets(12, 12, 12, 12));
-		textArea.setSize(320,250);
+		textArea.setSize(282,250);
 		textArea.setEditable(false);
 		textArea.setBackground(Color.LIGHT_GRAY);
 		textArea.setForeground(Color.white);
 		info = new InfoPanel(textArea);
 		//add(Box.createRigidArea(new Dimension(10,10)));
 		add(info);
-		add(Box.createRigidArea(new Dimension(7,10)));
+		add(Box.createRigidArea(new Dimension(9,88)));
 	}
 	public InfoPanel getInfo() {
 		return info;
