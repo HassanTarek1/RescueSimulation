@@ -231,7 +231,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		else if(e.getSource() == choicePanel.getDefaultCSV()) {
 			try {
 				intro.stop();
-				new WriteDefaultCSV();
+				//new WriteDefaultCSV();
 				Simulator engine = new Simulator(controller);
 				controller.setEngine(engine);
 				controller.setEmergencyUnits(engine.getEmergencyUnits());
@@ -249,7 +249,7 @@ public class MainMenu extends JFrame implements MouseListener{
 		else if(e.getSource() == choicePanel.getRandomCSV()) {
 			try {
 				intro.stop();
-				new WriteCSV(20,25,25,25);
+				new WriteCSV(5,35,20,21);
 				Simulator engine = new Simulator(controller);
 				controller.setEngine(engine);
 				controller.setEmergencyUnits(engine.getEmergencyUnits());
@@ -269,20 +269,11 @@ public class MainMenu extends JFrame implements MouseListener{
 			choicePanel.setVisible(true);
 			panel.setVisible(false);
 			
-//			try {
-//				game.setVisible(true);
-//				game.getGameMusic().start();
-//				game.getVolume().setValue(-25.0f);
-//				game.getGameMusic().loop(Clip.LOOP_CONTINUOUSLY);
-//			} catch (Exception e1) {
-//				e1.printStackTrace();
-//			}
-//			this.dispose();
 			
 		}
 		else if (temp == About) {
-			panel.setVisible(false);
-			AboutPanel.setVisible(true);
+//			panel.setVisible(false);
+//			AboutPanel.setVisible(true);
 			
 		}
 		

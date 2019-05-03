@@ -24,11 +24,11 @@ public class MidWestTop extends ImagePanel{
 		textArea.setFont(new java.awt.Font("Helvitica",1,14));
 		textArea.setEditable(false);
 		textArea.setMargin(new java.awt.Insets(12, 12, 12, 12));
-		textArea.setSize(320,250);
+		textArea.setSize(282,250);
 		textArea.setForeground(Color.white);
 		log = new LogPanel(textArea);
 		add(log);
-		add(Box.createRigidArea(new Dimension(7,10)));
+		add(Box.createRigidArea(new Dimension(9,88)));
 		
 		
 	}

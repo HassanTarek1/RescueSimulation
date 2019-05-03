@@ -1,40 +1,17 @@
 package Chating;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class Client {
 	
 	private String address;
-	private InputStream input;
-	private OutputStream output;
-	public OutputStream getOutput() {
-		return output;
-	}
-
-
-
-
-	public void setOutput(OutputStream output) {
-		this.output = output;
-	}
-
-
-
-
-	public InputStream getInput() {
-		return input;
-	}
-
-
-
-
-	public void setInput(InputStream input) {
-		this.input = input;
-	}
-
-
-
+	
 
 	public String getAddress() {
 		return address;
@@ -50,22 +27,18 @@ public class Client {
 
 
 
-	public Client(String address,InputStream input,OutputStream output) throws IOException {
+	public Client(String address) throws IOException {
 		this.address=address;
-		this.input=input;
-		this.output=output;
-		PrintStream printStream = new PrintStream(output);
-		System.setOut(printStream);
-		System.setErr(printStream);
 		@SuppressWarnings("resource")
 		Socket clientSocket = new Socket(address, 5000);
 		String sentence="";
 		String modifiedSentence = null;
-		BufferedReader inFromUser=new BufferedReader(new InputStreamReader(input));
+		System.out.println("enter a string");
+		BufferedReader inFromUser=new BufferedReader(new InputStreamReader(System.in));
 		BufferedReader inFromServer =new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 		while(true){
 			if(inFromUser.ready()) {
-				inFromUser=new BufferedReader(new InputStreamReader(input));
+				inFromUser=new BufferedReader(new InputStreamReader(System.in));
 				sentence=inFromUser.readLine();
 				DataOutputStream outToServer=new DataOutputStream(clientSocket.getOutputStream());
 				if(sentence!=null)

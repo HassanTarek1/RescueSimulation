@@ -196,6 +196,9 @@ import simulation.Simulatable;
 	
 	public void respond(Rescuable r) throws UnitException {
 		//Overridden in medicalUnit class
+		if (this == null || r == null) {
+			throw new NullPointerException();
+		}
 			if(this.getTarget() != null && r!=this.getTarget()) {
 				if(this.getTarget() instanceof Citizen) {
 					Citizen s=(Citizen)this.getTarget();
