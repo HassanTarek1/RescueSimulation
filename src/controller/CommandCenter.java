@@ -8,12 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent; 
 import java.awt.event.MouseListener;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -24,11 +19,10 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 import org.hamcrest.core.Is;
 
-import Chating.Client;
+
 import Chating.Server;
 import exceptions.DisasterException;
 import model.disasters.Collapse;
@@ -57,7 +51,6 @@ import view.Cell;
 import view.CellContent;
 import view.Chatwindow;
 import view.GameGUI;
-import view.IPinput;
 import view.MainMenu;
 import view.MiniFrame;
 import view.Selector;
@@ -77,7 +70,6 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 	private ArrayList<Citizen> deadCitizens;
 	private ArrayList<ResidentialBuilding> collapsedBuildings;
 	private Server server;
-	private Chatwindow window;
 	public CommandCenter() throws Exception {
 		
 		GUI = new MainMenu(this);
@@ -86,11 +78,6 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		deadCitizens = new ArrayList<Citizen>();
 		collapsedBuildings = new ArrayList<ResidentialBuilding>();
 		emergencyUnits = new ArrayList<Unit>();
-		this.window=new Chatwindow();
-		//this.window.setVisible(false);
-		JTextField inText=window.getInText();
-		JTextArea textArea=window.getChatText();
-		String text=inText.getText();
 		
 	}
 
@@ -100,10 +87,6 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 
 	public String getLogText() {
 		return logText;
-	}
-
-	public Chatwindow getWindow() {
-		return window;
 	}
 
 	public ArrayList<Citizen> getDeadCitizens() {
@@ -169,21 +152,21 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			
 			for (int j = 0; j < 10; j++) {
 				boolean disaster = false;
-				ArrayList<Citizen> lisyC = ListCitizens(i, j);
+				ArrayList<Citizen> lisyC = ListCitizens(j, i);
 				for (Citizen citizen : lisyC) {
 					if (citizen.getDisaster() != null && citizen.getDisaster().isActive()) {
 						disaster = true;
 					}
 				}
-				ResidentialBuilding building = buildingInCell(i, j);
+				ResidentialBuilding building = buildingInCell(j, i);
 				if (building != null && building.getDisaster() != null && building.getDisaster().isActive()) {
 					disaster = true;
 				}
-				GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[i][j].setDisaster(disaster);
+				GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[j][i].setDisaster(disaster);
 				if (disaster) 
-					GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[i][j].setImage(new ImageIcon("icons/Game panel/red.png"));	
-				else if (i != 0 && j != 0) 
-					GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[i][j].setImage(new ImageIcon("icons/Game panel/grey.png"));
+					GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[j][i].setImage(new ImageIcon("icons/Game panel/red.png"));	
+				else if (i != 0 || j != 0) 
+					GUI.getGame().getPanel().getMidArea().getMidGrid().getCells()[j][i].setImage(new ImageIcon("icons/Game panel/grey.png"));
 				
 			}
 		}
@@ -258,9 +241,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 				Random ran = new Random();
 				int x = ran.nextInt(5);
 				GUI.getGame().PlaySound(GUI.getGame().getEndCycleSound()[x]).start();
-				if(checkInput()) {
-					this.window.setVisible(true);
-				}
+				
 			} catch (DisasterException e1) {
 				// TODO Auto-generated catch block
 				//new MiniFrame(e1.getMessage());
@@ -281,31 +262,42 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			Unit selectedUnit = GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().getSelectedUnit();
 			try{
 				selectedUnit.respond(selectedTarget);
-				selectedTarget = null;
-				selectedUnit = null;
 				GUI.getGame().getPanel().getTopBar().getUnit().setText("Unit: Empty");
 				GUI.getGame().getPanel().getTopBar().getTarget().setText("Target: Empty");
-				GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().setSelectedIndex(0);
-				//GUI.getGame().PlaySound("sounds/Fruit collect 1.wav").start();
+				GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().setSelectedIndex(-1);
+				
+				GUI.getGame().PlaySound("sounds/Fruit collect 1.wav").start();
+				
+				GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().setSelectedTarget(null);
+				GUI.getGame().getPanel().getMidArea().getMiddleEast().getSelector().setSelectedUnit(null);
+				
+				
 				updateUnitCount(UnitState.IDLE);
 				updateUnitCount(UnitState.RESPONDING);
 				updateUnitCount(UnitState.TREATING);
+			
 				
 			}
+			
+	
 			catch (Exception e1) {
 				// TODO: handle exception
 				
-//				try {
-//					GUI.getGame().PlaySound("sounds/Basso.wav").start();
-//				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e2) {
-//					// TODO Auto-generated catch block
-//					e2.printStackTrace();
-//				}
+				try {
+					GUI.getGame().PlaySound("sounds/Basso.wav").start();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
 				
-				new MiniFrame(e1.getMessage());
+				if (e1 instanceof NullPointerException) 
+					new MiniFrame("Please select a target and a unit");
+				else
+					new MiniFrame(e1.getMessage());
 			}
 			
 		}
+		
 		
 		
 		else if(e.getSource() == GUI.getGame().getGameOver().getReturnButton()){
@@ -334,12 +326,12 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		
 		else if(e.getSource() instanceof view.Cell) {
 			
-//			try {
-//				GUI.getGame().PlaySound("sounds/Text 1.wav").start();
-//			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
+			try {
+				GUI.getGame().PlaySound("sounds/Morse.wav").start();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 			updateInfo((view.Cell)e.getSource());
 			getItems(((view.Cell)e.getSource()).getIndxX(),((view.Cell)e.getSource()).getIndxY(),
@@ -361,13 +353,13 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		
 		else if (e.getSource() instanceof JButton) {
 			
-//			try {
-//				GUI.getGame().PlaySound("sounds/Jump 1.wav").start();
-//			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//			
+			try {
+				GUI.getGame().PlaySound("sounds/Jump 1.wav").start();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 			JButton currButton = (JButton) e.getSource();
 			
 			//----------------------------------------------------
@@ -714,7 +706,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		for (int i = 0; i < visibleCitizens.size(); i++) {
 			
 			Citizen citizen=visibleCitizens.get(i);
-			if(citizen.getDisaster().isActive() && 
+			if(citizen.getDisaster() != null && citizen.getDisaster().isActive() && 
 					citizen.getDisaster().getStartCycle()==GUI.getGame().getCurrentCycle()) {
 			 logText=logText+"  "+citizen.getDisaster().toString()+"in location "+citizen.getLocation().toString()+"\n";
 			}
@@ -729,7 +721,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		//visibleCitizens.removeAll(toRemoveC);
 		for (int i=0;i<visibleBuildings.size();i++) {
 			ResidentialBuilding building=visibleBuildings.get(i);
-			if(building.getDisaster().isActive() && 
+			if(building.getDisaster() != null && building.getDisaster().isActive() && 
 					building.getDisaster().getStartCycle()==GUI.getGame().getCurrentCycle()) {
 				logText=logText+"  "+building.getDisaster().toString()+"in location "+building.getLocation().toString()+"\n";
 			}
@@ -913,12 +905,12 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			JComboBox<Simulatable> source = (JComboBox<Simulatable>) e.getSource();
 			if (source.getSelectedIndex() >=0) {
 				
-//				try {
-//					GUI.getGame().PlaySound("sounds/Confirm 1.wav").start();
-//				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
+				try {
+					GUI.getGame().PlaySound("sounds/Confirm 1.wav").start();
+				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				updateInfoSelector((Simulatable) source.getSelectedItem());
 				Simulatable r= (Simulatable) source.getSelectedItem();
@@ -955,222 +947,210 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		
 	}
 	
-	public  String[] NextMove() {
-		ArrayList<Citizen> citizens = this.getVisibleCitizens();
-		ArrayList<ResidentialBuilding> buildings = this.getVisibleBuildings();
-		ArrayList<Unit> units = this.emergencyUnits;
-		int[] score = new int[citizens.size()+buildings.size()];
-		int[] time = new int[citizens.size()+buildings.size()];
-		int[] canBeSaved = new int[citizens.size()+buildings.size()];
-		
-		Arrays.fill(canBeSaved, -1);
-		
-		for (int i = 0; i < citizens.size() && (citizens.get(i).getState() != CitizenState.DECEASED) ; i++) {
-			Disaster currDisaster = citizens.get(i).getDisaster();
-			score[i]+= 1;
-			int time1 = 0;
-			int time2 = 0;
-			
-			int bloodLoss = citizens.get(i).getBloodLoss();
-			int toxicity  = citizens.get(i).getToxicity();
-			
-			int damage = 0;
-			
-			if ((bloodLoss>0 && bloodLoss<30))
-				damage+= 5;
-			
-			if ((bloodLoss>=30 && bloodLoss<70))
-				damage+= 10;
-				
-			if ((bloodLoss>=70 ))
-				damage+= 15;
-			
-			if (( toxicity>0 && toxicity<30))
-				damage+= 5;
-			
-			if ((toxicity>=30 && toxicity<70))
-				damage+= 10;
-				
-			if ((toxicity>=70 ))
-				damage+= 15;
-			
-			if (damage != 0) {
-				time1 = (int) Math.ceil(citizens.get(i).getHp()/damage);
-			}
-			else {
-				time1 = Integer.MAX_VALUE;
-			}
-			
-			if (time1 <= 1) {
-				time1 = 10000;
-			}
-			
-			if (currDisaster instanceof Injury && currDisaster.isActive()) {
-				time2 = (int) Math.ceil((100 - citizens.get(i).getBloodLoss())/10);
-			}
-			
-			if (currDisaster instanceof Infection && currDisaster.isActive()) {
-				time2 = (int) Math.ceil((100 - citizens.get(i).getToxicity())/15);
-			}
-			
-			if (time2 <= 1) {
-				time2 = 10000;
-			}
-			
-			if (citizens.get(i).getDisaster() != null) {
-				time[i] = Math.min(time1, time2);
-			}
-			else {
-				time[i] = time1;
-			}
-			
-		}
-		
-		for (int i = 0; i < buildings.size(); i++) {
-			Disaster currDisaster = buildings.get(i).getDisaster();
-			
-			int time1 = 0;
-			int time2 = 0;
-			
-			int damage = 0;
-			
-			int foundationDamage = buildings.get(i).getFoundationDamage();
-			int fireDamage = buildings.get(i).getFireDamage();
-			
-			if (foundationDamage>0) {
-				damage+=11;
-			}
-			
-			if(fireDamage>0 && fireDamage<30)
-				damage+= 3;
-			
-			if(fireDamage>=30 && fireDamage<70)
-				damage+= 5;
-				
-			if(fireDamage>=70 && fireDamage<100)
-				damage+= 7;
-				
-			if (damage != 0) {
-				time1 = (int) Math.ceil(citizens.get(i).getHp()/damage);
-			}
-			else {
-				time1 = Integer.MAX_VALUE;
-			}
-			
-			if (time1 <= 1) {
-				time1 = 10000;
-			}	
-		
-			
-			score[i+citizens.size()]+=  buildings.get(i).getOccupants().size(); 
-			
-			if (currDisaster instanceof Fire && currDisaster.isActive()) {
-				time2 = (int) Math.ceil((100 - buildings.get(i).getFireDamage())/10);
-			}
-			
-			if (currDisaster instanceof GasLeak && currDisaster.isActive()) {
-				time2 = (int) Math.ceil((100 - buildings.get(i).getGasLevel())/15);
-			}
-			
-			if (currDisaster instanceof Collapse && currDisaster.isActive()) {
-				time2 = (int) Math.ceil((100 - buildings.get(i).getFoundationDamage())/10);
-			}
-			
-			if (time2 <= 1) {
-				time2 = 10000;
-			}
-			
-			if (citizens.get(i).getDisaster() != null) {
-				time[i+citizens.size()] = Math.min(time1, time2);
-			}
-			else {
-				time[i+citizens.size()] = time1;
-			}
-			
-		}
-		
-		for (int i = 0; i < time.length; i++) {
-			for (int j = 0; j < units.size(); j++) {
-				int x = units.get(j).getLocation().getX();
-				int y = units.get(j).getLocation().getY();
-				int xt = 0;
-				int yt = 0;
-				
-				int timeu = 0;
-				
-				if (i >= citizens.size()) {
-					xt = buildings.get(i%citizens.size()).getLocation().getX();
-					yt = buildings.get(i%citizens.size()).getLocation().getY();
-				}
-				else {
-					xt = citizens.get(i).getLocation().getX();
-					yt = citizens.get(i).getLocation().getY();
-				}
-				
-				
-				int distance = (xt-x)+(yt+y);
-				
-				 timeu = (int) Math.ceil(distance/units.get(j).getStepsPerCycle());
-				 
-				 if (timeu < time[i]) {
-					 if (time[i] != 10000) {
-						 if (i >= citizens.size()) {
-							 if (buildings.get(i-citizens.size()).getDisaster() != null) {
-								if (buildings.get(i-citizens.size()).getDisaster() instanceof Collapse && buildings.get(i-citizens.size()).getDisaster().isActive() && units.get(j) instanceof Evacuator) {
-									canBeSaved[i] = j;
-								}
-								
-								if ((buildings.get(i-citizens.size()).getFireDamage() > 0 && units.get(j) instanceof FireTruck) || (buildings.get(i-citizens.size()).getGasLevel() > 0 && units.get(j) instanceof GasControlUnit)) {
-									canBeSaved[i] = j;
-								}
-								
-								if (buildings.get(i-citizens.size()).getDisaster() instanceof Fire && buildings.get(i-citizens.size()).getDisaster().isActive() && units.get(j) instanceof FireTruck) {
-									canBeSaved[i] = j;
-								}
-								
-								if (buildings.get(i-citizens.size()).getDisaster() instanceof GasLeak && buildings.get(i-citizens.size()).getDisaster().isActive() && units.get(j) instanceof GasControlUnit) {
-									canBeSaved[i] = j;
-								}
-							}
-							
-						}
-						 else {
-							 if (citizens.get(i).getDisaster() != null) {
-								if (citizens.get(i).getDisaster() instanceof Injury && citizens.get(i).getDisaster().isActive() && units.get(j) instanceof Ambulance) {
-									canBeSaved[i] = j;
-								}
-								
-								if (citizens.get(i).getDisaster() instanceof Infection && citizens.get(i).getDisaster().isActive() && units.get(j) instanceof DiseaseControlUnit) {
-									canBeSaved[i] = j;
-								}
-								if (!citizens.get(i).getDisaster().isActive() && (citizens.get(i).getToxicity() > 0 || citizens.get(i).getBloodLoss() > 0) && units.get(i) instanceof MedicalUnit) {
-									canBeSaved[i] = j;
-								}
-							}
-							
-						}
-						
-					}	
-				}
-				
-			}
-		}
-		
-		return null;
-		
-	}
-	public boolean checkInput() {
-		BufferedReader br=new BufferedReader(new InputStreamReader(server.getInput()));
-		try {
-			if(br.ready()) {
-				return true;
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
+//	public  String[] NextMove() {
+//		ArrayList<Citizen> citizens = this.getVisibleCitizens();
+//		ArrayList<ResidentialBuilding> buildings = this.getVisibleBuildings();
+//		ArrayList<Unit> units = this.emergencyUnits;
+//		int[] score = new int[citizens.size()+buildings.size()];
+//		int[] time = new int[citizens.size()+buildings.size()];
+//		int[] canBeSaved = new int[citizens.size()+buildings.size()];
+//		
+//		Arrays.fill(canBeSaved, -1);
+//		
+//		for (int i = 0; i < citizens.size() && (citizens.get(i).getState() != CitizenState.DECEASED) ; i++) {
+//			Disaster currDisaster = citizens.get(i).getDisaster();
+//			score[i]+= 1;
+//			int time1 = 0;
+//			int time2 = 0;
+//			
+//			int bloodLoss = citizens.get(i).getBloodLoss();
+//			int toxicity  = citizens.get(i).getToxicity();
+//			
+//			int damage = 0;
+//			
+//			if ((bloodLoss>0 && bloodLoss<30))
+//				damage+= 5;
+//			
+//			if ((bloodLoss>=30 && bloodLoss<70))
+//				damage+= 10;
+//				
+//			if ((bloodLoss>=70 ))
+//				damage+= 15;
+//			
+//			if (( toxicity>0 && toxicity<30))
+//				damage+= 5;
+//			
+//			if ((toxicity>=30 && toxicity<70))
+//				damage+= 10;
+//				
+//			if ((toxicity>=70 ))
+//				damage+= 15;
+//			
+//			if (damage != 0) {
+//				time1 = (int) Math.ceil(citizens.get(i).getHp()/damage);
+//			}
+//			else {
+//				time1 = Integer.MAX_VALUE;
+//			}
+//			
+//			if (time1 <= 1) {
+//				time1 = 10000;
+//			}
+//			
+//			if (currDisaster instanceof Injury && currDisaster.isActive()) {
+//				time2 = (int) Math.ceil((100 - citizens.get(i).getBloodLoss())/10);
+//			}
+//			
+//			if (currDisaster instanceof Infection && currDisaster.isActive()) {
+//				time2 = (int) Math.ceil((100 - citizens.get(i).getToxicity())/15);
+//			}
+//			
+//			if (time2 <= 1) {
+//				time2 = 10000;
+//			}
+//			
+//			if (citizens.get(i).getDisaster() != null) {
+//				time[i] = Math.min(time1, time2);
+//			}
+//			else {
+//				time[i] = time1;
+//			}
+//			
+//		}
+//		
+//		for (int i = 0; i < buildings.size(); i++) {
+//			Disaster currDisaster = buildings.get(i).getDisaster();
+//			
+//			int time1 = 0;
+//			int time2 = 0;
+//			
+//			int damage = 0;
+//			
+//			int foundationDamage = buildings.get(i).getFoundationDamage();
+//			int fireDamage = buildings.get(i).getFireDamage();
+//			
+//			if (foundationDamage>0) {
+//				damage+=11;
+//			}
+//			
+//			if(fireDamage>0 && fireDamage<30)
+//				damage+= 3;
+//			
+//			if(fireDamage>=30 && fireDamage<70)
+//				damage+= 5;
+//				
+//			if(fireDamage>=70 && fireDamage<100)
+//				damage+= 7;
+//				
+//			if (damage != 0) {
+//				time1 = (int) Math.ceil(citizens.get(i).getHp()/damage);
+//			}
+//			else {
+//				time1 = Integer.MAX_VALUE;
+//			}
+//			
+//			if (time1 <= 1) {
+//				time1 = 10000;
+//			}	
+//		
+//			
+//			score[i+citizens.size()]+=  buildings.get(i).getOccupants().size(); 
+//			
+//			if (currDisaster instanceof Fire && currDisaster.isActive()) {
+//				time2 = (int) Math.ceil((100 - buildings.get(i).getFireDamage())/10);
+//			}
+//			
+//			if (currDisaster instanceof GasLeak && currDisaster.isActive()) {
+//				time2 = (int) Math.ceil((100 - buildings.get(i).getGasLevel())/15);
+//			}
+//			
+//			if (currDisaster instanceof Collapse && currDisaster.isActive()) {
+//				time2 = (int) Math.ceil((100 - buildings.get(i).getFoundationDamage())/10);
+//			}
+//			
+//			if (time2 <= 1) {
+//				time2 = 10000;
+//			}
+//			
+//			if (citizens.get(i).getDisaster() != null) {
+//				time[i+citizens.size()] = Math.min(time1, time2);
+//			}
+//			else {
+//				time[i+citizens.size()] = time1;
+//			}
+//			
+//		}
+//		
+//		for (int i = 0; i < time.length; i++) {
+//			for (int j = 0; j < units.size(); j++) {
+//				int x = units.get(j).getLocation().getX();
+//				int y = units.get(j).getLocation().getY();
+//				int xt = 0;
+//				int yt = 0;
+//				
+//				int timeu = 0;
+//				
+//				if (i >= citizens.size()) {
+//					xt = buildings.get(i%citizens.size()).getLocation().getX();
+//					yt = buildings.get(i%citizens.size()).getLocation().getY();
+//				}
+//				else {
+//					xt = citizens.get(i).getLocation().getX();
+//					yt = citizens.get(i).getLocation().getY();
+//				}
+//				
+//				
+//				int distance = (xt-x)+(yt+y);
+//				
+//				 timeu = (int) Math.ceil(distance/units.get(j).getStepsPerCycle());
+//				 
+//				 if (timeu < time[i]) {
+//					 if (time[i] != 10000) {
+//						 if (i >= citizens.size()) {
+//							 if (buildings.get(i-citizens.size()).getDisaster() != null) {
+//								if (buildings.get(i-citizens.size()).getDisaster() instanceof Collapse && buildings.get(i-citizens.size()).getDisaster().isActive() && units.get(j) instanceof Evacuator) {
+//									canBeSaved[i] = j;
+//								}
+//								
+//								if ((buildings.get(i-citizens.size()).getFireDamage() > 0 && units.get(j) instanceof FireTruck) || (buildings.get(i-citizens.size()).getGasLevel() > 0 && units.get(j) instanceof GasControlUnit)) {
+//									canBeSaved[i] = j;
+//								}
+//								
+//								if (buildings.get(i-citizens.size()).getDisaster() instanceof Fire && buildings.get(i-citizens.size()).getDisaster().isActive() && units.get(j) instanceof FireTruck) {
+//									canBeSaved[i] = j;
+//								}
+//								
+//								if (buildings.get(i-citizens.size()).getDisaster() instanceof GasLeak && buildings.get(i-citizens.size()).getDisaster().isActive() && units.get(j) instanceof GasControlUnit) {
+//									canBeSaved[i] = j;
+//								}
+//							}
+//							
+//						}
+//						 else {
+//							 if (citizens.get(i).getDisaster() != null) {
+//								if (citizens.get(i).getDisaster() instanceof Injury && citizens.get(i).getDisaster().isActive() && units.get(j) instanceof Ambulance) {
+//									canBeSaved[i] = j;
+//								}
+//								
+//								if (citizens.get(i).getDisaster() instanceof Infection && citizens.get(i).getDisaster().isActive() && units.get(j) instanceof DiseaseControlUnit) {
+//									canBeSaved[i] = j;
+//								}
+//								if (!citizens.get(i).getDisaster().isActive() && (citizens.get(i).getToxicity() > 0 || citizens.get(i).getBloodLoss() > 0) && units.get(i) instanceof MedicalUnit) {
+//									canBeSaved[i] = j;
+//								}
+//							}
+//							
+//						}
+//						
+//					}	
+//				}
+//				
+//			}
+//		}
+//		
+//		return null;
+//		
+//	}
 
 
 }

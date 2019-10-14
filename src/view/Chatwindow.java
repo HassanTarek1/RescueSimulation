@@ -32,21 +32,6 @@ public class Chatwindow extends JFrame{
 	}
 
 
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
-
-	public void setInText(JTextField inText) {
-		this.inText = inText;
-	}
-
-
-	public void setChatText(JTextArea chatText) {
-		this.chatText = chatText;
-	}
-
-
 	public JTextArea getChatText() {
 		return chatText;
 	}
@@ -61,14 +46,15 @@ public class Chatwindow extends JFrame{
 
 	public Chatwindow() throws FontFormatException, IOException {
 		// variables initialization
-		
+		IPinput in=new IPinput();
+		this.ip=in.getIp();
 		
 		//setting the frame
 		setSize(800, 600);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ImagePanel panel=new ImagePanel("icons/background.png");
 		panel.setLayout(new BorderLayout());
 		panel.setSize(this.getSize());
@@ -78,24 +64,33 @@ public class Chatwindow extends JFrame{
 
 		
 		//components
-		Font f=new Font("Helvetica ", Font.BOLD,18);
+		//Font f=new Font("Helvetica ", Font.BOLD,18);
 		this.chatText=new JTextArea();
 		chatText.setSize(800,500);
 		chatText.setEditable(false);
 		//chatText.setFont(f);
 		chatText.setOpaque(true);
-		chatText.setText("fsgsgsgsd");
-		InfoPanel c=new InfoPanel(chatText);
-		c.add(chatText);
-		c.setVisible(true);
-		this.inText=new JTextField();
-		inText.setBounds(0, 500, 800, 100);
-		inText.setFont(f);
-		inText.setOpaque(false);
-		inText.setAlignmentY(CENTER_ALIGNMENT);
-		inText.setText("");
-		inText.setVisible(true);
-
+		chatText.setText("");
+		InfoPanel c =new InfoPanel(chatText);
+		c.getTextArea().setBackground(Color.white);
+//		c.setSize(chatText.getSize());
+		
+//		c.setLayout(new ScrollPaneLayout());
+//		c.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+//		c.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+//		c.setWheelScrollingEnabled(true);
+//		c.setAlignmentY(CENTER_ALIGNMENT);
+//		c.add(chatText);
+//		c.setOpaque(true);
+//		c.setVisible(true);
+		
+		inText= new JTextField();
+//		inText.setBounds(0, 500, 800, 100);
+		inText.setFont(c.getTextArea().getFont());
+//		inText.setOpaque(false);
+//		inText.setAlignmentY(CENTER_ALIGNMENT);
+//		inText.setText("");
+//		inText.setVisible(true);
 		inText.addActionListener(new ActionListener() {
 			
 			
@@ -111,16 +106,12 @@ public class Chatwindow extends JFrame{
 		});
 		panel.add(c,BorderLayout.NORTH);
 		panel.add(inText);
-		add(panel);
-		this.setVisible(false);
 		pack();
+		this.setVisible(true);
 		
 
 	}
-	
-	/*
-	 * public static void main(String[] args) throws FontFormatException,
-	 * IOException { new Chatwindow(); }
-	 */
-	 
+	public static void main(String[] args) throws FontFormatException, IOException {
+		new Chatwindow();
+	}
 }
