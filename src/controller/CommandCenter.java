@@ -29,7 +29,6 @@ import javax.swing.JTextField;
 import org.hamcrest.core.Is;
 
 import Chating.Client;
-import Chating.CustomOutputStream;
 import Chating.Server;
 import exceptions.DisasterException;
 import model.disasters.Collapse;
@@ -92,9 +91,6 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 		JTextField inText=window.getInText();
 		JTextArea textArea=window.getChatText();
 		String text=inText.getText();
-		InputStream input=new ByteArrayInputStream(text.getBytes("UTF-8"));
-		OutputStream output=new CustomOutputStream(textArea);
-		server=new Server(input, output);
 		
 	}
 
@@ -310,26 +306,7 @@ public class CommandCenter implements SOSListener, MouseListener,ActionListener 
 			}
 			
 		}
-		else if(e.getSource()==GUI.getGame().getPanel().getTopBar().getChat()) {
-			try {
-				//server.close();
-				IPinput in=new IPinput();
-				this.window.setIp(in.getIp());
-				String ip=window.getIp();
-				this.window.setVisible(true);
-				JTextField inText=window.getInText();
-				JTextArea textArea=window.getChatText();
-				String text=inText.getText();
-				InputStream input=new ByteArrayInputStream(text.getBytes("UTF-8"));
-				OutputStream output=new CustomOutputStream(textArea);
-				Client client=new Client(ip, input,output);
-
-				
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
+		
 		
 		else if(e.getSource() == GUI.getGame().getGameOver().getReturnButton()){
 			
